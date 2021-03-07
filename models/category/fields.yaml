@@ -5,18 +5,18 @@
 fields:
 
     name:
-        label: rainlab.blog::lang.category.name
-        placeholder: rainlab.blog::lang.category.name_placeholder
+        label: winter.blog::lang.category.name
+        placeholder: winter.blog::lang.category.name_placeholder
         span: left
 
     slug:
-        label: rainlab.blog::lang.category.slug
+        label: winter.blog::lang.category.slug
         span: right
-        placeholder: rainlab.blog::lang.category.slug_placeholder
+        placeholder: winter.blog::lang.category.slug_placeholder
         preset: name
 
     description:
-        label: 'rainlab.blog::lang.category.description'
+        label: 'winter.blog::lang.category.description'
         size: large
         oc.commentPosition: ''
         span: full

@@ -1,10 +1,10 @@
-<?php namespace RainLab\Blog\Controllers;
+<?php namespace Winter\Blog\Controllers;
 
 use BackendMenu;
 use Flash;
 use Lang;
 use Backend\Classes\Controller;
-use RainLab\Blog\Models\Category;
+use Winter\Blog\Models\Category;
 
 class Categories extends Controller
 {
@@ -18,13 +18,13 @@ class Categories extends Controller
     public $listConfig = 'config_list.yaml';
     public $reorderConfig = 'config_reorder.yaml';
 
-    public $requiredPermissions = ['rainlab.blog.access_categories'];
+    public $requiredPermissions = ['winter.blog.access_categories'];
 
     public function __construct()
     {
         parent::__construct();
 
-        BackendMenu::setContext('RainLab.Blog', 'blog', 'categories');
+        BackendMenu::setContext('Winter.Blog', 'blog', 'categories');
     }
 
     public function index_onDelete()
@@ -39,7 +39,7 @@ class Categories extends Controller
                 $category->delete();
             }
 
-            Flash::success(Lang::get('rainlab.blog::lang.category.delete_success'));
+            Flash::success(Lang::get('winter.blog::lang.category.delete_success'));
         }
 
         return $this->listRefresh();

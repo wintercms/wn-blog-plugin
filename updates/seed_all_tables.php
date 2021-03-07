@@ -1,9 +1,9 @@
-<?php namespace RainLab\Blog\Updates;
+<?php namespace Winter\Blog\Updates;
 
 use Carbon\Carbon;
-use RainLab\Blog\Models\Post;
-use RainLab\Blog\Models\Category;
-use October\Rain\Database\Updates\Seeder;
+use Winter\Blog\Models\Post;
+use Winter\Blog\Models\Category;
+use Winter\Storm\Database\Updates\Seeder;
 
 class SeedAllTables extends Seeder
 {
@@ -26,7 +26,7 @@ You can edit this content by selecting **Blog** from the administration back-end
         ]);
 
         Category::create([
-            'name' => trans('rainlab.blog::lang.categories.uncategorized'),
+            'name' => trans('winter.blog::lang.categories.uncategorized'),
             'slug' => 'uncategorized',
         ]);
     }

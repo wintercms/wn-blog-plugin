@@ -5,14 +5,14 @@
 fields:
 
     title:
-        label: rainlab.blog::lang.post.title
+        label: winter.blog::lang.post.title
         span: left
-        placeholder: rainlab.blog::lang.post.title_placeholder
+        placeholder: winter.blog::lang.post.title_placeholder
 
     slug:
-        label: rainlab.blog::lang.post.slug
+        label: winter.blog::lang.post.slug
         span: right
-        placeholder: rainlab.blog::lang.post.slug_placeholder
+        placeholder: winter.blog::lang.post.slug_placeholder
         preset:
             field: title
             type: slug
@@ -26,35 +26,35 @@ secondaryTabs:
     stretch: true
     fields:
         content:
-            tab: rainlab.blog::lang.post.tab_edit
-            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            tab: winter.blog::lang.post.tab_edit
+            type: Winter\Blog\FormWidgets\BlogMarkdown
             cssClass: field-slim blog-post-preview
             stretch: true
             mode: split
 
         categories:
-            tab: rainlab.blog::lang.post.tab_categories
+            tab: winter.blog::lang.post.tab_categories
             type: relation
-            commentAbove: rainlab.blog::lang.post.categories_comment
-            placeholder: rainlab.blog::lang.post.categories_placeholder
+            commentAbove: winter.blog::lang.post.categories_comment
+            placeholder: winter.blog::lang.post.categories_placeholder
 
         published:
-            tab: rainlab.blog::lang.post.tab_manage
-            label: rainlab.blog::lang.post.published
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.published
             span: left
             type: checkbox
 
         user:
-            tab: rainlab.blog::lang.post.tab_manage
-            label: rainlab.blog::lang.post.published_by
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.published_by
             span: right
             type: relation
             nameFrom: login
-            emptyOption: rainlab.blog::lang.post.current_user
+            emptyOption: winter.blog::lang.post.current_user
 
         published_at:
-            tab: rainlab.blog::lang.post.tab_manage
-            label: rainlab.blog::lang.post.published_on
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.published_on
             span: left
             cssClass: checkbox-align
             type: datepicker
@@ -65,14 +65,14 @@ secondaryTabs:
                 condition: checked
 
         excerpt:
-            tab: rainlab.blog::lang.post.tab_manage
-            label: rainlab.blog::lang.post.excerpt
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.excerpt
             type: textarea
             size: small
 
         featured_images:
-            tab: rainlab.blog::lang.post.tab_manage
-            label: rainlab.blog::lang.post.featured_images
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.featured_images
             type: fileupload
             mode: image
             imageWidth: 200

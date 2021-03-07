@@ -1,8 +1,8 @@
 {
-    "name": "rainlab/blog-plugin",
-    "type": "october-plugin",
-    "description": "Blog plugin for October CMS",
-    "homepage": "https://octobercms.com/plugin/rainlab-blog",
+    "name": "winter/wn-blog-plugin",
+    "type": "winter-plugin",
+    "description": "Blog plugin for Winter CMS",
+    "homepage": "https://wintercms.com/plugin/winter-blog",
     "keywords": ["october", "octobercms", "blog"],
     "license": "MIT",
     "authors": [

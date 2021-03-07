@@ -10,7 +10,7 @@
         if (this.$markdownEditor.length > 0) {
             this.codeEditor = this.$markdownEditor.markdownEditor('getEditorObject')
 
-            this.$markdownEditor.on('initPreview.oc.markdowneditor', $.proxy(this.initPreview, this))
+            this.$markdownEditor.on('initPreview.wn.markdowneditor', $.proxy(this.initPreview, this))
 
             this.initDropzones()
             this.initFormEvents()
@@ -43,7 +43,7 @@
 
     PostForm.prototype.updateScroll = function() {
         // Reserved in case MarkdownEditor uses scrollbar plugin
-        // this.$preview.data('oc.scrollbar').update()
+        // this.$preview.data('wn.scrollbar').update()
     }
 
     PostForm.prototype.initImageUploaders = function() {
@@ -152,7 +152,7 @@
     PostForm.prototype.initFormEvents = function() {
         $(document).on('ajaxSuccess', '#post-form', function(event, context, data){
             if (context.handler == 'onSave' && !data.X_OCTOBER_ERROR_FIELDS) {
-                $(this).trigger('unchange.oc.changeMonitor')
+                $(this).trigger('unchange.wn.changeMonitor')
             }
         })
     }
@@ -178,7 +178,7 @@
         if ($.oc === undefined)
             $.oc = {}
 
-        $.oc.blogPostForm = form
+        $.wn.blogPostForm = form
     })
 
 }(window.jQuery);

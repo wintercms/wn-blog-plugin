@@ -1,4 +1,4 @@
-<?php namespace RainLab\Blog\Models;
+<?php namespace Winter\Blog\Models;
 
 use Str;
 use Model;
@@ -8,19 +8,19 @@ use Cms\Classes\Theme;
 
 class Category extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\NestedTree;
+    use \Winter\Storm\Database\Traits\Validation;
+    use \Winter\Storm\Database\Traits\NestedTree;
 
-    public $table = 'rainlab_blog_categories';
-    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
+    public $table = 'winter_blog_categories';
+    public $implement = ['@Winter.Translate.Behaviors.TranslatableModel'];
 
     /*
      * Validation
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required|between:3,64|unique:rainlab_blog_categories',
-        'code' => 'nullable|unique:rainlab_blog_categories',
+        'slug' => 'required|between:3,64|unique:winter_blog_categories',
+        'code' => 'nullable|unique:winter_blog_categories',
     ];
 
     /**
@@ -35,13 +35,13 @@ class Category extends Model
     protected $guarded = [];
 
     public $belongsToMany = [
-        'posts' => ['RainLab\Blog\Models\Post',
-            'table' => 'rainlab_blog_posts_categories',
+        'posts' => ['Winter\Blog\Models\Post',
+            'table' => 'winter_blog_posts_categories',
             'order' => 'published_at desc',
             'scope' => 'isPublished'
         ],
-        'posts_count' => ['RainLab\Blog\Models\Post',
-            'table' => 'rainlab_blog_posts_categories',
+        'posts_count' => ['Winter\Blog\Models\Post',
+            'table' => 'winter_blog_posts_categories',
             'scope' => 'isPublished',
             'count' => true
         ]
@@ -193,7 +193,7 @@ class Category extends Model
      *   return all available records.
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
-     * @param \RainLab\Pages\Classes\MenuItem $item Specifies the menu item.
+     * @param \Winter\Pages\Classes\MenuItem $item Specifies the menu item.
      * @param \Cms\Classes\Theme $theme Specifies the current theme.
      * @param string $url Specifies the current page URL, normalized, in lower case
      * The URL is specified relative to the website root, it includes the subdirectory name, if any.

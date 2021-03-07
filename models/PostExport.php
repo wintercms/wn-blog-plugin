@@ -1,4 +1,4 @@
-<?php namespace RainLab\Blog\Models;
+<?php namespace Winter\Blog\Models;
 
 use Backend\Models\ExportModel;
 use ApplicationException;
@@ -22,7 +22,7 @@ class PostExport extends ExportModel
 
     public $belongsToMany = [
         'post_categories' => [
-            'RainLab\Blog\Models\Category',
+            'Winter\Blog\Models\Category',
             'table'    => 'rainlab_blog_posts_categories',
             'key'      => 'post_id',
             'otherKey' => 'category_id'
@@ -34,7 +34,7 @@ class PostExport extends ExportModel
             'System\Models\File',
             'order' => 'sort_order',
             'key' => 'attachment_id',
-            'conditions' => "field = 'featured_images' AND attachment_type = 'RainLab\\\\Blog\\\\Models\\\\Post'"
+            'conditions' => "field = 'featured_images' AND attachment_type = 'Winter\\\\Blog\\\\Models\\\\Post'"
         ]
     ];
 

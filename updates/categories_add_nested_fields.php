@@ -1,8 +1,8 @@
-<?php namespace RainLab\Blog\Updates;
+<?php namespace Winter\Blog\Updates;
 
 use Schema;
-use October\Rain\Database\Updates\Migration;
-use RainLab\Blog\Models\Category as CategoryModel;
+use Winter\Storm\Database\Updates\Migration;
+use Winter\Blog\Models\Category as CategoryModel;
 
 class CategoriesAddNestedFields extends Migration
 {

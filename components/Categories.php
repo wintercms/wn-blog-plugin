@@ -1,10 +1,10 @@
-<?php namespace RainLab\Blog\Components;
+<?php namespace Winter\Blog\Components;
 
 use Db;
 use Carbon\Carbon;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use RainLab\Blog\Models\Category as BlogCategory;
+use Winter\Blog\Models\Category as BlogCategory;
 
 class Categories extends ComponentBase
 {
@@ -26,8 +26,8 @@ class Categories extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'rainlab.blog::lang.settings.category_title',
-            'description' => 'rainlab.blog::lang.settings.category_description'
+            'name'        => 'winter.blog::lang.settings.category_title',
+            'description' => 'winter.blog::lang.settings.category_description'
         ];
     }
 
@@ -35,23 +35,23 @@ class Categories extends ComponentBase
     {
         return [
             'slug' => [
-                'title'       => 'rainlab.blog::lang.settings.category_slug',
-                'description' => 'rainlab.blog::lang.settings.category_slug_description',
+                'title'       => 'winter.blog::lang.settings.category_slug',
+                'description' => 'winter.blog::lang.settings.category_slug_description',
                 'default'     => '{{ :slug }}',
                 'type'        => 'string',
             ],
             'displayEmpty' => [
-                'title'       => 'rainlab.blog::lang.settings.category_display_empty',
-                'description' => 'rainlab.blog::lang.settings.category_display_empty_description',
+                'title'       => 'winter.blog::lang.settings.category_display_empty',
+                'description' => 'winter.blog::lang.settings.category_display_empty_description',
                 'type'        => 'checkbox',
                 'default'     => 0,
             ],
             'categoryPage' => [
-                'title'       => 'rainlab.blog::lang.settings.category_page',
-                'description' => 'rainlab.blog::lang.settings.category_page_description',
+                'title'       => 'winter.blog::lang.settings.category_page',
+                'description' => 'winter.blog::lang.settings.category_page_description',
                 'type'        => 'dropdown',
                 'default'     => 'blog/category',
-                'group'       => 'rainlab.blog::lang.settings.group_links',
+                'group'       => 'winter.blog::lang.settings.group_links',
             ],
         ];
     }
