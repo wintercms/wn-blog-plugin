@@ -8,7 +8,7 @@ use ApplicationException;
  */
 class PostExport extends ExportModel
 {
-    public $table = 'rainlab_blog_posts';
+    public $table = 'winter_blog_posts';
 
     /**
      * @var array Relations
@@ -23,7 +23,7 @@ class PostExport extends ExportModel
     public $belongsToMany = [
         'post_categories' => [
             'Winter\Blog\Models\Category',
-            'table'    => 'rainlab_blog_posts_categories',
+            'table'    => 'winter_blog_posts_categories',
             'key'      => 'post_id',
             'otherKey' => 'category_id'
         ]

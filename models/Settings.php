@@ -8,7 +8,7 @@ class Settings extends Model
 
     public $implement = ['System.Behaviors.SettingsModel'];
 
-    public $settingsCode = 'rainlab_blog_settings';
+    public $settingsCode = 'winter_blog_settings';
 
     public $settingsFields = 'fields.yaml';
 

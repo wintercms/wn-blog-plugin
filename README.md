@@ -1,6 +1,6 @@
 # Blog Plugin
 
-A simple, extensible blogging platform for October CMS.
+A simple, extensible blogging platform for Winter CMS.
 
 [Blog & Forum Building Tutorial Video](https://player.vimeo.com/video/97088926)
 
@@ -185,7 +185,7 @@ The component can be used on any page, it will hijack the entire page cycle to d
 
 ## Markdown guide
 
-October supports [standard markdown syntax](http://daringfireball.net/projects/markdown/) as well as [extended markdown syntax](http://michelf.ca/projects/php-markdown/extra/)
+Winter CMS supports [standard markdown syntax](http://daringfireball.net/projects/markdown/) as well as [extended markdown syntax](http://michelf.ca/projects/php-markdown/extra/)
 
 ### Classes and IDs
 
@@ -194,7 +194,7 @@ Classes and IDs can be added to images and other elements as shown below:
 ```
 [link](url){#id .class}
 ![1](image){#id .class}
-# October  {#id .class}
+# Winter CMS  {#id .class}
 ```
 
 ### Fenced code blogs
@@ -258,7 +258,7 @@ Below is an example of a simple definition list:
 Laravel
 :   A popular PHP framework
 
-October
+Winter CMS
 :   Awesome CMS built on Laravel
 ```
 
@@ -268,7 +268,7 @@ A term can also have multiple definitions:
 Laravel
 :   A popular PHP framework
 
-October
+Winter CMS
 :   Awesome CMS built on Laravel
 :   Supports markdown extra
 ```
@@ -277,7 +277,7 @@ You can also associate more than 1 term to a definition:
 
 ```
 Laravel
-October
+Winter CMS
 :   Built using PHP
 ```
 

@@ -151,7 +151,7 @@
 
     PostForm.prototype.initFormEvents = function() {
         $(document).on('ajaxSuccess', '#post-form', function(event, context, data){
-            if (context.handler == 'onSave' && !data.X_OCTOBER_ERROR_FIELDS) {
+            if (context.handler == 'onSave' && !data.X_WINTER_ERROR_FIELDS) {
                 $(this).trigger('unchange.wn.changeMonitor')
             }
         })
