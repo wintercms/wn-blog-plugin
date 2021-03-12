@@ -175,8 +175,11 @@
     $(document).ready(function(){
         var form = new PostForm()
 
+        if ($.wn === undefined)
+            $.wn = {}
+
         if ($.oc === undefined)
-            $.oc = {}
+            $.oc = $.wn
 
         $.wn.blogPostForm = form
     })
