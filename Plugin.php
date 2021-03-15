@@ -17,7 +17,8 @@ class Plugin extends PluginBase
             'description' => 'winter.blog::lang.plugin.description',
             'author'      => 'Alexey Bobkov, Samuel Georges',
             'icon'        => 'icon-pencil',
-            'homepage'    => 'https://github.com/winter/blog-plugin'
+            'homepage'    => 'https://github.com/winter/blog-plugin',
+            'replaces'    => 'RainLab.Blog'
         ];
     }
 
