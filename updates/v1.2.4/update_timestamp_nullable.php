@@ -9,8 +9,8 @@ class UpdateTimestampsNullable extends Migration
     {
         DbDongle::disableStrictMode();
 
-        DbDongle::convertTimestamps('rainlab_blog_posts');
-        DbDongle::convertTimestamps('rainlab_blog_categories');
+        DbDongle::convertTimestamps('winter_blog_posts');
+        DbDongle::convertTimestamps('winter_blog_categories');
     }
 
     public function down()
