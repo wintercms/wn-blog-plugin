@@ -1,7 +1,7 @@
 <?php
 /**
- * To allow compatibility with plugins that extend the original RainLab.Sitemap plugin, this will alias those classes to
- * use the new Winter.Sitemap classes.
+ * To allow compatibility with plugins that extend the original RainLab.Blog plugin, this will alias those classes to
+ * use the new Winter.Blog classes.
  */
 $aliases = [
     Winter\Blog\Plugin::class                     => 'RainLab\Blog\Plugin',
@@ -25,4 +25,4 @@ foreach ($aliases as $original => $alias) {
     if (!class_exists($alias)) {
         class_alias($original, $alias);
     }
-} 
+}
