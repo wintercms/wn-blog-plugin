@@ -1,4 +1,4 @@
-<?php namespace RainLab\Blog\Models;
+<?php namespace Winter\Blog\Models;
 
 use Backend\Models\ImportModel;
 use Backend\Models\User as AuthorModel;
@@ -10,7 +10,7 @@ use Exception;
  */
 class PostImport extends ImportModel
 {
-    public $table = 'rainlab_blog_posts';
+    public $table = 'winter_blog_posts';
 
     /**
      * Validation rules

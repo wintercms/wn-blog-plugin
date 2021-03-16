@@ -1,12 +1,12 @@
 # Blog Plugin
 
-A simple, extensible blogging platform for October CMS.
+A simple, extensible blogging platform for Winter CMS.
 
 [Blog & Forum Building Tutorial Video](https://player.vimeo.com/video/97088926)
 
 ## Editing posts
 
-The plugin uses the markdown markup for the posts. You can use any Markdown syntax and some special tags for embedding images and videos (requires RainLab Blog Video plugin). To embed an image use the image placeholder:
+The plugin uses the markdown markup for the posts. You can use any Markdown syntax and some special tags for embedding images and videos (requires Winter Blog Video plugin). To embed an image use the image placeholder:
 
     ![1](image)
 
@@ -95,7 +95,7 @@ The next example shows the basic component usage with the category filter:
         {% component 'blogPosts' %}
     {% endif %}
 
-The post list and the pagination are coded in the default component partial `plugins/rainlab/blog/components/posts/default.htm`. If the default markup is not suitable for your website, feel free to copy it from the default partial and replace the `{% component %}` call in the example above with the partial contents.
+The post list and the pagination are coded in the default component partial `plugins/winter/blog/components/posts/default.htm`. If the default markup is not suitable for your website, feel free to copy it from the default partial and replace the `{% component %}` call in the example above with the partial contents.
 
 ### Post page
 
@@ -132,7 +132,7 @@ The next example shows the basic component usage on the blog page:
         <h2>Post not found</h2>
     {% endif %}
 
-The post details is coded in the default component partial `plugins/rainlab/blog/components/post/default.htm`.
+The post details is coded in the default component partial `plugins/winter/blog/components/post/default.htm`.
 
 ### Category list
 
@@ -161,7 +161,7 @@ The component can be used on any page. The next example shows the basic componen
     </div>
     ...
 
-The category list is coded in the default component partial `plugins/rainlab/blog/components/categories/default.htm`.
+The category list is coded in the default component partial `plugins/winter/blog/components/categories/default.htm`.
 
 ### RSS feed
 
@@ -185,7 +185,7 @@ The component can be used on any page, it will hijack the entire page cycle to d
 
 ## Markdown guide
 
-October supports [standard markdown syntax](http://daringfireball.net/projects/markdown/) as well as [extended markdown syntax](http://michelf.ca/projects/php-markdown/extra/)
+Winter CMS supports [standard markdown syntax](http://daringfireball.net/projects/markdown/) as well as [extended markdown syntax](http://michelf.ca/projects/php-markdown/extra/)
 
 ### Classes and IDs
 
@@ -194,7 +194,7 @@ Classes and IDs can be added to images and other elements as shown below:
 ```
 [link](url){#id .class}
 ![1](image){#id .class}
-# October  {#id .class}
+# Winter CMS  {#id .class}
 ```
 
 ### Fenced code blogs
@@ -258,7 +258,7 @@ Below is an example of a simple definition list:
 Laravel
 :   A popular PHP framework
 
-October
+Winter CMS
 :   Awesome CMS built on Laravel
 ```
 
@@ -268,7 +268,7 @@ A term can also have multiple definitions:
 Laravel
 :   A popular PHP framework
 
-October
+Winter CMS
 :   Awesome CMS built on Laravel
 :   Supports markdown extra
 ```
@@ -277,7 +277,7 @@ You can also associate more than 1 term to a definition:
 
 ```
 Laravel
-October
+Winter CMS
 :   Built using PHP
 ```
 

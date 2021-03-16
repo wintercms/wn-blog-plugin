@@ -1,14 +1,14 @@
-<?php namespace RainLab\Blog\Classes;
+<?php namespace Winter\Blog\Classes;
 
 /**
  * Blog Markdown tag processor.
  *
- * @package rainlab\blog
+ * @package winter\blog
  * @author Alexey Bobkov, Samuel Georges
  */
 class TagProcessor
 {
-    use \October\Rain\Support\Traits\Singleton;
+    use \Winter\Storm\Support\Traits\Singleton;
 
     /**
      * @var array Cache of processing callbacks.

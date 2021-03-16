@@ -3,13 +3,13 @@
 # ===================================
 
 # Reorder Title
-title: rainlab.blog::lang.category.reorder
+title: winter.blog::lang.category.reorder
 
 # Attribute name
 nameFrom: name
 
 # Model Class name
-modelClass: RainLab\Blog\Models\Category
+modelClass: Winter\Blog\Models\Category
 
 # Toolbar widget configuration
 toolbar:

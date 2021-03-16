@@ -1,15 +1,15 @@
-<?php namespace RainLab\Blog\Components;
+<?php namespace Winter\Blog\Components;
 
 use Event;
 use BackendAuth;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use RainLab\Blog\Models\Post as BlogPost;
+use Winter\Blog\Models\Post as BlogPost;
 
 class Post extends ComponentBase
 {
     /**
-     * @var RainLab\Blog\Models\Post The post model used for display.
+     * @var Winter\Blog\Models\Post The post model used for display.
      */
     public $post;
 
@@ -21,8 +21,8 @@ class Post extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'rainlab.blog::lang.settings.post_title',
-            'description' => 'rainlab.blog::lang.settings.post_description'
+            'name'        => 'winter.blog::lang.settings.post_title',
+            'description' => 'winter.blog::lang.settings.post_description'
         ];
     }
 
@@ -30,14 +30,14 @@ class Post extends ComponentBase
     {
         return [
             'slug' => [
-                'title'       => 'rainlab.blog::lang.settings.post_slug',
-                'description' => 'rainlab.blog::lang.settings.post_slug_description',
+                'title'       => 'winter.blog::lang.settings.post_slug',
+                'description' => 'winter.blog::lang.settings.post_slug_description',
                 'default'     => '{{ :slug }}',
                 'type'        => 'string',
             ],
             'categoryPage' => [
-                'title'       => 'rainlab.blog::lang.settings.post_category',
-                'description' => 'rainlab.blog::lang.settings.post_category_description',
+                'title'       => 'winter.blog::lang.settings.post_category',
+                'description' => 'winter.blog::lang.settings.post_category_description',
                 'type'        => 'dropdown',
                 'default'     => 'blog/category',
             ],
@@ -90,7 +90,7 @@ class Post extends ComponentBase
         $post = new BlogPost;
         $query = $post->query();
 
-        if ($post->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+        if ($post->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')) {
             $query->transWhere('slug', $slug);
         } else {
             $query->where('slug', $slug);
@@ -151,6 +151,6 @@ class Post extends ComponentBase
     {
         $backendUser = BackendAuth::getUser();
 
-        return $backendUser && $backendUser->hasAccess('rainlab.blog.access_posts');
+        return $backendUser && $backendUser->hasAccess('winter.blog.access_posts');
     }
 }

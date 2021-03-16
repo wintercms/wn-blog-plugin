@@ -1,18 +1,18 @@
-<?php namespace RainLab\Blog\FormWidgets;
+<?php namespace Winter\Blog\FormWidgets;
 
-use RainLab\Blog\Models\Post;
-use RainLab\Translate\Models\Locale;
+use Winter\Blog\Models\Post;
+use Winter\Translate\Models\Locale;
 
 /**
  * A multi-lingual version of the blog markdown editor.
- * This class should never be invoked without the RainLab.Translate plugin.
+ * This class should never be invoked without the Winter.Translate plugin.
  *
- * @package rainlab\blog
+ * @package winter\blog
  * @author Alexey Bobkov, Samuel Georges
  */
 class MLBlogMarkdown extends BlogMarkdown
 {
-    use \RainLab\Translate\Traits\MLControl;
+    use \Winter\Translate\Traits\MLControl;
 
     /**
      * {@inheritDoc}
@@ -121,8 +121,8 @@ class MLBlogMarkdown extends BlogMarkdown
         if ($switch) {
             $this->originalAssetPath = $this->assetPath;
             $this->originalViewPath = $this->viewPath;
-            $this->assetPath = '/plugins/rainlab/translate/formwidgets/mlmarkdowneditor/assets';
-            $this->viewPath = base_path('/plugins/rainlab/translate/formwidgets/mlmarkdowneditor/partials');
+            $this->assetPath = '/plugins/winter/translate/formwidgets/mlmarkdowneditor/assets';
+            $this->viewPath = base_path('/plugins/winter/translate/formwidgets/mlmarkdowneditor/partials');
         }
         else {
             $this->assetPath = $this->originalAssetPath;

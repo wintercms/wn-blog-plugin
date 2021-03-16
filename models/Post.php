@@ -1,4 +1,4 @@
-<?php namespace RainLab\Blog\Models;
+<?php namespace Winter\Blog\Models;
 
 use Url;
 use Html;
@@ -11,8 +11,8 @@ use Backend\Models\User;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
 use Cms\Classes\Controller;
-use October\Rain\Database\NestedTreeScope;
-use RainLab\Blog\Classes\TagProcessor;
+use Winter\Storm\Database\NestedTreeScope;
+use Winter\Blog\Classes\TagProcessor;
 use ValidationException;
 
 /**
@@ -20,17 +20,17 @@ use ValidationException;
  */
 class Post extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use \Winter\Storm\Database\Traits\Validation;
 
-    public $table = 'rainlab_blog_posts';
-    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
+    public $table = 'winter_blog_posts';
+    public $implement = ['@Winter.Translate.Behaviors.TranslatableModel'];
 
     /*
      * Validation
      */
     public $rules = [
         'title'   => 'required',
-        'slug'    => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:rainlab_blog_posts'],
+        'slug'    => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:winter_blog_posts'],
         'content' => 'required',
         'excerpt' => ''
     ];
@@ -63,15 +63,15 @@ class Post extends Model
      * @var array
      */
     public static $allowedSortingOptions = [
-        'title asc'         => 'rainlab.blog::lang.sorting.title_asc',
-        'title desc'        => 'rainlab.blog::lang.sorting.title_desc',
-        'created_at asc'    => 'rainlab.blog::lang.sorting.created_asc',
-        'created_at desc'   => 'rainlab.blog::lang.sorting.created_desc',
-        'updated_at asc'    => 'rainlab.blog::lang.sorting.updated_asc',
-        'updated_at desc'   => 'rainlab.blog::lang.sorting.updated_desc',
-        'published_at asc'  => 'rainlab.blog::lang.sorting.published_asc',
-        'published_at desc' => 'rainlab.blog::lang.sorting.published_desc',
-        'random'            => 'rainlab.blog::lang.sorting.random'
+        'title asc'         => 'winter.blog::lang.sorting.title_asc',
+        'title desc'        => 'winter.blog::lang.sorting.title_desc',
+        'created_at asc'    => 'winter.blog::lang.sorting.created_asc',
+        'created_at desc'   => 'winter.blog::lang.sorting.created_desc',
+        'updated_at asc'    => 'winter.blog::lang.sorting.updated_asc',
+        'updated_at desc'   => 'winter.blog::lang.sorting.updated_desc',
+        'published_at asc'  => 'winter.blog::lang.sorting.published_asc',
+        'published_at desc' => 'winter.blog::lang.sorting.published_desc',
+        'random'            => 'winter.blog::lang.sorting.random'
     ];
 
     /*
@@ -83,8 +83,8 @@ class Post extends Model
 
     public $belongsToMany = [
         'categories' => [
-            'RainLab\Blog\Models\Category',
-            'table' => 'rainlab_blog_posts_categories',
+            'Winter\Blog\Models\Category',
+            'table' => 'winter_blog_posts_categories',
             'order' => 'name'
         ]
     ];
@@ -116,7 +116,7 @@ class Post extends Model
 
         $user = BackendAuth::getUser();
 
-        if (!$user->hasAnyAccess(['rainlab.blog.access_publish'])) {
+        if (!$user->hasAnyAccess(['winter.blog.access_publish'])) {
             $fields->published->hidden = true;
             $fields->published_at->hidden = true;
         }
@@ -130,7 +130,7 @@ class Post extends Model
     {
         if ($this->published && !$this->published_at) {
             throw new ValidationException([
-               'published_at' => Lang::get('rainlab.blog::lang.post.published_validation')
+               'published_at' => Lang::get('winter.blog::lang.post.published_validation')
             ]);
         }
     }
@@ -183,7 +183,7 @@ class Post extends Model
      */
     public function canEdit(User $user)
     {
-        return ($this->user_id == $user->id) || $user->hasAnyAccess(['rainlab.blog.access_other_posts']);
+        return ($this->user_id == $user->id) || $user->hasAnyAccess(['winter.blog.access_other_posts']);
     }
 
     public static function formatHtml($input, $preview = false)
@@ -557,7 +557,7 @@ class Post extends Model
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
      *
-     * @param \RainLab\Pages\Classes\MenuItem $item Specifies the menu item.
+     * @param \Winter\Pages\Classes\MenuItem $item Specifies the menu item.
      * @param \Cms\Classes\Theme $theme Specifies the current theme.
      * @param string $url Specifies the current page URL, normalized, in lower case
      * The URL is specified relative to the website root, it includes the subdirectory name, if any.

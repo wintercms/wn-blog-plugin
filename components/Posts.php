@@ -1,15 +1,15 @@
-<?php namespace RainLab\Blog\Components;
+<?php namespace Winter\Blog\Components;
 
 use Lang;
 use Redirect;
 use BackendAuth;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use October\Rain\Database\Model;
-use October\Rain\Database\Collection;
-use RainLab\Blog\Models\Post as BlogPost;
-use RainLab\Blog\Models\Category as BlogCategory;
-use RainLab\Blog\Models\Settings as BlogSettings;
+use Winter\Storm\Database\Model;
+use Winter\Storm\Database\Collection;
+use Winter\Blog\Models\Post as BlogPost;
+use Winter\Blog\Models\Category as BlogCategory;
+use Winter\Blog\Models\Settings as BlogSettings;
 
 class Posts extends ComponentBase
 {
@@ -65,8 +65,8 @@ class Posts extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'rainlab.blog::lang.settings.posts_title',
-            'description' => 'rainlab.blog::lang.settings.posts_description'
+            'name'        => 'winter.blog::lang.settings.posts_title',
+            'description' => 'winter.blog::lang.settings.posts_description'
         ];
     }
 
@@ -74,68 +74,68 @@ class Posts extends ComponentBase
     {
         return [
             'pageNumber' => [
-                'title'       => 'rainlab.blog::lang.settings.posts_pagination',
-                'description' => 'rainlab.blog::lang.settings.posts_pagination_description',
+                'title'       => 'winter.blog::lang.settings.posts_pagination',
+                'description' => 'winter.blog::lang.settings.posts_pagination_description',
                 'type'        => 'string',
                 'default'     => '{{ :page }}',
             ],
             'categoryFilter' => [
-                'title'       => 'rainlab.blog::lang.settings.posts_filter',
-                'description' => 'rainlab.blog::lang.settings.posts_filter_description',
+                'title'       => 'winter.blog::lang.settings.posts_filter',
+                'description' => 'winter.blog::lang.settings.posts_filter_description',
                 'type'        => 'string',
                 'default'     => '',
             ],
             'postsPerPage' => [
-                'title'             => 'rainlab.blog::lang.settings.posts_per_page',
+                'title'             => 'winter.blog::lang.settings.posts_per_page',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'rainlab.blog::lang.settings.posts_per_page_validation',
+                'validationMessage' => 'winter.blog::lang.settings.posts_per_page_validation',
                 'default'           => '10',
             ],
             'noPostsMessage' => [
-                'title'             => 'rainlab.blog::lang.settings.posts_no_posts',
-                'description'       => 'rainlab.blog::lang.settings.posts_no_posts_description',
+                'title'             => 'winter.blog::lang.settings.posts_no_posts',
+                'description'       => 'winter.blog::lang.settings.posts_no_posts_description',
                 'type'              => 'string',
-                'default'           => Lang::get('rainlab.blog::lang.settings.posts_no_posts_default'),
+                'default'           => Lang::get('winter.blog::lang.settings.posts_no_posts_default'),
                 'showExternalParam' => false,
             ],
             'sortOrder' => [
-                'title'       => 'rainlab.blog::lang.settings.posts_order',
-                'description' => 'rainlab.blog::lang.settings.posts_order_description',
+                'title'       => 'winter.blog::lang.settings.posts_order',
+                'description' => 'winter.blog::lang.settings.posts_order_description',
                 'type'        => 'dropdown',
                 'default'     => 'published_at desc',
             ],
             'categoryPage' => [
-                'title'       => 'rainlab.blog::lang.settings.posts_category',
-                'description' => 'rainlab.blog::lang.settings.posts_category_description',
+                'title'       => 'winter.blog::lang.settings.posts_category',
+                'description' => 'winter.blog::lang.settings.posts_category_description',
                 'type'        => 'dropdown',
                 'default'     => 'blog/category',
-                'group'       => 'rainlab.blog::lang.settings.group_links',
+                'group'       => 'winter.blog::lang.settings.group_links',
             ],
             'postPage' => [
-                'title'       => 'rainlab.blog::lang.settings.posts_post',
-                'description' => 'rainlab.blog::lang.settings.posts_post_description',
+                'title'       => 'winter.blog::lang.settings.posts_post',
+                'description' => 'winter.blog::lang.settings.posts_post_description',
                 'type'        => 'dropdown',
                 'default'     => 'blog/post',
-                'group'       => 'rainlab.blog::lang.settings.group_links',
+                'group'       => 'winter.blog::lang.settings.group_links',
             ],
             'exceptPost' => [
-                'title'             => 'rainlab.blog::lang.settings.posts_except_post',
-                'description'       => 'rainlab.blog::lang.settings.posts_except_post_description',
+                'title'             => 'winter.blog::lang.settings.posts_except_post',
+                'description'       => 'winter.blog::lang.settings.posts_except_post_description',
                 'type'              => 'string',
                 'validationPattern' => '^[a-z0-9\-_,\s]+$',
-                'validationMessage' => 'rainlab.blog::lang.settings.posts_except_post_validation',
+                'validationMessage' => 'winter.blog::lang.settings.posts_except_post_validation',
                 'default'           => '',
-                'group'             => 'rainlab.blog::lang.settings.group_exceptions',
+                'group'             => 'winter.blog::lang.settings.group_exceptions',
             ],
             'exceptCategories' => [
-                'title'             => 'rainlab.blog::lang.settings.posts_except_categories',
-                'description'       => 'rainlab.blog::lang.settings.posts_except_categories_description',
+                'title'             => 'winter.blog::lang.settings.posts_except_categories',
+                'description'       => 'winter.blog::lang.settings.posts_except_categories_description',
                 'type'              => 'string',
                 'validationPattern' => '^[a-z0-9\-_,\s]+$',
-                'validationMessage' => 'rainlab.blog::lang.settings.posts_except_categories_validation',
+                'validationMessage' => 'winter.blog::lang.settings.posts_except_categories_validation',
                 'default'           => '',
-                'group'             => 'rainlab.blog::lang.settings.group_exceptions',
+                'group'             => 'winter.blog::lang.settings.group_exceptions',
             ],
         ];
     }
@@ -239,7 +239,7 @@ class Posts extends ComponentBase
 
         $category = new BlogCategory;
 
-        $category = $category->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')
+        $category = $category->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')
             ? $category->transWhere('slug', $slug)
             : $category->where('slug', $slug);
 
@@ -252,6 +252,6 @@ class Posts extends ComponentBase
     {
         $backendUser = BackendAuth::getUser();
 
-        return $backendUser && $backendUser->hasAccess('rainlab.blog.access_posts') && BlogSettings::get('show_all_posts', true);
+        return $backendUser && $backendUser->hasAccess('winter.blog.access_posts') && BlogSettings::get('show_all_posts', true);
     }
 }
