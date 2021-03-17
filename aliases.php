@@ -1,7 +1,4 @@
 <?php
-
-use Winter\Storm\Support\ClassLoader;
-
 /**
  * To allow compatibility with plugins that extend the original RainLab.Blog plugin, this will alias those classes to
  * use the new Winter.Blog classes.
@@ -24,4 +21,8 @@ $aliases = [
     Winter\Blog\Models\PostExport::class          => 'RainLab\Blog\Models\PostExport',
 ];
 
-app(ClassLoader::class)->addAliases($aliases);
+foreach ($aliases as $original => $alias) {
+    if (!class_exists($alias)) {
+        class_alias($original, $alias);
+    }
+}
