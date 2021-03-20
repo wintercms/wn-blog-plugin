@@ -2,7 +2,7 @@
     "name": "winter/wn-blog-plugin",
     "type": "winter-plugin",
     "description": "Blog plugin for Winter CMS",
-    "homepage": "https://wintercms.com/plugin/winter-blog",
+    "homepage": "https://github.com/wintercms/wn-blog-plugin",
     "keywords": ["winter cms", "winter", "plugin", "blog"],
     "license": "MIT",
     "authors": [
@@ -31,7 +31,6 @@
         "php": ">=7.0",
         "composer/installers": "~1.0"
     },
-    "minimum-stability": "dev",
     "extra": {
         "installer-name": "blog"
     }
