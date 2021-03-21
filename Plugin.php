@@ -15,7 +15,7 @@ class Plugin extends PluginBase
         return [
             'name'        => 'winter.blog::lang.plugin.name',
             'description' => 'winter.blog::lang.plugin.description',
-            'author'      => 'Alexey Bobkov, Samuel Georges',
+            'author'      => 'Winter CMS',
             'icon'        => 'icon-pencil',
             'homepage'    => 'https://github.com/winter/blog-plugin',
             'replaces'    => 'RainLab.Blog'
