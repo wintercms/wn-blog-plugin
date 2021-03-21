@@ -18,6 +18,5 @@ fields:
     description:
         label: 'winter.blog::lang.category.description'
         size: large
-        oc.commentPosition: ''
         span: full
         type: textarea
