@@ -2,11 +2,10 @@
 
 use Schema;
 use Winter\Storm\Database\Updates\Migration;
-use Winter\Blog\Models\Category as CategoryModel;
+use Winter\Blog\Models\Category;
 
 class CategoriesAddNestedFields extends Migration
 {
-
     public function up()
     {
         if (Schema::hasColumn('rainlab_blog_categories', 'parent_id')) {
@@ -21,14 +20,21 @@ class CategoriesAddNestedFields extends Migration
             $table->integer('nest_depth')->nullable();
         });
 
-        foreach (CategoryModel::all() as $category) {
+        Category::extend(function ($model) {
+            $model->setTable('rainlab_blog_categories');
+        });
+
+        foreach (Category::all() as $category) {
             $category->setDefaultLeftAndRight();
             $category->save();
         }
+
+        Category::extend(function ($model) {
+            $model->setTable('winter_blog_categories');
+        });
     }
 
     public function down()
     {
     }
-
 }
