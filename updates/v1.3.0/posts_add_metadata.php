@@ -9,11 +9,11 @@ class PostsAddMetadata extends Migration
 
     public function up()
     {
-        if (Schema::hasColumn('winter_blog_posts', 'metadata')) {
+        if (Schema::hasColumn('rainlab_blog_posts', 'metadata')) {
             return;
         }
 
-        Schema::table('winter_blog_posts', function($table)
+        Schema::table('rainlab_blog_posts', function($table)
         {
             $table->mediumText('metadata')->nullable();
         });
@@ -21,8 +21,8 @@ class PostsAddMetadata extends Migration
 
     public function down()
     {
-        if (Schema::hasColumn('winter_blog_posts', 'metadata')) {
-            Schema::table('winter_blog_posts', function ($table) {
+        if (Schema::hasColumn('rainlab_blog_posts', 'metadata')) {
+            Schema::table('rainlab_blog_posts', function ($table) {
                 $table->dropColumn('metadata');
             });
         }
