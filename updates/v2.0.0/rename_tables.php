@@ -7,7 +7,8 @@ class RenameTables extends Migration
 {
     const TABLES = [
         'categories',
-        'posts'
+        'posts',
+        'posts_categories'
     ];
 
     public function up()
