@@ -12,7 +12,6 @@ class SeedAllTables extends Seeder
     {
         Post::extend(function ($model) {
             $model->setTable('rainlab_blog_posts');
-            $model->rules['slug'] = ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:rainlab_blog_posts'];
         });
 
         Post::create([
@@ -32,8 +31,6 @@ You can edit this content by selecting **Blog** from the administration back-end
 
         Category::extend(function ($model) {
             $model->setTable('rainlab_blog_categories');
-            $model->rules['slug'] = 'required|between:3,64|unique:rainlab_blog_categories';
-            $model->rules['code'] = 'nullable|unique:rainlab_blog_categories';
         });
 
         Category::create([
@@ -43,13 +40,10 @@ You can edit this content by selecting **Blog** from the administration back-end
 
         Post::extend(function ($model) {
             $model->setTable('winter_blog_posts');
-            $model->rules['slug'] = ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:winter_blog_posts'];
         });
 
         Category::extend(function ($model) {
             $model->setTable('winter_blog_categories');
-            $model->rules['slug'] = 'required|between:3,64|unique:winter_blog_categories';
-            $model->rules['code'] = 'nullable|unique:winter_blog_categories';
         });
     }
 }
