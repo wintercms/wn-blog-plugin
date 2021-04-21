@@ -46,5 +46,4 @@ You can edit this content by selecting **Blog** from the administration back-end
             $model->setTable('winter_blog_categories');
         });
     }
-
 }

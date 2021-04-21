@@ -19,8 +19,8 @@ class Category extends Model
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required|between:3,64|unique:winter_blog_categories',
-        'code' => 'nullable|unique:winter_blog_categories',
+        'slug' => 'required|between:3,64|unique',
+        'code' => 'nullable|unique',
     ];
 
     /**
