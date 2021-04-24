@@ -17,7 +17,7 @@ class Plugin extends PluginBase
             'description' => 'winter.blog::lang.plugin.description',
             'author'      => 'Winter CMS',
             'icon'        => 'icon-pencil',
-            'homepage'    => 'https://github.com/winter/blog-plugin',
+            'homepage'    => 'https://github.com/wintercms/wn-blog-plugin',
             'replaces'    => ['RainLab.Blog' => '<= 1.5.0'],
         ];
     }
