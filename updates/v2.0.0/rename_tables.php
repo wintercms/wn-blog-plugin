@@ -38,7 +38,7 @@ class RenameTables extends Migration
             }
         }
 
-        Db::table('system_files')->where('attachment_type', 'Winter\Blog\Models\Post')->update('attachment_type', 'RainLab\Blog\Models\Post');
-        Db::table('system_settings')->where('item', 'winter_blog_settings')->update('item', 'rainlab_blog_settings');
+        Db::table('system_files')->where('attachment_type', 'Winter\Blog\Models\Post')->update(['attachment_type' => 'RainLab\Blog\Models\Post']);
+        Db::table('system_settings')->where('item', 'winter_blog_settings')->update(['item' => 'rainlab_blog_settings']);
     }
 }
