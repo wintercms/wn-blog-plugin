@@ -62,4 +62,8 @@
 "2.0.0":
     - Rebrand to Winter.Blog
     - v2.0.0/rename_tables.php
-
+"2.0.1":
+    - Rebrand table indexes
+    - Add migrations for translate plugin attributes and indexes tables
+    - v2.0.1/rename_indexes.php
+    - v2.0.1/fix_translate_records.php
