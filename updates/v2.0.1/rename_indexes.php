@@ -4,7 +4,7 @@ use Db;
 use Schema;
 use Winter\Storm\Database\Updates\Migration;
 
-class RenameTables extends Migration
+class RenameIndexes extends Migration
 {
     const TABLES = [
         'categories',
