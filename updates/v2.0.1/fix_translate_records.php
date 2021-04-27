@@ -6,6 +6,11 @@ use Winter\Storm\Database\Updates\Migration;
 
 class FixTranslateRecords extends Migration
 {
+    const MODELS = [
+        'Category',
+        'Post',
+    ];
+
     public function up()
     {
         $this->fix_records('RainLab', 'Winter');
@@ -29,13 +34,13 @@ class FixTranslateRecords extends Migration
         }
 
         foreach ($tables as $table) {
-            Db::table($table)
-                ->where('model_type', $from . '\Blog\Models\Category')
-                ->update(['model_type' => $to . '\Blog\Models\Category']);
-
-            Db::table($table)
-                ->where('model_type', $from . '\Blog\Models\Post')
-                ->update(['model_type' => $to . '\Blog\Models\Post']);
+            foreach (self::MODELS as $model) {
+                $fromModel = $from . '\\Blog\\Models\\' . $model;
+                $toModel = $to . '\\Blog\\Models\\' . $model;
+                Db::table($table)
+                    ->where('model_type', $fromModel)
+                    ->update(['model_type' => $toModel]);
+            }
         }
     }
 }
