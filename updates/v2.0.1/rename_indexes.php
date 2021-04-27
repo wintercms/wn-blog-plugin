@@ -37,12 +37,12 @@ class RenameIndexes extends Migration
         $sm = Schema::getConnection()->getDoctrineSchemaManager();
 
         foreach ($sm->listTableIndexes($table) as $index) {
-            $old = $index->getName();
-            $new = str_replace($from, $to, $old);
-
             if ($index->isPrimary()) {
                 continue;
             }
+            
+            $old = $index->getName();
+            $new = str_replace($from, $to, $old);
 
             $columns = $index->getColumns();
             if ($index->isUnique()) {
