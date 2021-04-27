@@ -20,9 +20,9 @@ class FixTranslateRecords extends Migration
     {
         $tables = ['indexes', 'attributes'];
 
-        if (Schema::hasTable('rainlab_translate_indexes') {
+        if (Schema::hasTable('rainlab_translate_indexes')) {
             $tables = preg_filter('/^/', 'rainlab_translate_', $tables);
-        } else if (Schema::hasTable('rainlab_translate_indexes') {
+        } else if (Schema::hasTable('rainlab_translate_indexes')) {
             $tables = preg_filter('/^/', 'rainlab_translate_', $tables);
         } else {
             return;
