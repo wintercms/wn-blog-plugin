@@ -67,4 +67,4 @@
     - Add migrations for translate plugin attributes and indexes tables
     - v2.0.1/rename_indexes.php
     - v2.0.1/fix_translate_records.php
-"2.0.2": Fixes js events incorrectly remapped to wn namespace.
+"2.0.2": Fixes issue where images could not be uploaded directly to the Markdown editor.
