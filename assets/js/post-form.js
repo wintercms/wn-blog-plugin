@@ -10,7 +10,7 @@
         if (this.$markdownEditor.length > 0) {
             this.codeEditor = this.$markdownEditor.markdownEditor('getEditorObject')
 
-            this.$markdownEditor.on('initPreview.wn.markdowneditor', $.proxy(this.initPreview, this))
+            this.$markdownEditor.on('initPreview.oc.markdowneditor', $.proxy(this.initPreview, this))
 
             this.initDropzones()
             this.initFormEvents()
