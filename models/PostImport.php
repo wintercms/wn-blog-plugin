@@ -45,6 +45,12 @@ class PostImport extends ImportModel
             throw new ApplicationException('Please specify a match for the Categories column.');
         }
 
+        $except = ['id', 'categories', 'author_email'];
+        $except_override = $this->fireEvent('winter.blog.import.except', [$except], true);
+        if ($except_override) {
+            $except = $except_override;
+        }
+
         /*
          * Import
          */
@@ -70,8 +76,6 @@ class PostImport extends ImportModel
                 /*
                  * Set attributes
                  */
-                $except = ['id', 'categories', 'author_email'];
-
                 foreach (array_except($data, $except) as $attribute => $value) {
                     if (in_array($attribute, $post->getDates()) && empty($value)) {
                         continue;
@@ -84,6 +88,8 @@ class PostImport extends ImportModel
                 }
 
                 $post->forceSave();
+
+                $this->fireEvent('winter.blog.import.afterSave', [$post, $data]);
 
                 if ($categoryIds = $this->getCategoryIdsForPost($data)) {
                     $post->categories()->sync($categoryIds, false);
