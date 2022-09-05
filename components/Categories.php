@@ -53,6 +53,12 @@ class Categories extends ComponentBase
                 'default'     => 'blog/category',
                 'group'       => 'winter.blog::lang.settings.group_links',
             ],
+            'categoryFilter' => [
+                'title'       => 'winter.blog::lang.settings.posts_filter',
+                'description' => 'winter.blog::lang.settings.posts_filter_description',
+                'default'     => '{{ :slug }}',
+                'type'        => 'string',
+            ],
         ];
     }
 
@@ -74,7 +80,20 @@ class Categories extends ComponentBase
      */
     protected function loadCategories()
     {
-        $categories = BlogCategory::with('posts_count')->getNested();
+        $categoriesQuery = BlogCategory::with('posts_count');
+
+        if ($slug = $this->property('categoryFilter')) {
+            if ((new BlogCategory)->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')) {
+                $categoriesQuery->transWhere('slug', $slug);
+            } else {
+                $categoriesQuery->where('slug', $slug);
+            }
+
+            $categories = $categoriesQuery->first()->getChildren();
+        } else {
+            $categories = $categoriesQuery->getNested(false);
+        }
+
         if (!$this->property('displayEmpty')) {
             $iterator = function ($categories) use (&$iterator) {
                 return $categories->reject(function ($category) use (&$iterator) {
