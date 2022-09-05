@@ -91,7 +91,7 @@ class Categories extends ComponentBase
 
             $categories = $categoriesQuery->first()->getChildren();
         } else {
-            $categories = $categoriesQuery->getNested(false);
+            $categories = $categoriesQuery->getNested();
         }
 
         if (!$this->property('displayEmpty')) {
