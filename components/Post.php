@@ -103,12 +103,18 @@ class Post extends ComponentBase
         $post = $query->first();
 
         /*
-         * Add a "url" helper attribute for linking to each category
+         * Add a "url" helper attribute for linking to each category and canonical url of the post
          */
-        if ($post && $post->exists && $post->categories->count()) {
-            $post->categories->each(function($category) {
-                $category->setUrl($this->categoryPage, $this->controller);
-            });
+        if ($post && $post->exists) {
+            $postPage = $this->getPage()->getBaseFileName();
+
+            $post->setUrl($postPage, $this->controller, []);
+
+            if ($post->categories->count()) {
+                $post->categories->each(function($category) {
+                    $category->setUrl($this->categoryPage, $this->controller);
+                });
+            }
         }
 
         return $post;
