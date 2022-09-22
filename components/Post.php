@@ -108,7 +108,7 @@ class Post extends ComponentBase
         if ($post && $post->exists) {
             $postPage = $this->getPage()->getBaseFileName();
 
-            $post->setUrl($postPage, $this->controller, []);
+            $post->setUrl($postPage, $this->controller);
 
             if ($post->categories->count()) {
                 $post->categories->each(function($category) {
