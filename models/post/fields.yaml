@@ -22,8 +22,11 @@ fields:
         path: post_toolbar
         cssClass: collapse-visible
 
-secondaryTabs:
+tabs:
     stretch: true
+    cssClass: master-area
+    paneCssClass:
+        0: pane-compact
     fields:
         content:
             tab: winter.blog::lang.post.tab_edit
