@@ -26,7 +26,7 @@ return [
         'settings_description' => 'Gérer les paramètres du blog',
         'show_all_posts_label' => "Afficher tous les messages aux utilisateurs du panneaux d'administration",
         'show_all_posts_comment' => 'Afficher autant les publications publiées et non publiées sur le site web pour les utilisateurs principaux',
-        'tab_general' => 'Général'
+        'tab_general' => 'Général',
     ],
     'posts' => [
         'list_title' => 'Gérer les articles du blog',
@@ -35,7 +35,7 @@ return [
         'filter_date' => 'Date',
         'new_post' => 'Nouvel article',
         'export_post' => 'Exporter les articles',
-        'import_post' => 'Importer des articles'
+        'import_post' => 'Importer des articles',
     ],
     'post' => [
         'title' => 'Titre',
@@ -67,12 +67,15 @@ return [
         'delete_confirm' => 'Confirmez-vous la suppression de cet article ?',
         'delete_success' => 'Ces articles ont été supprimés avec succès.',
         'close_confirm' => 'L’article n’est pas enregistré.',
-        'return_to_posts' => 'Retour à la liste des articles'
+        'return_to_posts' => 'Retour à la liste des articles',
+        'posted_byline' => 'Posté dans :categories le :date.',
+        'posted_byline_no_categories' => 'Posté le :date.',
+        'date_format' => 'd M Y',
     ],
     'categories' => [
         'list_title' => 'Gérer les catégories',
         'new_category' => 'Nouvelle catégorie',
-        'uncategorized' => 'Non catégorisé'
+        'uncategorized' => 'Non catégorisé',
     ],
     'category' => [
         'name' => 'Nom',
@@ -84,14 +87,14 @@ return [
         'delete_confirm' => 'Confirmez-vous la suppression de cette catégorie ?',
         'delete_success' => 'Ces catégories ont été supprimés avec succès.',
         'return_to_categories' => 'Retour à la liste des catégories',
-        'reorder' => 'Réorganiser les catégories'
+        'reorder' => 'Réorganiser les catégories',
     ],
     'menuitem' => [
         'blog_category' => 'Catégories du blog',
         'all_blog_categories' => 'Toutes les catégories du blog',
         'blog_post' => 'Articles du blog',
         'all_blog_posts' => 'Tous les articles du blog',
-        'category_blog_posts' => "Articles d'une catégorie du blog"
+        'category_blog_posts' => "Articles d'une catégorie du blog",
     ],
     'settings' => [
         'category_title' => 'Liste des catégories',
@@ -136,7 +139,7 @@ return [
         'rssfeed_title' => 'Flux RSS',
         'rssfeed_description' => 'Génère un Flux RSS contenant les articles du blog.',
         'group_links' => 'Liens',
-        'group_exceptions' => 'Exceptions'
+        'group_exceptions' => 'Exceptions',
     ],
     'sorting' => [
         'title_asc' => 'Titre (ascendant)',
@@ -147,7 +150,7 @@ return [
         'updated_desc' => 'Mise à jour (descendant)',
         'published_asc' => 'Publication (ascendant)',
         'published_desc' => 'Publication (descendant)',
-        'random' => 'Aléatoire'
+        'random' => 'Aléatoire',
     ],
     'import' => [
         'update_existing_label' => 'Mettre à jour les articles existants',
@@ -158,6 +161,6 @@ return [
         'categories_comment' => 'Sélectionnez les catégories auxquelles appartiendront les articles importées (facultatif).',
         'default_author_label' => 'Auteur par défaut (facultatif)',
         'default_author_comment' => "L'importation tentera d'utiliser un auteur existant si vous correspondez la colonne Email à l'auteur, sinon l'auteur spécifié ci-dessus sera utilisé.",
-        'default_author_placeholder' => "-- sélectionnez l'auteur --"
+        'default_author_placeholder' => "-- sélectionnez l'auteur --",
     ]
 ];

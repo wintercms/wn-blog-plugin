@@ -8,7 +8,7 @@ class CreateCategoriesTable extends Migration
 
     public function up()
     {
-        Schema::create('winter_blog_categories', function($table)
+        Schema::create('rainlab_blog_categories', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -23,7 +23,7 @@ class CreateCategoriesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('winter_blog_posts_categories', function($table)
+        Schema::create('rainlab_blog_posts_categories', function($table)
         {
             $table->engine = 'InnoDB';
             $table->integer('post_id')->unsigned();
@@ -34,8 +34,8 @@ class CreateCategoriesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('winter_blog_categories');
-        Schema::dropIfExists('winter_blog_posts_categories');
+        Schema::dropIfExists('rainlab_blog_categories');
+        Schema::dropIfExists('rainlab_blog_posts_categories');
     }
 
 }

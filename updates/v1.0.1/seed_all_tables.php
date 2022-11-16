@@ -10,6 +10,10 @@ class SeedAllTables extends Seeder
 
     public function run()
     {
+        Post::extend(function ($model) {
+            $model->setTable('rainlab_blog_posts');
+        });
+
         Post::create([
             'title' => 'First blog post',
             'slug' => 'first-blog-post',
@@ -25,10 +29,21 @@ You can edit this content by selecting **Blog** from the administration back-end
             'published' => true
         ]);
 
+        Category::extend(function ($model) {
+            $model->setTable('rainlab_blog_categories');
+        });
+
         Category::create([
             'name' => trans('winter.blog::lang.categories.uncategorized'),
             'slug' => 'uncategorized',
         ]);
-    }
 
+        Post::extend(function ($model) {
+            $model->setTable('winter_blog_posts');
+        });
+
+        Category::extend(function ($model) {
+            $model->setTable('winter_blog_categories');
+        });
+    }
 }

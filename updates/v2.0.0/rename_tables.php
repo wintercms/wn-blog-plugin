@@ -1,5 +1,6 @@
 <?php namespace Winter\Blog\Updates;
 
+use Db;
 use Schema;
 use Winter\Storm\Database\Updates\Migration;
 
@@ -7,7 +8,8 @@ class RenameTables extends Migration
 {
     const TABLES = [
         'categories',
-        'posts'
+        'posts',
+        'posts_categories'
     ];
 
     public function up()
@@ -20,6 +22,9 @@ class RenameTables extends Migration
                 Schema::rename($from, $to);
             }
         }
+
+        Db::table('system_files')->where('attachment_type', 'RainLab\Blog\Models\Post')->update(['attachment_type' => 'Winter\Blog\Models\Post']);
+        Db::table('system_settings')->where('item', 'rainlab_blog_settings')->update(['item' => 'winter_blog_settings']);
     }
 
     public function down()
@@ -32,5 +37,8 @@ class RenameTables extends Migration
                 Schema::rename($from, $to);
             }
         }
+
+        Db::table('system_files')->where('attachment_type', 'Winter\Blog\Models\Post')->update(['attachment_type' => 'RainLab\Blog\Models\Post']);
+        Db::table('system_settings')->where('item', 'winter_blog_settings')->update(['item' => 'rainlab_blog_settings']);
     }
 }

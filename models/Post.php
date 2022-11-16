@@ -30,7 +30,7 @@ class Post extends Model
      */
     public $rules = [
         'title'   => 'required',
-        'slug'    => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:winter_blog_posts'],
+        'slug'    => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique'],
         'content' => 'required',
         'excerpt' => ''
     ];

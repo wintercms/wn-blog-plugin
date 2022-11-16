@@ -8,7 +8,7 @@ class CreatePostsTable extends Migration
 
     public function up()
     {
-        Schema::create('winter_blog_posts', function($table)
+        Schema::create('rainlab_blog_posts', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -26,7 +26,7 @@ class CreatePostsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('winter_blog_posts');
+        Schema::dropIfExists('rainlab_blog_posts');
     }
 
 }
