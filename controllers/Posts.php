@@ -79,7 +79,7 @@ class Posts extends Controller
 
     public function formExtendModel($model)
     {
-        if ($model->exists && !empty($model->slug)) {
+        if ($model->exists && !empty($model->slug) && $model->preview_page) {
             $model->setUrl($model->preview_page, (new \Cms\Classes\Controller()));
         }
     }
