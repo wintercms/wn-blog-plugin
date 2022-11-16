@@ -24,6 +24,13 @@ fields:
 
 secondaryTabs:
     stretch: true
+
+    icons:
+        winter.blog::lang.post.tab_edit: icon-pencil
+        winter.blog::lang.post.tab_categories: icon-tags
+        winter.blog::lang.post.tab_manage: icon-cog
+
+
     fields:
         content:
             tab: winter.blog::lang.post.tab_edit
@@ -56,13 +63,20 @@ secondaryTabs:
             tab: winter.blog::lang.post.tab_manage
             label: winter.blog::lang.post.published_on
             span: left
-            cssClass: checkbox-align
             type: datepicker
             mode: datetime
             trigger:
                 action: enable
                 field: published
                 condition: checked
+
+        metadata[preview_page]:
+            tab: winter.blog::lang.post.tab_manage
+            label: winter.blog::lang.post.preview_page
+            commentAbove: winter.blog::lang.post.preview_page_comment
+            span: auto
+            type: dropdown
+            options: getCmsPageOptions
 
         excerpt:
             tab: winter.blog::lang.post.tab_manage

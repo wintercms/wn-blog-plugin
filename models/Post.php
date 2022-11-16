@@ -48,6 +48,11 @@ class Post extends Model
     ];
 
     /**
+     * @var array Attributes that should be purged prior to saving.
+     */
+    protected $purgeable = ['url'];
+
+    /**
      * @var array Attributes to be stored as JSON
      */
     protected $jsonable = ['metadata'];
@@ -178,12 +183,10 @@ class Post extends Model
     /**
      * Used to test if a certain user has permission to edit post,
      * returns TRUE if the user is the owner or has other posts access.
-     * @param  User $user
-     * @return bool
      */
-    public function canEdit(User $user)
+    public function canEdit(User $user): bool
     {
-        return ($this->user_id == $user->id) || $user->hasAnyAccess(['winter.blog.access_other_posts']);
+        return ($this->user_id === $user->id) || $user->hasAnyAccess(['winter.blog.access_other_posts']);
     }
 
     public static function formatHtml($input, $preview = false)
@@ -543,6 +546,44 @@ class Post extends Model
         }
 
         return $result;
+    }
+
+    /**
+     * Get the list of pages that can be used to display the post
+     */
+    public function getCmsPageOptions(): array
+    {
+        $result = [];
+
+        $theme = Theme::getActiveTheme();
+        $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
+            if (!preg_match('/{{\s*:/', $component->property('slug'))) {
+                return false;
+            }
+            return true;
+        });
+
+        foreach ($pages as $page) {
+            $result[$page->baseFileName] = $page->title;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Accessor for the $post->preview_page attribute
+     */
+    public function getPreviewPageAttribute(): ?string
+    {
+        $page = null;
+
+        if (!empty($this->metadata['preview_page'])) {
+            $page = $this->metadata['preview_page'];
+        } else {
+            $page = array_first(array_keys($this->getCmsPageOptions()));
+        }
+
+        return $page;
     }
 
     /**

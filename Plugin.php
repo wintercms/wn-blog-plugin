@@ -2,11 +2,11 @@
 
 use Backend;
 use Backend\Models\UserRole;
-use Winter\Blog\Models\Post;
+use Event;
 use System\Classes\PluginBase;
 use Winter\Blog\Classes\TagProcessor;
 use Winter\Blog\Models\Category;
-use Event;
+use Winter\Blog\Models\Post;
 
 class Plugin extends PluginBase
 {
