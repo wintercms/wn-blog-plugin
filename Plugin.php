@@ -1,7 +1,7 @@
 <?php namespace Winter\Blog;
 
 use Backend;
-use Controller;
+use Backend\Models\UserRole;
 use Winter\Blog\Models\Post;
 use System\Classes\PluginBase;
 use Winter\Blog\Classes\TagProcessor;
@@ -18,7 +18,7 @@ class Plugin extends PluginBase
             'author'      => 'Winter CMS',
             'icon'        => 'icon-pencil',
             'homepage'    => 'https://github.com/winter/blog-plugin',
-            'replaces'    => 'RainLab.Blog'
+            'replaces'    => 'RainLab.Blog',
         ];
     }
 
@@ -37,27 +37,33 @@ class Plugin extends PluginBase
         return [
             'winter.blog.manage_settings' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.manage_settings'
+                'label' => 'winter.blog::lang.blog.manage_settings',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
             'winter.blog.access_posts' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.access_posts'
+                'label' => 'winter.blog::lang.blog.access_posts',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
             'winter.blog.access_categories' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.access_categories'
+                'label' => 'winter.blog::lang.blog.access_categories',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
             'winter.blog.access_other_posts' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.access_other_posts'
+                'label' => 'winter.blog::lang.blog.access_other_posts',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
             'winter.blog.access_import_export' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.access_import_export'
+                'label' => 'winter.blog::lang.blog.access_import_export',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ],
             'winter.blog.access_publish' => [
                 'tab'   => 'winter.blog::lang.blog.tab',
-                'label' => 'winter.blog::lang.blog.access_publish'
+                'label' => 'winter.blog::lang.blog.access_publish',
+                'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
             ]
         ];
     }
