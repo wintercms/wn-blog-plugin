@@ -571,6 +571,25 @@ class Post extends Model
     }
 
     /**
+     * Accessor for the $post->title attribute
+     */
+    public function getTitleAttribute($value)
+    {
+        if (!$this->is_published && !\App::runningInBackend()) {
+            $value = '🔒 ' . $value;
+        }
+        return $value;
+    }
+
+    /**
+     * Accessor for the $post->is_published attribute
+     */
+    public function getIsPublishedAttribute(): bool
+    {
+        return $this->published && $this->published_at && $this->published_at <= Carbon::now();
+    }
+
+    /**
      * Accessor for the $post->preview_page attribute
      */
     public function getPreviewPageAttribute(): ?string
