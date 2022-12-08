@@ -107,6 +107,26 @@ class Post extends Model
     public $preview = null;
 
     /**
+     * {@inheritDoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        // Add the content processor for the blog as a local event so that it can be
+        // bypassed by third parties if required.
+        $this->bindEvent('model.beforeSave', function () {
+            if (empty($this->user)) {
+                $user = BackendAuth::getUser();
+                if (!is_null($user)) {
+                    $this->user = $user->id;
+                }
+            }
+            $this->content_html = static::formatHtml($this->content);
+        });
+
+        parent::__construct($attributes);
+    }
+
+    /**
      * Limit visibility of the published-button
      *
      * @param       $fields
@@ -138,17 +158,6 @@ class Post extends Model
                'published_at' => Lang::get('winter.blog::lang.post.published_validation')
             ]);
         }
-    }
-
-    public function beforeSave()
-    {
-        if (empty($this->user)) {
-            $user = BackendAuth::getUser();
-            if (!is_null($user)) {
-                $this->user = $user->id;
-            }
-        }
-        $this->content_html = self::formatHtml($this->content);
     }
 
     /**
