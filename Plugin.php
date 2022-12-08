@@ -176,19 +176,5 @@ class Plugin extends PluginBase
                 return Post::resolveMenuItem($item, $url, $theme);
             }
         });
-
-        // Add the content processor for the blog as a local event so that it can be
-        // bypassed by third parties if required.
-        Post::extend(function ($model) {
-            $model->bindEvent('model.beforeSave', function () use ($model) {
-                if (empty($model->user)) {
-                    $user = BackendAuth::getUser();
-                    if (!is_null($user)) {
-                        $model->user = $user->id;
-                    }
-                }
-                $model->content_html = $model::formatHtml($model->content);
-            });
-        });
     }
 }
