@@ -187,6 +187,6 @@ class Plugin extends PluginBase
                 }
             }
             $model->content_html = Post::formatHtml($model->content);
-        })
+        });
     }
 }
