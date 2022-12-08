@@ -140,17 +140,6 @@ class Post extends Model
         }
     }
 
-    public function beforeSave()
-    {
-        if (empty($this->user)) {
-            $user = BackendAuth::getUser();
-            if (!is_null($user)) {
-                $this->user = $user->id;
-            }
-        }
-        $this->content_html = self::formatHtml($this->content);
-    }
-
     /**
      * Sets the "url" attribute with a URL to this object.
      * @param string $pageName
