@@ -2,7 +2,6 @@
 
 use Backend;
 use Backend\Models\UserRole;
-use BackendAuth;
 use Event;
 use System\Classes\PluginBase;
 use Winter\Blog\Classes\TagProcessor;
