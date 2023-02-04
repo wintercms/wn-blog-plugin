@@ -4,7 +4,11 @@
         <title>{{ this.page.meta_title ?: this.page.title }}</title>
         <link>{{ link }}</link>
         <description>{{ this.page.meta_description ?: this.page.description }}</description>
-        <atom:link href="{{ rssLink }}" rel="self" type="application/rss+xml" />
+        <atom:link rel="self" href="{{ rssLink }}" type="application/rss+xml" />
+        <link rel="first" href="{{ paginationLinks.first }}"/>
+        {% if paginationLinks.prev %}<link rel="previous" href="{{ paginationLinks.prev }}"/>{% endif %}
+        {% if paginationLinks.next %}<link rel="next" href="{{ paginationLinks.next }}"/>{% endif %}
+        <link rel="last" href="{{ paginationLinks.last }}"/>
         {% for post in posts %}
         <item>
             <title>{{ post.title }}</title>

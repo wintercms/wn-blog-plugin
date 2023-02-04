@@ -1,19 +1,20 @@
 <?php namespace Winter\Blog\Models;
 
-use Url;
-use Html;
-use Lang;
-use Model;
-use Markdown;
+use Backend\Models\User;
 use BackendAuth;
 use Carbon\Carbon;
-use Backend\Models\User;
+use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
-use Cms\Classes\Controller;
-use Winter\Storm\Database\NestedTreeScope;
-use Winter\Blog\Classes\TagProcessor;
+use Html;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Lang;
+use Markdown;
+use Model;
+use Url;
 use ValidationException;
+use Winter\Blog\Classes\TagProcessor;
+use Winter\Storm\Database\NestedTreeScope;
 
 /**
  * Class Post
@@ -233,12 +234,8 @@ class Post extends Model
 
     /**
      * Lists posts for the frontend
-     *
-     * @param        $query
-     * @param  array $options Display options
-     * @return Post
      */
-    public function scopeListFrontEnd($query, $options)
+    public function scopeListFrontEnd($query, array $options = []): LengthAwarePaginator
     {
         /*
          * Default options
