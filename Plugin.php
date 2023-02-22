@@ -18,7 +18,7 @@ class Plugin extends PluginBase
             'author'      => 'Winter CMS',
             'icon'        => 'icon-pencil',
             'homepage'    => 'https://github.com/wintercms/wn-blog-plugin',
-            'replaces'    => ['RainLab.Blog' => '<= 1.5.0'],
+            'replaces'    => ['RainLab.Blog' => '<= 1.7.0'],
         ];
     }
 
