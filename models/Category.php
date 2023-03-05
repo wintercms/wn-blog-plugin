@@ -5,6 +5,9 @@ use Model;
 use Url;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
+use Winter\Storm\Router\Router;
+use Winter\Translate\Classes\Translator;
+use Winter\Translate\Models\Locale;
 
 class Category extends Model
 {
@@ -202,6 +205,8 @@ class Category extends Model
     public static function resolveMenuItem($item, $url, $theme)
     {
         $result = null;
+        $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];
+        $defaultLocale = Locale::getDefault();
 
         if ($item->type == 'blog-category') {
             if (!$item->reference || !$item->cmsPage) {
@@ -225,9 +230,26 @@ class Category extends Model
             $result['isActive'] = $pageUrl == $url;
             $result['mtime'] = $category->updated_at;
 
+            if ($locales) {
+                $alternateLinks = [];
+                foreach ($locales as $locale => $name) {
+                    if ($locale === $defaultLocale->code) {
+                        $pageUrl = $result['url'];
+                    } else {
+                        $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
+                    }
+                    if ($pageUrl) {
+                        $alternateLinks[$locale] = Url::to($pageUrl);
+                    }
+                }
+                if ($alternateLinks) {
+                    $result['alternateLinks'] = $alternateLinks;
+                }
+            }
+
             if ($item->nesting) {
                 $categories = $category->getNested();
-                $iterator = function($categories) use (&$iterator, &$item, &$theme, $url) {
+                $iterator = function($categories) use (&$iterator, &$item, &$theme, $url, $locales) {
                     $branch = [];
 
                     foreach ($categories as $category) {
@@ -237,6 +259,23 @@ class Category extends Model
                         $branchItem['isActive'] = $branchItem['url'] == $url;
                         $branchItem['title'] = $category->name;
                         $branchItem['mtime'] = $category->updated_at;
+
+                        if ($locales) {
+                            $alternateLinks = [];
+                            foreach ($locales as $locale => $name) {
+                                if ($locale === $defaultLocale->code) {
+                                    $pageUrl = $branchItem['url'];
+                                } else {
+                                    $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
+                                }
+                                if ($pageUrl) {
+                                    $alternateLinks[$locale] = Url::to($pageUrl);
+                                }
+                            }
+                            if ($alternateLinks) {
+                                $branchItem['alternateLinks'] = $alternateLinks;
+                            }
+                        }
 
                         if ($category->children) {
                             $branchItem['items'] = $iterator($category->children);
@@ -266,6 +305,23 @@ class Category extends Model
 
                 $categoryItem['isActive'] = $categoryItem['url'] == $url;
 
+                if ($locales) {
+                    $alternateLinks = [];
+                    foreach ($locales as $locale => $name) {
+                        if ($locale === $defaultLocale->code) {
+                            $pageUrl = $categoryItem['url'];
+                        } else {
+                            $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
+                        }
+                        if ($pageUrl) {
+                            $alternateLinks[$locale] = Url::to($pageUrl);
+                        }
+                    }
+                    if ($alternateLinks) {
+                        $categoryItem['alternateLinks'] = $alternateLinks;
+                    }
+                }
+
                 $result['items'][] = $categoryItem;
             }
         }
@@ -287,6 +343,48 @@ class Category extends Model
             return;
         }
 
+        $params = self::getParams($page, $category);
+        if (!$params) {
+            return;
+        }
+
+        $url = CmsPage::url($page->getBaseFileName(), $params);
+
+        return $url;
+    }
+
+    /**
+     * Returns URL of a post page for a locale.
+     *
+     * @param $pageCode
+     * @param $post
+     * @param $theme
+     * @param $locale
+     */
+    protected static function getMLCategoryPageUrl($pageCode, $category, $theme, $locale)
+    {
+        $page = CmsPage::loadCached($theme, $pageCode);
+        if (!$page) {
+            return;
+        }
+
+        $translator = Translator::instance();
+        $page->rewriteTranslatablePageUrl($locale);
+
+        $category->translateContext($locale);
+
+        $params = self::getParams($page, $category);
+        if (!$params) {
+            return;
+        }
+
+        $url = $translator->getPathInLocale($page->url, $locale);
+
+        return (new Router)->urlFromPattern($url, $params);
+    }
+
+    protected static function getParams($page, $category)
+    {
         $properties = $page->getComponentProperties('blogPosts');
         if (!isset($properties['categoryFilter'])) {
             return;
@@ -301,8 +399,7 @@ class Category extends Model
         }
 
         $paramName = substr(trim($matches[1]), 1);
-        $url = CmsPage::url($page->getBaseFileName(), [$paramName => $category->slug]);
 
-        return $url;
+        return [ $paramName => $category->slug ];
     }
 }

@@ -15,6 +15,9 @@ use Url;
 use ValidationException;
 use Winter\Blog\Classes\TagProcessor;
 use Winter\Storm\Database\NestedTreeScope;
+use Winter\Storm\Router\Router;
+use Winter\Translate\Classes\Translator;
+use Winter\Translate\Models\Locale;
 
 /**
  * Class Post
@@ -632,30 +635,50 @@ class Post extends Model
     public static function resolveMenuItem($item, $url, $theme)
     {
         $result = null;
+        $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];
+        $defaultLocale = Locale::getDefault();
 
         if ($item->type == 'blog-post') {
             if (!$item->reference || !$item->cmsPage) {
                 return;
             }
 
-            $category = self::find($item->reference);
-            if (!$category) {
+            $post = self::find($item->reference);
+            if (!$post) {
                 return;
             }
 
-            $pageUrl = self::getPostPageUrl($item->cmsPage, $category, $theme);
+            $pageUrl = self::getPostPageUrl($item->cmsPage, $post, $theme);
             if (!$pageUrl) {
                 return;
             }
 
             $pageUrl = Url::to($pageUrl);
 
-            $result = [];
-            $result['url'] = $pageUrl;
-            $result['isActive'] = $pageUrl == $url;
-            $result['mtime'] = $category->updated_at;
-        }
-        elseif ($item->type == 'all-blog-posts') {
+            $result = [
+                'url' => $pageUrl,
+                'isActive' => $pageUrl == $url,
+                'mtime' => $post->updated_at,
+            ];
+
+            if ($locales) {
+                $alternateLinks = [];
+                foreach ($locales as $locale => $name) {
+                    if ($locale === $defaultLocale->code) {
+                        $pageUrl = $result['url'];
+                    } else {
+                        $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
+                    }
+                    if ($pageUrl) {
+                        $alternateLinks[$locale] = Url::to($pageUrl);
+                    }
+                }
+                if ($alternateLinks) {
+                    $result['alternateLinks'] = $alternateLinks;
+                }
+            }
+
+        } elseif ($item->type == 'all-blog-posts') {
             $result = [
                 'items' => []
             ];
@@ -673,10 +696,27 @@ class Post extends Model
 
                 $postItem['isActive'] = $postItem['url'] == $url;
 
+                if ($locales) {
+                    $alternateLinks = [];
+                    foreach ($locales as $locale => $name) {
+                        if ($locale === $defaultLocale->code) {
+                            $pageUrl = $postItem['url'];
+                        } else {
+                            $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
+                        }
+                        if ($pageUrl) {
+                            $alternateLinks[$locale] = Url::to($pageUrl);
+                        }
+                    }
+                    if ($alternateLinks) {
+                        $postItem['alternateLinks'] = $alternateLinks;
+                    }
+                }
+
                 $result['items'][] = $postItem;
             }
-        }
-        elseif ($item->type == 'category-blog-posts') {
+
+        } elseif ($item->type == 'category-blog-posts') {
             if (!$item->reference || !$item->cmsPage) {
                 return;
             }
@@ -709,6 +749,22 @@ class Post extends Model
 
                 $postItem['isActive'] = $postItem['url'] == $url;
 
+                if ($locales) {
+                    $alternateLinks = [];
+                    foreach ($locales as $locale => $name) {
+                        if ($locale === $defaultLocale->code) {
+                            $pageUrl = $postItem['url'];
+                        } else {
+                            $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
+                        }
+                        if ($pageUrl) {
+                            $alternateLinks[$locale] = Url::to($pageUrl);
+                        }
+                    }
+                    if ($alternateLinks) {
+                        $postItem['alternateLinks'] = $alternateLinks;
+                    }
+                }
                 $result['items'][] = $postItem;
             }
         }
@@ -720,16 +776,58 @@ class Post extends Model
      * Returns URL of a post page.
      *
      * @param $pageCode
-     * @param $category
+     * @param $post
      * @param $theme
      */
-    protected static function getPostPageUrl($pageCode, $category, $theme)
+    protected static function getPostPageUrl($pageCode, $post, $theme)
     {
         $page = CmsPage::loadCached($theme, $pageCode);
         if (!$page) {
             return;
         }
 
+        $params = self::getParams($page, $post);
+        if (!$params) {
+            return;
+        }
+
+        $url = CmsPage::url($page->getBaseFileName(), $params);
+
+        return $url;
+    }
+
+    /**
+     * Returns URL of a post page for a locale.
+     *
+     * @param $pageCode
+     * @param $post
+     * @param $theme
+     * @param $locale
+     */
+    protected static function getMLPostPageUrl($pageCode, $post, $theme, $locale)
+    {
+        $page = CmsPage::loadCached($theme, $pageCode);
+        if (!$page) {
+            return;
+        }
+
+        $translator = Translator::instance();
+        $page->rewriteTranslatablePageUrl($locale);
+
+        $post->translateContext($locale);
+
+        $params = self::getParams($page, $post);
+        if (!$params) {
+            return;
+        }
+
+        $url = $translator->getPathInLocale($page->url, $locale);
+
+        return (new Router)->urlFromPattern($url, $params);
+    }
+
+    protected static function getParams($page, $post)
+    {
         $properties = $page->getComponentProperties('blogPost');
         if (!isset($properties['slug'])) {
             return;
@@ -744,14 +842,11 @@ class Post extends Model
         }
 
         $paramName = substr(trim($matches[1]), 1);
-        $params = [
-            $paramName => $category->slug,
-            'year'  => $category->published_at->format('Y'),
-            'month' => $category->published_at->format('m'),
-            'day'   => $category->published_at->format('d')
+        return [
+            $paramName => $post->slug,
+            'year'  => $post->published_at->format('Y'),
+            'month' => $post->published_at->format('m'),
+            'day'   => $post->published_at->format('d')
         ];
-        $url = CmsPage::url($page->getBaseFileName(), $params);
-
-        return $url;
     }
 }
