@@ -1,8 +1,10 @@
-<?php namespace Winter\Blog\Models;
+<?php
 
+namespace Winter\Blog\Models;
+
+use ApplicationException;
 use Backend\Models\ImportModel;
 use Backend\Models\User as AuthorModel;
-use ApplicationException;
 use Exception;
 
 /**

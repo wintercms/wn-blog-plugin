@@ -1,10 +1,12 @@
-<?php namespace Winter\Blog\Models;
+<?php
 
-use Str;
-use Model;
-use Url;
+namespace Winter\Blog\Models;
+
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
+use Model;
+use Str;
+use Url;
 
 class Category extends Model
 {
