@@ -1,4 +1,6 @@
-<?php namespace Winter\Blog;
+<?php
+
+namespace Winter\Blog;
 
 use Backend;
 use Backend\Models\UserRole;
@@ -10,7 +12,10 @@ use Winter\Blog\Models\Post;
 
 class Plugin extends PluginBase
 {
-    public function pluginDetails()
+    /**
+     * Returns information about this plugin.
+     */
+    public function pluginDetails(): array
     {
         return [
             'name'        => 'winter.blog::lang.plugin.name',
@@ -22,17 +27,23 @@ class Plugin extends PluginBase
         ];
     }
 
-    public function registerComponents()
+    /**
+     * Registers the components provided by this plugin.
+     */
+    public function registerComponents(): array
     {
         return [
-            'Winter\Blog\Components\Post'       => 'blogPost',
-            'Winter\Blog\Components\Posts'      => 'blogPosts',
-            'Winter\Blog\Components\Categories' => 'blogCategories',
-            'Winter\Blog\Components\RssFeed'    => 'blogRssFeed'
+            \Winter\Blog\Components\Post::class       => 'blogPost',
+            \Winter\Blog\Components\Posts::class      => 'blogPosts',
+            \Winter\Blog\Components\Categories::class => 'blogCategories',
+            \Winter\Blog\Components\RssFeed::class    => 'blogRssFeed'
         ];
     }
 
-    public function registerPermissions()
+    /**
+     * Registers the permissions provided by this plugin.
+     */
+    public function registerPermissions(): array
     {
         return [
             'winter.blog.manage_settings' => [
@@ -68,6 +79,9 @@ class Plugin extends PluginBase
         ];
     }
 
+    /**
+     * Registers the backend navigation items provided by this plugin.
+     */
     public function registerNavigation()
     {
         return [
@@ -103,6 +117,9 @@ class Plugin extends PluginBase
         ];
     }
 
+    /**
+     * Registers the settings provided by this plugin.
+     */
     public function registerSettings()
     {
         return [
@@ -143,7 +160,18 @@ class Plugin extends PluginBase
         });
     }
 
+    /**
+     * Boot method, called when the plugin is first booted.
+     */
     public function boot()
+    {
+        $this->extendWinterPagesPlugin();
+    }
+
+    /**
+     * Extends the Winter.Pages plugin
+     */
+    protected function extendWinterPagesPlugin(): void
     {
         /*
          * Register menu items for the Winter.Pages plugin

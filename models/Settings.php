@@ -1,4 +1,6 @@
-<?php namespace Winter\Blog\Models;
+<?php
+
+namespace Winter\Blog\Models;
 
 use Winter\Storm\Database\Model;
 

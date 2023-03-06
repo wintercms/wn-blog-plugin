@@ -1,4 +1,6 @@
-<?php namespace Winter\Blog\Classes;
+<?php
+
+namespace Winter\Blog\Classes;
 
 /**
  * Blog Markdown tag processor.

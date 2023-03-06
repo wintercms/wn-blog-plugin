@@ -1,7 +1,8 @@
-<?php namespace Winter\Blog\Models;
+<?php
+
+namespace Winter\Blog\Models;
 
 use Backend\Models\ExportModel;
-use ApplicationException;
 
 /**
  * Post Export Model
