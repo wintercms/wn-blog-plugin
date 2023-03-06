@@ -400,6 +400,6 @@ class Category extends Model
 
         $paramName = substr(trim($matches[1]), 1);
 
-        return [ $paramName => $category->slug ];
+        return [$paramName => $category->slug];
     }
 }
