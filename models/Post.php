@@ -720,7 +720,7 @@ class Post extends Model
         $params = [
             'id'   => $this->id,
             'slug' => $this->slug,
-            'category' => $firstCategory ? $firstCategory->slug : null;
+            'category' => $firstCategory ? $firstCategory->slug : null,
         ];
 
         // Expose published year, month and day as URL parameters.
