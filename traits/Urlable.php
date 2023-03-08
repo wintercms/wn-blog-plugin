@@ -7,7 +7,8 @@ use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
 use Url;
 use Winter\Storm\Router\Router;
-use Winter\Translate\Classes\Locale;
+use Winter\Translate\Classes\Translator;
+use Winter\Translate\Models\Locale;
 
 /**
  * Urlable trait
