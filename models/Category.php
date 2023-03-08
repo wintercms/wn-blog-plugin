@@ -7,14 +7,14 @@ use Cms\Classes\Theme;
 use Model;
 use Str;
 use Url;
-use Winter\Storm\Router\Router;
-use Winter\Translate\Classes\Translator;
-use Winter\Translate\Models\Locale;
+use Winter\Pages\Classes\MenuItem;
+use Winter\Sitemap\Classes\DefinitionItem;
 
 class Category extends Model
 {
-    use \Winter\Storm\Database\Traits\Validation;
+    use \Winter\Blog\Traits\Urlable;
     use \Winter\Storm\Database\Traits\NestedTree;
+    use \Winter\Storm\Database\Traits\Validation;
 
     public $table = 'winter_blog_categories';
     public $implement = ['@Winter.Translate.Behaviors.TranslatableModel'];
@@ -34,21 +34,23 @@ class Category extends Model
     public $translatable = [
         'name',
         'description',
-        ['slug', 'index' => true]
+        ['slug', 'index' => true],
     ];
 
     protected $guarded = [];
 
     public $belongsToMany = [
-        'posts' => ['Winter\Blog\Models\Post',
+        'posts' => [
+            Post::class,
             'table' => 'winter_blog_posts_categories',
             'order' => 'published_at desc',
-            'scope' => 'isPublished'
+            'scope' => 'isPublished',
         ],
-        'posts_count' => ['Winter\Blog\Models\Post',
+        'posts_count' => [
+            Post::class,
             'table' => 'winter_blog_posts_categories',
             'scope' => 'isPublished',
-            'count' => true
+            'count' => true,
         ]
     ];
 
@@ -65,16 +67,18 @@ class Category extends Model
         $this->posts()->detach();
     }
 
-    public function getPostCountAttribute()
+    /**
+     * Returns the number of posts in this category
+     */
+    public function getPostCountAttribute(): int
     {
         return optional($this->posts_count->first())->count ?? 0;
     }
 
     /**
-     * Count posts in this and nested categories
-     * @return int
+     * Returns the number of posts in this and nested categories
      */
-    public function getNestedPostCount()
+    public function getNestedPostCount(): int
     {
         return $this->post_count + $this->children->sum(function ($category) {
             return $category->getNestedPostCount();
@@ -113,10 +117,8 @@ class Category extends Model
      *   Optional, false if omitted.
      * - cmsPages - a list of CMS pages (objects of the Cms\Classes\Page class), if the item type requires a CMS page reference to
      *   resolve the item URL.
-     * @param string $type Specifies the menu item type
-     * @return array Returns an array
      */
-    public static function getMenuTypeInfo($type)
+    public static function getMenuTypeInfo(string $type): array
     {
         $result = [];
 
@@ -198,13 +200,10 @@ class Category extends Model
      *   return all available records.
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
-     * @param \Winter\Pages\Classes\MenuItem $item Specifies the menu item.
-     * @param \Cms\Classes\Theme $theme Specifies the current theme.
-     * @param string $url Specifies the current page URL, normalized, in lower case
-     * The URL is specified relative to the website root, it includes the subdirectory name, if any.
-     * @return mixed Returns an array. Returns null if the item cannot be resolved.
+     *
+     * @param DefinitionItem|MenuItem $item Specifies the menu item.
      */
-    public static function resolveMenuItem($item, $url, $theme)
+    public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
         $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];

@@ -5,7 +5,6 @@ namespace Winter\Blog\Models;
 use Backend\Models\User;
 use BackendAuth;
 use Carbon\Carbon;
-use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
 use Html;
@@ -13,19 +12,21 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Lang;
 use Markdown;
 use Model;
+use System\Models\File;
 use Url;
 use ValidationException;
 use Winter\Blog\Classes\TagProcessor;
+use Winter\Pages\Classes\MenuItem;
+use Winter\Sitemap\Classes\DefinitionItem;
 use Winter\Storm\Database\NestedTreeScope;
 use Winter\Storm\Router\Router;
-use Winter\Translate\Classes\Translator;
-use Winter\Translate\Models\Locale;
 
 /**
  * Class Post
  */
 class Post extends Model
 {
+    use \Winter\Blog\Traits\Urlable;
     use \Winter\Storm\Database\Traits\Validation;
 
     public $table = 'winter_blog_posts';
@@ -82,27 +83,32 @@ class Post extends Model
         'updated_at desc'   => 'winter.blog::lang.sorting.updated_desc',
         'published_at asc'  => 'winter.blog::lang.sorting.published_asc',
         'published_at desc' => 'winter.blog::lang.sorting.published_desc',
-        'random'            => 'winter.blog::lang.sorting.random'
+        'random'            => 'winter.blog::lang.sorting.random',
     ];
 
     /*
      * Relations
      */
     public $belongsTo = [
-        'user' => ['Backend\Models\User']
+        'user' => [User::class],
     ];
 
     public $belongsToMany = [
         'categories' => [
-            'Winter\Blog\Models\Category',
+            Category::class,
             'table' => 'winter_blog_posts_categories',
-            'order' => 'name'
+            'order' => 'name',
         ]
     ];
 
     public $attachMany = [
-        'featured_images' => ['System\Models\File', 'order' => 'sort_order'],
-        'content_images'  => ['System\Models\File']
+        'featured_images' => [
+            File::class,
+            'order' => 'sort_order',
+        ],
+        'content_images'  => [
+            File::class,
+        ],
     ];
 
     /**
@@ -407,6 +413,63 @@ class Post extends Model
         return Html::limit($this->content_html, 600);
     }
 
+    /**
+     * Get the list of pages that can be used to display the post
+     */
+    public function getCmsPageOptions(): array
+    {
+        $result = [];
+
+        $theme = Theme::getActiveTheme();
+        $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
+            if (!preg_match('/{{\s*:/', $component->property('slug'))) {
+                return false;
+            }
+            return true;
+        });
+
+        foreach ($pages as $page) {
+            $result[$page->baseFileName] = $page->title;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Accessor for the $post->title attribute
+     */
+    public function getTitleAttribute($value)
+    {
+        if (!$this->is_published && !\App::runningInBackend()) {
+            $value = '🔒 ' . $value;
+        }
+        return $value;
+    }
+
+    /**
+     * Accessor for the $post->is_published attribute
+     */
+    public function getIsPublishedAttribute(): bool
+    {
+        return $this->published && $this->published_at && $this->published_at <= Carbon::now();
+    }
+
+    /**
+     * Accessor for the $post->preview_page attribute
+     */
+    public function getPreviewPageAttribute(): ?string
+    {
+        $page = null;
+
+        if (!empty($this->metadata['preview_page'])) {
+            $page = $this->metadata['preview_page'];
+        } else {
+            $page = array_first(array_keys($this->getCmsPageOptions()));
+        }
+
+        return $page;
+    }
+
     //
     // Next / Previous
     //
@@ -487,18 +550,15 @@ class Post extends Model
      *   Optional, false if omitted.
      * - cmsPages - a list of CMS pages (objects of the Cms\Classes\Page class), if the item type requires a CMS page reference to
      *   resolve the item URL.
-     *
-     * @param string $type Specifies the menu item type
-     * @return array Returns an array
      */
-    public static function getMenuTypeInfo($type)
+    public static function getMenuTypeInfo(string $type): array
     {
         $result = [];
 
         if ($type == 'blog-post') {
             $references = [];
 
-            $posts = self::orderBy('title')->get();
+            $posts = self::select('id', 'title')->orderBy('title')->get();
             foreach ($posts as $post) {
                 $references[$post->id] = $post->title;
             }
@@ -560,63 +620,6 @@ class Post extends Model
     }
 
     /**
-     * Get the list of pages that can be used to display the post
-     */
-    public function getCmsPageOptions(): array
-    {
-        $result = [];
-
-        $theme = Theme::getActiveTheme();
-        $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
-            if (!preg_match('/{{\s*:/', $component->property('slug'))) {
-                return false;
-            }
-            return true;
-        });
-
-        foreach ($pages as $page) {
-            $result[$page->baseFileName] = $page->title;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Accessor for the $post->title attribute
-     */
-    public function getTitleAttribute($value)
-    {
-        if (!$this->is_published && !\App::runningInBackend()) {
-            $value = '🔒 ' . $value;
-        }
-        return $value;
-    }
-
-    /**
-     * Accessor for the $post->is_published attribute
-     */
-    public function getIsPublishedAttribute(): bool
-    {
-        return $this->published && $this->published_at && $this->published_at <= Carbon::now();
-    }
-
-    /**
-     * Accessor for the $post->preview_page attribute
-     */
-    public function getPreviewPageAttribute(): ?string
-    {
-        $page = null;
-
-        if (!empty($this->metadata['preview_page'])) {
-            $page = $this->metadata['preview_page'];
-        } else {
-            $page = array_first(array_keys($this->getCmsPageOptions()));
-        }
-
-        return $page;
-    }
-
-    /**
      * Handler for the pages.menuitem.resolveItem event.
      * Returns information about a menu item. The result is an array
      * with the following keys:
@@ -628,13 +631,9 @@ class Post extends Model
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
      *
-     * @param \Winter\Pages\Classes\MenuItem $item Specifies the menu item.
-     * @param \Cms\Classes\Theme $theme Specifies the current theme.
-     * @param string $url Specifies the current page URL, normalized, in lower case
-     * The URL is specified relative to the website root, it includes the subdirectory name, if any.
-     * @return mixed Returns an array. Returns null if the item cannot be resolved.
+     * @param DefinitionItem|MenuItem $item Specifies the menu item.
      */
-    public static function resolveMenuItem($item, $url, $theme)
+    public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
         $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];
