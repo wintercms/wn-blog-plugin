@@ -86,24 +86,6 @@ class Category extends Model
     }
 
     /**
-     * Sets the "url" attribute with a URL to this object
-     *
-     * @param string $pageName
-     * @param Cms\Classes\Controller $controller
-     *
-     * @return string
-     */
-    public function setUrl($pageName, $controller)
-    {
-        $params = [
-            'id'   => $this->id,
-            'slug' => $this->slug
-        ];
-
-        return $this->url = $controller->pageUrl($pageName, $params, false);
-    }
-
-    /**
      * Handler for the pages.menuitem.getTypeInfo event.
      * Returns a menu item type information. The type information is returned as array
      * with the following elements:
@@ -206,76 +188,63 @@ class Category extends Model
     public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
-        $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];
-        $defaultLocale = Locale::getDefault();
+
+        // Items must have a reference to a CMS page
+        if (!$item->cmsPage) {
+            return null;
+        }
+        $cmsPage = CmsPage::loadCached($theme, $item->cmsPage);
+        if (!$cmsPage) {
+            return null;
+        }
 
         if ($item->type == 'blog-category') {
-            if (!$item->reference || !$item->cmsPage) {
-                return;
+            // Attempt to get the category record for a specific category menu item
+            if (!$item->reference) {
+                return null;
             }
-
             $category = self::find($item->reference);
             if (!$category) {
-                return;
+                return null;
             }
 
-            $pageUrl = self::getCategoryPageUrl($item->cmsPage, $category, $theme);
+            $pageUrl = $category->getUrl($cmsPage);
             if (!$pageUrl) {
-                return;
+                return null;
             }
-
             $pageUrl = Url::to($pageUrl);
 
-            $result = [];
-            $result['url'] = $pageUrl;
-            $result['isActive'] = $pageUrl == $url;
-            $result['mtime'] = $category->updated_at;
+            $result = [
+                'url' => $pageUrl,
+                'isActive' => $pageUrl === $currentUrl,
+                'mtime' => $category->updated_at,
+            ];
 
-            if ($locales) {
-                $alternateLinks = [];
-                foreach ($locales as $locale => $name) {
-                    if ($locale === $defaultLocale->code) {
-                        $pageUrl = $result['url'];
-                    } else {
-                        $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
-                    }
-                    if ($pageUrl) {
-                        $alternateLinks[$locale] = Url::to($pageUrl);
-                    }
-                }
-                if ($alternateLinks) {
-                    $result['alternateLinks'] = $alternateLinks;
-                }
+            $localizedUrls = $category->getLocalizedUrls($cmsPage);
+            if (count($localizedUrls) > 1) {
+                $result['alternateLinks'] = $localizedUrls;
             }
 
             if ($item->nesting) {
                 $categories = $category->getNested();
-                $iterator = function($categories) use (&$iterator, &$item, &$theme, $url, $locales) {
+                $iterator = function($categories) use (&$iterator, &$item, &$theme, $currentUrl) {
                     $branch = [];
 
                     foreach ($categories as $category) {
+                        $cmsPage = CmsPage::loadCached($theme, $item->cmsPage);
+                        if (!$cmsPage) {
+                            continue;
+                        }
 
                         $branchItem = [];
-                        $branchItem['url'] = self::getCategoryPageUrl($item->cmsPage, $category, $theme);
-                        $branchItem['isActive'] = $branchItem['url'] == $url;
+                        $branchItem['url'] = $category->getUrl($cmsPage);
+                        $branchItem['isActive'] = $branchItem['url'] === $currentUrl;
                         $branchItem['title'] = $category->name;
                         $branchItem['mtime'] = $category->updated_at;
 
-                        if ($locales) {
-                            $alternateLinks = [];
-                            foreach ($locales as $locale => $name) {
-                                if ($locale === $defaultLocale->code) {
-                                    $pageUrl = $branchItem['url'];
-                                } else {
-                                    $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
-                                }
-                                if ($pageUrl) {
-                                    $alternateLinks[$locale] = Url::to($pageUrl);
-                                }
-                            }
-                            if ($alternateLinks) {
-                                $branchItem['alternateLinks'] = $alternateLinks;
-                            }
+                        $localizedUrls = $category->getLocalizedUrls($cmsPage);
+                        if (count($localizedUrls) > 1) {
+                            $branchItem['alternateLinks'] = $localizedUrls;
                         }
 
                         if ($category->children) {
@@ -300,27 +269,15 @@ class Category extends Model
             foreach ($categories as $category) {
                 $categoryItem = [
                     'title' => $category->name,
-                    'url'   => self::getCategoryPageUrl($item->cmsPage, $category, $theme),
+                    'url'   => Url::to($category->getUrl($cmsPage)),
                     'mtime' => $category->updated_at
                 ];
 
-                $categoryItem['isActive'] = $categoryItem['url'] == $url;
+                $categoryItem['isActive'] = $categoryItem['url'] === $currentUrl;
 
-                if ($locales) {
-                    $alternateLinks = [];
-                    foreach ($locales as $locale => $name) {
-                        if ($locale === $defaultLocale->code) {
-                            $pageUrl = $categoryItem['url'];
-                        } else {
-                            $pageUrl = static::getMLCategoryPageUrl($item->cmsPage, $category, $theme, $locale);
-                        }
-                        if ($pageUrl) {
-                            $alternateLinks[$locale] = Url::to($pageUrl);
-                        }
-                    }
-                    if ($alternateLinks) {
-                        $categoryItem['alternateLinks'] = $alternateLinks;
-                    }
+                $localizedUrls = $category->getLocalizedUrls($cmsPage);
+                if (count($localizedUrls) > 1) {
+                    $categoryItem['alternateLinks'] = $localizedUrls;
                 }
 
                 $result['items'][] = $categoryItem;
@@ -331,76 +288,20 @@ class Category extends Model
     }
 
     /**
-     * Returns URL of a category page.
-     *
-     * @param $pageCode
-     * @param $category
-     * @param $theme
+     * Get the URL parameters for this record, optionally using the provided CMS page.
      */
-    protected static function getCategoryPageUrl($pageCode, $category, $theme)
+    public function getUrlParams(?CmsPage $page = null): array
     {
-        $page = CmsPage::loadCached($theme, $pageCode);
-        if (!$page) {
-            return;
+        $params = [
+            'id'   => $this->id,
+            'slug' => $this->slug,
+        ];
+
+        $paramName = $this->getParamNameFromComponentProperty($page, 'blogPosts', 'categoryFilter');
+        if ($paramName) {
+            $params[$paramName] = $this->slug;
         }
 
-        $params = self::getParams($page, $category);
-        if (!$params) {
-            return;
-        }
-
-        $url = CmsPage::url($page->getBaseFileName(), $params);
-
-        return $url;
-    }
-
-    /**
-     * Returns URL of a post page for a locale.
-     *
-     * @param $pageCode
-     * @param $post
-     * @param $theme
-     * @param $locale
-     */
-    protected static function getMLCategoryPageUrl($pageCode, $category, $theme, $locale)
-    {
-        $page = CmsPage::loadCached($theme, $pageCode);
-        if (!$page) {
-            return;
-        }
-
-        $translator = Translator::instance();
-        $page->rewriteTranslatablePageUrl($locale);
-
-        $category->translateContext($locale);
-
-        $params = self::getParams($page, $category);
-        if (!$params) {
-            return;
-        }
-
-        $url = $translator->getPathInLocale($page->url, $locale);
-
-        return (new Router)->urlFromPattern($url, $params);
-    }
-
-    protected static function getParams($page, $category)
-    {
-        $properties = $page->getComponentProperties('blogPosts');
-        if (!isset($properties['categoryFilter'])) {
-            return;
-        }
-
-        /*
-         * Extract the routing parameter name from the category filter
-         * eg: {{ :someRouteParam }}
-         */
-        if (!preg_match('/^\{\{([^\}]+)\}\}$/', $properties['categoryFilter'], $matches)) {
-            return;
-        }
-
-        $paramName = substr(trim($matches[1]), 1);
-
-        return [$paramName => $category->slug];
+        return $params;
     }
 }

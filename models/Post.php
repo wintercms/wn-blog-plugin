@@ -173,35 +173,6 @@ class Post extends Model
     }
 
     /**
-     * Sets the "url" attribute with a URL to this object.
-     * @param string $pageName
-     * @param Controller $controller
-     * @param array $params Override request URL parameters
-     *
-     * @return string
-     */
-    public function setUrl($pageName, $controller, $params = [])
-    {
-        $params = array_merge([
-            'id'   => $this->id,
-            'slug' => $this->slug,
-        ], $params);
-
-        if (empty($params['category'])) {
-            $params['category'] = $this->categories->count() ? $this->categories->first()->slug : null;
-        }
-
-        // Expose published year, month and day as URL parameters.
-        if ($this->published) {
-            $params['year']  = $this->published_at->format('Y');
-            $params['month'] = $this->published_at->format('m');
-            $params['day']   = $this->published_at->format('d');
-        }
-
-        return $this->url = $controller->pageUrl($pageName, $params);
-    }
-
-    /**
      * Used to test if a certain user has permission to edit post,
      * returns TRUE if the user is the owner or has other posts access.
      */
@@ -636,47 +607,41 @@ class Post extends Model
     public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
-        $locales = class_exists(Locale::class) ? Locale::listEnabled() : [];
-        $defaultLocale = Locale::getDefault();
+
+        // Items must have a reference to a CMS page
+        if (!$item->cmsPage) {
+            return null;
+        }
+        $cmsPage = CmsPage::loadCached($theme, $item->cmsPage);
+        if (!$cmsPage) {
+            return null;
+        }
 
         if ($item->type == 'blog-post') {
-            if (!$item->reference || !$item->cmsPage) {
-                return;
+            // Attempt to get the post record for a specific post menu item
+            if (!$item->reference) {
+                return null;
             }
-
             $post = self::find($item->reference);
             if (!$post) {
-                return;
+                return null;
             }
 
-            $pageUrl = self::getPostPageUrl($item->cmsPage, $post, $theme);
+            $pageUrl = $post->getUrl($cmsPage);
             if (!$pageUrl) {
-                return;
+                return null;
             }
-
             $pageUrl = Url::to($pageUrl);
 
             $result = [
                 'url' => $pageUrl,
-                'isActive' => $pageUrl == $url,
+                'isActive' => $pageUrl === $currentUrl,
                 'mtime' => $post->updated_at,
             ];
 
-            if ($locales) {
-                $alternateLinks = [];
-                foreach ($locales as $locale => $name) {
-                    if ($locale === $defaultLocale->code) {
-                        $pageUrl = $result['url'];
-                    } else {
-                        $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
-                    }
-                    if ($pageUrl) {
-                        $alternateLinks[$locale] = Url::to($pageUrl);
-                    }
-                }
-                if ($alternateLinks) {
-                    $result['alternateLinks'] = $alternateLinks;
-                }
+            $localizedUrls = $post->getLocalizedUrls($cmsPage);
+            if (count($localizedUrls) > 1) {
+                $result['alternateLinks'] = $localizedUrls;
             }
 
         } elseif ($item->type == 'all-blog-posts') {
@@ -684,55 +649,39 @@ class Post extends Model
                 'items' => []
             ];
 
-            $posts = self::isPublished()
-            ->orderBy('title')
-            ->get();
-
+            $posts = self::isPublished()->orderBy('title')->get();
             foreach ($posts as $post) {
                 $postItem = [
                     'title' => $post->title,
-                    'url'   => self::getPostPageUrl($item->cmsPage, $post, $theme),
+                    'url'   => Url::to($post->getUrl($cmsPage)),
                     'mtime' => $post->updated_at
                 ];
 
-                $postItem['isActive'] = $postItem['url'] == $url;
+                $postItem['isActive'] = $postItem['url'] === $currentUrl;
 
-                if ($locales) {
-                    $alternateLinks = [];
-                    foreach ($locales as $locale => $name) {
-                        if ($locale === $defaultLocale->code) {
-                            $pageUrl = $postItem['url'];
-                        } else {
-                            $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
-                        }
-                        if ($pageUrl) {
-                            $alternateLinks[$locale] = Url::to($pageUrl);
-                        }
-                    }
-                    if ($alternateLinks) {
-                        $postItem['alternateLinks'] = $alternateLinks;
-                    }
+                $localizedUrls = $post->getLocalizedUrls($cmsPage);
+                if (count($localizedUrls) > 1) {
+                    $postItem['alternateLinks'] = $localizedUrls;
                 }
 
                 $result['items'][] = $postItem;
             }
 
         } elseif ($item->type == 'category-blog-posts') {
-            if (!$item->reference || !$item->cmsPage) {
-                return;
+            if (!$item->reference) {
+                return null;
             }
 
             $category = Category::find($item->reference);
             if (!$category) {
-                return;
+                return null;
             }
 
             $result = [
                 'items' => []
             ];
 
-            $query = self::isPublished()
-            ->orderBy('title');
+            $query = self::isPublished()->orderBy('title');
 
             $categories = $category->getAllChildrenAndSelf()->lists('id');
             $query->whereHas('categories', function($q) use ($categories) {
@@ -744,28 +693,17 @@ class Post extends Model
             foreach ($posts as $post) {
                 $postItem = [
                     'title' => $post->title,
-                    'url'   => self::getPostPageUrl($item->cmsPage, $post, $theme),
+                    'url'   => Url::to($post->getUrl($cmsPage)),
                     'mtime' => $post->updated_at
                 ];
 
-                $postItem['isActive'] = $postItem['url'] == $url;
+                $postItem['isActive'] = $postItem['url'] === $currentUrl;
 
-                if ($locales) {
-                    $alternateLinks = [];
-                    foreach ($locales as $locale => $name) {
-                        if ($locale === $defaultLocale->code) {
-                            $pageUrl = $postItem['url'];
-                        } else {
-                            $pageUrl = static::getMLPostPageUrl($item->cmsPage, $post, $theme, $locale);
-                        }
-                        if ($pageUrl) {
-                            $alternateLinks[$locale] = Url::to($pageUrl);
-                        }
-                    }
-                    if ($alternateLinks) {
-                        $postItem['alternateLinks'] = $alternateLinks;
-                    }
+                $localizedUrls = $post->getLocalizedUrls($cmsPage);
+                if (count($localizedUrls) > 1) {
+                    $postItem['alternateLinks'] = $localizedUrls;
                 }
+
                 $result['items'][] = $postItem;
             }
         }
@@ -774,80 +712,29 @@ class Post extends Model
     }
 
     /**
-     * Returns URL of a post page.
-     *
-     * @param $pageCode
-     * @param $post
-     * @param $theme
+     * Get the URL parameters for this record, optionally using the provided CMS page.
      */
-    protected static function getPostPageUrl($pageCode, $post, $theme)
+    public function getUrlParams(?CmsPage $page = null): array
     {
-        $page = CmsPage::loadCached($theme, $pageCode);
-        if (!$page) {
-            return;
-        }
-
-        $params = self::getParams($page, $post);
-        if (!$params) {
-            return;
-        }
-
-        $url = CmsPage::url($page->getBaseFileName(), $params);
-
-        return $url;
-    }
-
-    /**
-     * Returns URL of a post page for a locale.
-     *
-     * @param $pageCode
-     * @param $post
-     * @param $theme
-     * @param $locale
-     */
-    protected static function getMLPostPageUrl($pageCode, $post, $theme, $locale)
-    {
-        $page = CmsPage::loadCached($theme, $pageCode);
-        if (!$page) {
-            return;
-        }
-
-        $translator = Translator::instance();
-        $page->rewriteTranslatablePageUrl($locale);
-
-        $post->translateContext($locale);
-
-        $params = self::getParams($page, $post);
-        if (!$params) {
-            return;
-        }
-
-        $url = $translator->getPathInLocale($page->url, $locale);
-
-        return (new Router)->urlFromPattern($url, $params);
-    }
-
-    protected static function getParams($page, $post)
-    {
-        $properties = $page->getComponentProperties('blogPost');
-        if (!isset($properties['slug'])) {
-            return;
-        }
-
-        /*
-         * Extract the routing parameter name from the category filter
-         * eg: {{ :someRouteParam }}
-         */
-        if (!preg_match('/^\{\{([^\}]+)\}\}$/', $properties['slug'], $matches)) {
-            return;
-        }
-
-        $paramName = substr(trim($matches[1]), 1);
-        return [
-            $paramName => $post->slug,
-            'year'  => $post->published_at->format('Y'),
-            'month' => $post->published_at->format('m'),
-            'day'   => $post->published_at->format('d')
+        $firstCategory = $this->categories->first();
+        $params = [
+            'id'   => $this->id,
+            'slug' => $this->slug,
+            'category' => $firstCategory ? $firstCategory->slug : null;
         ];
+
+        // Expose published year, month and day as URL parameters.
+        if ($this->published) {
+            $params['year']  = $this->published_at->format('Y');
+            $params['month'] = $this->published_at->format('m');
+            $params['day']   = $this->published_at->format('d');
+        }
+
+        $paramName = $this->getParamNameFromComponentProperty($page, 'blogPost', 'slug');
+        if ($paramName) {
+            $params[$paramName] = $this->slug;
+        }
+
+        return $params;
     }
 }
