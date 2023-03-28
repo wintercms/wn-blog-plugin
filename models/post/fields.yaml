@@ -22,15 +22,15 @@ fields:
         path: post_toolbar
         cssClass: collapse-visible
 
-secondaryTabs:
+tabs:
     stretch: true
-
+    cssClass: master-area
+    paneCssClass:
+        0: pane-compact
     icons:
         winter.blog::lang.post.tab_edit: icon-pencil
         winter.blog::lang.post.tab_categories: icon-tags
         winter.blog::lang.post.tab_manage: icon-cog
-
-
     fields:
         content:
             tab: winter.blog::lang.post.tab_edit
