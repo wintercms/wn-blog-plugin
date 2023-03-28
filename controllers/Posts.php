@@ -77,12 +77,22 @@ class Posts extends Controller
         }
     }
 
+    public function formExtendModel($model)
+    {
+        if ($model->exists && !empty($model->slug) && $model->preview_page) {
+            $model->setUrl($model->preview_page, (new \Cms\Classes\Controller()));
+        }
+    }
+
     public function formExtendFieldsBefore($widget)
     {
         if (!$model = $widget->model) {
             return;
         }
 
+        // @TODO: This shouldn't engage when the translate plugin is present but disabled
+        // Fix can be more restrictive checks here or finishing changes to the class loader so that
+        // disabled plugins cannot even have their classes loaded.
         if ($model instanceof Post && $model->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')) {
             $widget->secondaryTabs['fields']['content']['type'] = 'Winter\Blog\FormWidgets\MLBlogMarkdown';
         }

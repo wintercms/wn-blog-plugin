@@ -34,6 +34,7 @@ return [
         'filter_published' => 'Published',
         'filter_date' => 'Date',
         'new_post' => 'New post',
+        'view_post' => 'View post',
         'export_post' => 'Export posts',
         'import_post' => 'Import posts'
     ],
@@ -52,6 +53,8 @@ return [
         'updated_date' => 'Updated date',
         'published' => 'Published',
         'published_by' => 'Published by',
+        'preview_page' => 'Preview Page',
+        'preview_page_comment' => 'The page that should be used when previewing the post',
         'current_user' => 'Current user',
         'published_date' => 'Published date',
         'published_validation' => 'Please specify the published date',

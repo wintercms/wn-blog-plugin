@@ -1,19 +1,20 @@
 <?php namespace Winter\Blog\Models;
 
-use Url;
-use Html;
-use Lang;
-use Model;
-use Markdown;
+use Backend\Models\User;
 use BackendAuth;
 use Carbon\Carbon;
-use Backend\Models\User;
+use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
-use Cms\Classes\Controller;
-use Winter\Storm\Database\NestedTreeScope;
-use Winter\Blog\Classes\TagProcessor;
+use Html;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Lang;
+use Markdown;
+use Model;
+use Url;
 use ValidationException;
+use Winter\Blog\Classes\TagProcessor;
+use Winter\Storm\Database\NestedTreeScope;
 
 /**
  * Class Post
@@ -46,6 +47,11 @@ class Post extends Model
         'metadata',
         ['slug', 'index' => true]
     ];
+
+    /**
+     * @var array Attributes that should be purged prior to saving.
+     */
+    protected $purgeable = ['url'];
 
     /**
      * @var array Attributes to be stored as JSON
@@ -102,6 +108,26 @@ class Post extends Model
     public $preview = null;
 
     /**
+     * {@inheritDoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        // Add the content processor for the blog as a local event so that it can be
+        // bypassed by third parties if required.
+        $this->bindEvent('model.beforeSave', function () {
+            if (empty($this->user)) {
+                $user = BackendAuth::getUser();
+                if (!is_null($user)) {
+                    $this->user = $user->id;
+                }
+            }
+            $this->content_html = static::formatHtml($this->content);
+        });
+
+        parent::__construct($attributes);
+    }
+
+    /**
      * Limit visibility of the published-button
      *
      * @param       $fields
@@ -133,17 +159,6 @@ class Post extends Model
                'published_at' => Lang::get('winter.blog::lang.post.published_validation')
             ]);
         }
-    }
-
-    public function beforeSave()
-    {
-        if (empty($this->user)) {
-            $user = BackendAuth::getUser();
-            if (!is_null($user)) {
-                $this->user = $user->id;
-            }
-        }
-        $this->content_html = self::formatHtml($this->content);
     }
 
     /**
@@ -178,12 +193,10 @@ class Post extends Model
     /**
      * Used to test if a certain user has permission to edit post,
      * returns TRUE if the user is the owner or has other posts access.
-     * @param  User $user
-     * @return bool
      */
-    public function canEdit(User $user)
+    public function canEdit(User $user): bool
     {
-        return ($this->user_id == $user->id) || $user->hasAnyAccess(['winter.blog.access_other_posts']);
+        return ($this->user_id === $user->id) || $user->hasAnyAccess(['winter.blog.access_other_posts']);
     }
 
     public static function formatHtml($input, $preview = false)
@@ -221,12 +234,8 @@ class Post extends Model
 
     /**
      * Lists posts for the frontend
-     *
-     * @param        $query
-     * @param  array $options Display options
-     * @return Post
      */
-    public function scopeListFrontEnd($query, $options)
+    public function scopeListFrontEnd($query, array $options = []): LengthAwarePaginator
     {
         /*
          * Default options
@@ -543,6 +552,63 @@ class Post extends Model
         }
 
         return $result;
+    }
+
+    /**
+     * Get the list of pages that can be used to display the post
+     */
+    public function getCmsPageOptions(): array
+    {
+        $result = [];
+
+        $theme = Theme::getActiveTheme();
+        $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
+            if (!preg_match('/{{\s*:/', $component->property('slug'))) {
+                return false;
+            }
+            return true;
+        });
+
+        foreach ($pages as $page) {
+            $result[$page->baseFileName] = $page->title;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Accessor for the $post->title attribute
+     */
+    public function getTitleAttribute($value)
+    {
+        if (!$this->is_published && !\App::runningInBackend()) {
+            $value = '🔒 ' . $value;
+        }
+        return $value;
+    }
+
+    /**
+     * Accessor for the $post->is_published attribute
+     */
+    public function getIsPublishedAttribute(): bool
+    {
+        return $this->published && $this->published_at && $this->published_at <= Carbon::now();
+    }
+
+    /**
+     * Accessor for the $post->preview_page attribute
+     */
+    public function getPreviewPageAttribute(): ?string
+    {
+        $page = null;
+
+        if (!empty($this->metadata['preview_page'])) {
+            $page = $this->metadata['preview_page'];
+        } else {
+            $page = array_first(array_keys($this->getCmsPageOptions()));
+        }
+
+        return $page;
     }
 
     /**

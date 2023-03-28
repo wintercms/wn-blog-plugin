@@ -68,3 +68,11 @@
     - v2.0.1/rename_indexes.php
     - v2.0.1/fix_translate_records.php
 "2.0.2": Fixes issue where images could not be uploaded directly to the Markdown editor.
+"2.1.0":
+    - "Added Vietnamese translation"
+    - "Added support for default Editor & Developer roles"
+    - "Added button to go directly to the frontend preview page for a post from the backend"
+    - "Added 🔒 icon to unpublished post titles in the frontend to identify when a post isn't visible to the public"
+    - "Added is_published attribute accessor on the Post model"
+    - "Added support for paginating the RSSFeed component"
+"2.1.1": "Bumped version of RainLab.Blog replaced by Winter.Blog to v1.7."
