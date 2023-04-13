@@ -78,7 +78,7 @@ trait Urlable
     {
         $localizedUrls = [];
         $enabledLocales = class_exists(Locale::class) ? Locale::listEnabled() : [];
-        $defaultLocale = class_exists(Locale::class) ? Locale::getDefault() : App::getLocale();
+        $defaultLocale = class_exists(Translator::class) ? Translator::instance()->getDefaultLocale() : App::getLocale();
 
         foreach ($enabledLocales as $locale => $name) {
             if ($locale === $defaultLocale) {
