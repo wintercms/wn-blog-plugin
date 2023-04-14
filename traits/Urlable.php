@@ -59,9 +59,10 @@ trait Urlable
     public function getLocalizedUrl(string $locale, ?CmsPage $page = null): ?string
     {
         $translator = Translator::instance();
-        $translator->setLocale($locale, false);
 
-        $localPage = $page ? clone $page : null;
+        // cloning the $page creates random issues with the translation plugin
+        #$localPage = $page ? clone $page : null;
+        $localPage = $page;
         $localRecord = clone $this;
 
         $localPage->rewriteTranslatablePageUrl($locale);
