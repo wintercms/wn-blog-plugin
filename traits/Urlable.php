@@ -59,6 +59,8 @@ trait Urlable
     public function getLocalizedUrl(string $locale, ?CmsPage $page = null): ?string
     {
         $translator = Translator::instance();
+        $translator->setLocale($locale, false);
+
         $localPage = $page ? clone $page : null;
         $localRecord = clone $this;
 
@@ -78,7 +80,7 @@ trait Urlable
     {
         $localizedUrls = [];
         $enabledLocales = class_exists(Locale::class) ? Locale::listEnabled() : [];
-        $defaultLocale = class_exists(Translator::class) ? Translator::instance()->getDefaultLocale() : App::getLocale();
+        $defaultLocale = class_exists(Locale::class) ? Locale::getDefault()->code : App::getLocale();
 
         foreach ($enabledLocales as $locale => $name) {
             if ($locale === $defaultLocale) {
