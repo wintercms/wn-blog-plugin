@@ -1,29 +1,30 @@
-<?php namespace Winter\Blog\Components;
+<?php
 
-use Db;
-use Carbon\Carbon;
-use Cms\Classes\Page;
+namespace Winter\Blog\Components;
+
 use Cms\Classes\ComponentBase;
+use Cms\Classes\Page;
+use Illuminate\Support\Collection;
 use Winter\Blog\Models\Category as BlogCategory;
 
 class Categories extends ComponentBase
 {
     /**
-     * @var Collection A collection of categories to display
+     * A collection of categories to display
      */
-    public $categories;
+    public ?Collection $categories = null;
 
     /**
-     * @var string Reference to the page name for linking to categories.
+     * Reference to the page name for linking to categories.
      */
-    public $categoryPage;
+    public string $categoryPage = '';
 
     /**
-     * @var string Reference to the current category slug.
+     * Reference to the current category slug.
      */
-    public $currentCategorySlug;
+    public string $currentCategorySlug = '';
 
-    public function componentDetails()
+    public function componentDetails(): array
     {
         return [
             'name'        => 'winter.blog::lang.settings.category_title',
@@ -31,7 +32,7 @@ class Categories extends ComponentBase
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'slug' => [
@@ -70,9 +71,8 @@ class Categories extends ComponentBase
 
     /**
      * Load all categories or, depending on the <displayEmpty> option, only those that have blog posts
-     * @return mixed
      */
-    protected function loadCategories()
+    protected function loadCategories(): Collection
     {
         $categories = BlogCategory::with('posts_count')->getNested();
         if (!$this->property('displayEmpty')) {
@@ -98,9 +98,8 @@ class Categories extends ComponentBase
 
     /**
      * Sets the URL on each category according to the defined category page
-     * @return void
      */
-    protected function linkCategories($categories)
+    protected function linkCategories(Collection $categories): Collection
     {
         return $categories->each(function ($category) {
             $category->setUrl($this->categoryPage, $this->controller);

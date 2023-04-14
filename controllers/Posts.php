@@ -1,9 +1,11 @@
-<?php namespace Winter\Blog\Controllers;
+<?php
 
+namespace Winter\Blog\Controllers;
+
+use Backend\Classes\Controller;
 use BackendMenu;
 use Flash;
 use Lang;
-use Backend\Classes\Controller;
 use Winter\Blog\Models\Post;
 
 class Posts extends Controller
@@ -13,10 +15,6 @@ class Posts extends Controller
         \Backend\Behaviors\ListController::class,
         \Backend\Behaviors\ImportExportController::class
     ];
-
-    public $formConfig = 'config_form.yaml';
-    public $listConfig = 'config_list.yaml';
-    public $importExportConfig = 'config_import_export.yaml';
 
     public $requiredPermissions = ['winter.blog.access_other_posts', 'winter.blog.access_posts'];
 

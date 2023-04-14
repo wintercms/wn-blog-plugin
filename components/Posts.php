@@ -1,15 +1,17 @@
-<?php namespace Winter\Blog\Components;
+<?php
 
+namespace Winter\Blog\Components;
+
+use BackendAuth;
+use Cms\Classes\ComponentBase;
+use Cms\Classes\Page;
 use Lang;
 use Redirect;
-use BackendAuth;
-use Cms\Classes\Page;
-use Cms\Classes\ComponentBase;
-use Winter\Storm\Database\Model;
-use Winter\Storm\Database\Collection;
-use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Category as BlogCategory;
+use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Settings as BlogSettings;
+use Winter\Storm\Database\Collection;
+use Winter\Storm\Database\Model;
 
 class Posts extends ComponentBase
 {

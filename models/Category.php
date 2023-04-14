@@ -1,15 +1,20 @@
-<?php namespace Winter\Blog\Models;
+<?php
 
-use Str;
-use Model;
-use Url;
+namespace Winter\Blog\Models;
+
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
+use Model;
+use Str;
+use Url;
+use Winter\Pages\Classes\MenuItem;
+use Winter\Sitemap\Classes\DefinitionItem;
 
 class Category extends Model
 {
-    use \Winter\Storm\Database\Traits\Validation;
+    use \Winter\Blog\Traits\Urlable;
     use \Winter\Storm\Database\Traits\NestedTree;
+    use \Winter\Storm\Database\Traits\Validation;
 
     public $table = 'winter_blog_categories';
     public $implement = ['@Winter.Translate.Behaviors.TranslatableModel'];
@@ -29,21 +34,23 @@ class Category extends Model
     public $translatable = [
         'name',
         'description',
-        ['slug', 'index' => true]
+        ['slug', 'index' => true],
     ];
 
     protected $guarded = [];
 
     public $belongsToMany = [
-        'posts' => ['Winter\Blog\Models\Post',
+        'posts' => [
+            Post::class,
             'table' => 'winter_blog_posts_categories',
             'order' => 'published_at desc',
-            'scope' => 'isPublished'
+            'scope' => 'isPublished',
         ],
-        'posts_count' => ['Winter\Blog\Models\Post',
+        'posts_count' => [
+            Post::class,
             'table' => 'winter_blog_posts_categories',
             'scope' => 'isPublished',
-            'count' => true
+            'count' => true,
         ]
     ];
 
@@ -60,38 +67,22 @@ class Category extends Model
         $this->posts()->detach();
     }
 
-    public function getPostCountAttribute()
+    /**
+     * Returns the number of posts in this category
+     */
+    public function getPostCountAttribute(): int
     {
         return optional($this->posts_count->first())->count ?? 0;
     }
 
     /**
-     * Count posts in this and nested categories
-     * @return int
+     * Returns the number of posts in this and nested categories
      */
-    public function getNestedPostCount()
+    public function getNestedPostCount(): int
     {
         return $this->post_count + $this->children->sum(function ($category) {
             return $category->getNestedPostCount();
         });
-    }
-
-    /**
-     * Sets the "url" attribute with a URL to this object
-     *
-     * @param string $pageName
-     * @param Cms\Classes\Controller $controller
-     *
-     * @return string
-     */
-    public function setUrl($pageName, $controller)
-    {
-        $params = [
-            'id'   => $this->id,
-            'slug' => $this->slug
-        ];
-
-        return $this->url = $controller->pageUrl($pageName, $params, false);
     }
 
     /**
@@ -108,10 +99,8 @@ class Category extends Model
      *   Optional, false if omitted.
      * - cmsPages - a list of CMS pages (objects of the Cms\Classes\Page class), if the item type requires a CMS page reference to
      *   resolve the item URL.
-     * @param string $type Specifies the menu item type
-     * @return array Returns an array
      */
-    public static function getMenuTypeInfo($type)
+    public static function getMenuTypeInfo(string $type): array
     {
         $result = [];
 
@@ -193,50 +182,70 @@ class Category extends Model
      *   return all available records.
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
-     * @param \Winter\Pages\Classes\MenuItem $item Specifies the menu item.
-     * @param \Cms\Classes\Theme $theme Specifies the current theme.
-     * @param string $url Specifies the current page URL, normalized, in lower case
-     * The URL is specified relative to the website root, it includes the subdirectory name, if any.
-     * @return mixed Returns an array. Returns null if the item cannot be resolved.
+     *
+     * @param DefinitionItem|MenuItem $item Specifies the menu item.
      */
-    public static function resolveMenuItem($item, $url, $theme)
+    public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
 
-        if ($item->type == 'blog-category') {
-            if (!$item->reference || !$item->cmsPage) {
-                return;
-            }
+        // Items must have a reference to a CMS page
+        if (!$item->cmsPage) {
+            return null;
+        }
+        $cmsPage = CmsPage::loadCached($theme, $item->cmsPage);
+        if (!$cmsPage) {
+            return null;
+        }
 
+        if ($item->type == 'blog-category') {
+            // Attempt to get the category record for a specific category menu item
+            if (!$item->reference) {
+                return null;
+            }
             $category = self::find($item->reference);
             if (!$category) {
-                return;
+                return null;
             }
 
-            $pageUrl = self::getCategoryPageUrl($item->cmsPage, $category, $theme);
+            $pageUrl = $category->getUrl($cmsPage);
             if (!$pageUrl) {
-                return;
+                return null;
             }
-
             $pageUrl = Url::to($pageUrl);
 
-            $result = [];
-            $result['url'] = $pageUrl;
-            $result['isActive'] = $pageUrl == $url;
-            $result['mtime'] = $category->updated_at;
+            $result = [
+                'url' => $pageUrl,
+                'isActive' => $pageUrl === $currentUrl,
+                'mtime' => $category->updated_at,
+            ];
+
+            $localizedUrls = $category->getLocalizedUrls($cmsPage);
+            if (count($localizedUrls) > 1) {
+                $result['alternateLinks'] = $localizedUrls;
+            }
 
             if ($item->nesting) {
                 $categories = $category->getNested();
-                $iterator = function($categories) use (&$iterator, &$item, &$theme, $url) {
+                $iterator = function($categories) use (&$iterator, &$item, &$theme, $currentUrl) {
                     $branch = [];
 
                     foreach ($categories as $category) {
+                        $cmsPage = CmsPage::loadCached($theme, $item->cmsPage);
+                        if (!$cmsPage) {
+                            continue;
+                        }
 
                         $branchItem = [];
-                        $branchItem['url'] = self::getCategoryPageUrl($item->cmsPage, $category, $theme);
-                        $branchItem['isActive'] = $branchItem['url'] == $url;
+                        $branchItem['url'] = $category->getUrl($cmsPage);
+                        $branchItem['isActive'] = $branchItem['url'] === $currentUrl;
                         $branchItem['title'] = $category->name;
                         $branchItem['mtime'] = $category->updated_at;
+
+                        $localizedUrls = $category->getLocalizedUrls($cmsPage);
+                        if (count($localizedUrls) > 1) {
+                            $branchItem['alternateLinks'] = $localizedUrls;
+                        }
 
                         if ($category->children) {
                             $branchItem['items'] = $iterator($category->children);
@@ -260,11 +269,16 @@ class Category extends Model
             foreach ($categories as $category) {
                 $categoryItem = [
                     'title' => $category->name,
-                    'url'   => self::getCategoryPageUrl($item->cmsPage, $category, $theme),
+                    'url'   => Url::to($category->getUrl($cmsPage)),
                     'mtime' => $category->updated_at
                 ];
 
-                $categoryItem['isActive'] = $categoryItem['url'] == $url;
+                $categoryItem['isActive'] = $categoryItem['url'] === $currentUrl;
+
+                $localizedUrls = $category->getLocalizedUrls($cmsPage);
+                if (count($localizedUrls) > 1) {
+                    $categoryItem['alternateLinks'] = $localizedUrls;
+                }
 
                 $result['items'][] = $categoryItem;
             }
@@ -274,35 +288,20 @@ class Category extends Model
     }
 
     /**
-     * Returns URL of a category page.
-     *
-     * @param $pageCode
-     * @param $category
-     * @param $theme
+     * Get the URL parameters for this record, optionally using the provided CMS page.
      */
-    protected static function getCategoryPageUrl($pageCode, $category, $theme)
+    public function getUrlParams(?CmsPage $page = null): array
     {
-        $page = CmsPage::loadCached($theme, $pageCode);
-        if (!$page) {
-            return;
+        $params = [
+            'id'   => $this->id,
+            'slug' => $this->slug,
+        ];
+
+        $paramName = $this->getParamNameFromComponentProperty($page, 'blogPosts', 'categoryFilter');
+        if ($paramName) {
+            $params[$paramName] = $this->slug;
         }
 
-        $properties = $page->getComponentProperties('blogPosts');
-        if (!isset($properties['categoryFilter'])) {
-            return;
-        }
-
-        /*
-         * Extract the routing parameter name from the category filter
-         * eg: {{ :someRouteParam }}
-         */
-        if (!preg_match('/^\{\{([^\}]+)\}\}$/', $properties['categoryFilter'], $matches)) {
-            return;
-        }
-
-        $paramName = substr(trim($matches[1]), 1);
-        $url = CmsPage::url($page->getBaseFileName(), [$paramName => $category->slug]);
-
-        return $url;
+        return $params;
     }
 }
