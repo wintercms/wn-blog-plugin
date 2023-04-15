@@ -60,16 +60,13 @@ trait Urlable
     {
         $translator = Translator::instance();
 
-        // cloning the $page creates random issues with the translation plugin
-        #$localPage = $page ? clone $page : null;
-        $localPage = $page;
         $localRecord = clone $this;
-
-        $localPage->rewriteTranslatablePageUrl($locale);
         $localRecord->translateContext($locale);
 
-        $params = $localRecord->getUrlParams($localPage);
-        $url = $translator->getPathInLocale($localPage->url, $locale);
+        $localeUrl = $page->getViewBagUrlAttributeTranslated($locale);
+
+        $params = $localRecord->getUrlParams($page);
+        $url = $translator->getPathInLocale($localeUrl, $locale);
 
         return (new Router)->urlFromPattern($url, $params);
     }
