@@ -76,3 +76,6 @@
     - "Added is_published attribute accessor on the Post model"
     - "Added support for paginating the RSSFeed component"
 "2.1.1": "Bumped version of RainLab.Blog replaced by Winter.Blog to v1.7."
+"2.1.2":
+    - "Add multilang data to resolveMenuItem() methods."
+    - "Move blog post form fields to primary tabs."
