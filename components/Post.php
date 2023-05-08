@@ -18,7 +18,7 @@ class Post extends ComponentBase
     /**
      * Reference to the page name for linking to categories.
      */
-    public string $categoryPage = '';
+    public ?string $categoryPage = '';
 
     public function componentDetails(): array
     {

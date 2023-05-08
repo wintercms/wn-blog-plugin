@@ -17,12 +17,12 @@ class Categories extends ComponentBase
     /**
      * Reference to the page name for linking to categories.
      */
-    public string $categoryPage = '';
+    public ?string $categoryPage = '';
 
     /**
      * Reference to the current category slug.
      */
-    public string $currentCategorySlug = '';
+    public ?string $currentCategorySlug = '';
 
     public function componentDetails(): array
     {
