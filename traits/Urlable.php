@@ -64,7 +64,7 @@ trait Urlable
         $localRecord = clone $this;
         $localRecord->translateContext($locale);
 
-        $localeUrl = $page->getViewBagUrlAttributeTranslated($locale);
+        $localeUrl = $page->getViewBagUrlAttributeTranslated($locale) ?: $page->url;
 
         $params = $localRecord->getUrlParams($page);
         $url = $translator->getPathInLocale($localeUrl, $locale);
