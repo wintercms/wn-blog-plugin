@@ -5,6 +5,7 @@ namespace Winter\Blog\Traits;
 use App;
 use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
+use Config;
 use Url;
 use Winter\Storm\Router\Router;
 use Winter\Translate\Classes\Translator;
@@ -77,11 +78,12 @@ trait Urlable
     public function getLocalizedUrls(?CmsPage $page = null, bool $absolute = true): array
     {
         $localizedUrls = [];
+        $prefixDefaultLocale = Config::get('winter.translate::prefixDefaultLocale', false);
         $enabledLocales = class_exists(Locale::class) ? Locale::listEnabled() : [];
         $defaultLocale = class_exists(Locale::class) ? Locale::getDefault()->code : App::getLocale();
 
         foreach ($enabledLocales as $locale => $name) {
-            if ($locale === $defaultLocale) {
+            if ($locale === $defaultLocale && !$prefixDefaultLocale) {
                 $url = $this->getUrl($page);
             } else {
                 $url = $this->getLocalizedUrl($locale, $page);
