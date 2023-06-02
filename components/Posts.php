@@ -5,11 +5,13 @@ namespace Winter\Blog\Components;
 use BackendAuth;
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Lang;
 use Redirect;
 use Winter\Blog\Models\Category as BlogCategory;
 use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Settings as BlogSettings;
+use Winter\Storm\Database\Collection;
 use Winter\Storm\Database\Model;
 
 class Posts extends ComponentBase
@@ -17,7 +19,7 @@ class Posts extends ComponentBase
     /**
      * A collection of posts to display
      */
-    public ?iterable $posts;
+    public LengthAwarePaginator|Collection|null $posts;
 
     /**
      * Parameter to use for the page number
