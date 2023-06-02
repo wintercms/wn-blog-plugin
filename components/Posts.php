@@ -10,7 +10,6 @@ use Redirect;
 use Winter\Blog\Models\Category as BlogCategory;
 use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Settings as BlogSettings;
-use Winter\Storm\Database\Collection;
 use Winter\Storm\Database\Model;
 
 class Posts extends ComponentBase
@@ -18,7 +17,7 @@ class Posts extends ComponentBase
     /**
      * A collection of posts to display
      */
-    public ?Collection $posts;
+    public ?iterable $posts;
 
     /**
      * Parameter to use for the page number
