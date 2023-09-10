@@ -167,7 +167,7 @@ class Posts extends ComponentBase
                 return Redirect::to($this->currentPageUrl([$pageNumberParam => $lastPage]));
             }
 
-            if ($currentPage < 1) {
+            if (isset($currentPage) && $currentPage < 1) {
                 return Redirect::to($this->currentPageUrl([$pageNumberParam => 1]));
             }
         }
