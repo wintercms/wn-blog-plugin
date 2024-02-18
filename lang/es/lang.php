@@ -25,7 +25,7 @@ return [
         'chart_total' => 'Total',
         'settings_description' => 'Administrar configuración del blog',
         'show_all_posts_label' => 'Mostrar todas las publicaciones a los usuarios de backend',
-        'show_all_posts_comment' => 'Mostrar las publicaciones publicados y los borradores a los usuarios de backend',
+        'show_all_posts_comment' => 'Mostrar las publicaciones publicadas y los borradores a los usuarios de backend',
         'tab_general' => 'General'
     ],
     'posts' => [
@@ -70,7 +70,7 @@ return [
         'return_to_posts' => 'Volver a la lista de publicaciones',
         'posted_byline' => 'Publicado en :categories el :date.',
         'posted_byline_no_categories' => 'Publicado el :date.',
-        'date_format' => 'd de M de Y',
+        'date_format' => 'd \d\e M \d\e Y',
     ],
     'categories' => [
         'list_title' => 'Administrar las categorías',
@@ -142,13 +142,13 @@ return [
         'group_exceptions' => 'Excepciones'
     ],
     'sorting' => [
-        'title_asc' => 'Título (ascendiente)',
+        'title_asc' => 'Título (ascendente)',
         'title_desc' => 'Título (descendiente)',
-        'created_asc' => 'Creado (ascendiente)',
+        'created_asc' => 'Creado (ascendente)',
         'created_desc' => 'Creado (descendiente)',
-        'updated_asc' => 'Editado (ascendiente)',
+        'updated_asc' => 'Editado (ascendente)',
         'updated_desc' => 'Editado (descendiente)',
-        'published_asc' => 'Publicado (ascendiente)',
+        'published_asc' => 'Publicado (ascendente)',
         'published_desc' => 'Publicado (descendiente)',
         'random' => 'Aleatorio'
     ],
