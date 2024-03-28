@@ -4,6 +4,14 @@ A simple, extensible blogging platform for Winter CMS.
 
 [Blog & Forum Building Tutorial Video](https://player.vimeo.com/video/97088926)
 
+## Installation
+
+This plugin is available for installation via [Composer](http://getcomposer.org/).
+
+```bash
+composer require winter/wn-blog-plugin
+```
+
 ## Editing posts
 
 The plugin uses the markdown markup for the posts. You can use any Markdown syntax and some special tags for embedding images and videos (requires Winter Blog Video plugin). To embed an image use the image placeholder:
