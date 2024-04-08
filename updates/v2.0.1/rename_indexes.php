@@ -34,19 +34,30 @@ class RenameIndexes extends Migration
 
     public function updateIndexNames($from, $to, $table)
     {
-        $sm = Schema::getConnection()->getDoctrineSchemaManager();
+        Schema::table($table, function ($blueprint) use ($from, $to) {
+            foreach ($this->getIndexes($blueprint) as $index) {
+                if (is_object($index) ? $index->isPrimary() : $index['primary']) {
+                    continue;
+                }
 
-        $table = $sm->listTableDetails($table);
+                $old = is_object($index) ? $index->getName() : $index['name'];
+                $new = str_replace($from, $to, $old);
 
-        foreach ($table->getIndexes() as $index) {
-            if ($index->isPrimary()) {
-                continue;
+                $blueprint->renameIndex($old, $new);
             }
+        });
+    }
 
-            $old = $index->getName();
-            $new = str_replace($from, $to, $old);
+    public function getIndexes($blueprint)
+    {
+        $connection = Schema::getConnection();
+        $table = $blueprint->getTable();
 
-            $table->renameIndex($old, $new);
+        if (method_exists($connection, 'getDoctrineSchemaManager')) {
+            $sm = $connection->getDoctrineSchemaManager();
+            return $sm->listTableDetails($table)->getIndexes();
+        } else {
+            return $connection->getSchemaBuilder()->getIndexes($table);
         }
     }
 }
