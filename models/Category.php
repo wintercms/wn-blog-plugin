@@ -104,6 +104,14 @@ class Category extends Model
     {
         $result = [];
 
+        if (!class_exists(Theme::class)) {
+            return $result;
+        }
+
+        if (!class_exists(CmsPage::class)) {
+            return $result;
+        }
+
         if ($type == 'blog-category') {
             $result = [
                 'references'   => self::listSubCategoryOptions(),
@@ -188,6 +196,10 @@ class Category extends Model
     public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
+
+        if (!class_exists(CmsPage::class)) {
+            return $result;
+        }
 
         // Items must have a reference to a CMS page
         if (!$item->cmsPage) {
