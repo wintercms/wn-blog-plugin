@@ -177,6 +177,7 @@ class Posts extends ComponentBase
     {
         $this->pageParam = $this->page['pageParam'] = $this->paramName('pageNumber');
         $this->noPostsMessage = $this->page['noPostsMessage'] = $this->property('noPostsMessage');
+        $this->sortOrder = $this->property('sortOrder');
 
         /*
          * Page links
