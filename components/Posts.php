@@ -163,12 +163,20 @@ class Posts extends ComponentBase
         if ($pageNumberParam = $this->paramName('pageNumber')) {
             $currentPage = $this->property('pageNumber');
 
-            if ($currentPage > ($lastPage = $this->posts->lastPage()) && $currentPage > 1) {
-                return Redirect::to($this->currentPageUrl([$pageNumberParam => $lastPage]));
+            // If the page number has not been set, then default to page 1
+            if (!$currentPage) {
+                $this->setProperty('pageNumber', $currentPage = 1);
             }
 
-            if (!is_null($currentPage) && $currentPage < 1) {
-                return Redirect::to($this->currentPageUrl([$pageNumberParam => 1]));
+            // Page number is not numeric or less than 1, then 404 as this is not a real page
+            if (!is_numeric($currentPage) || $currentPage < 1) {
+                $this->setStatusCode(404);
+                return $this->controller->run('404');
+            }
+
+            // If the current page is bigger than the last page of pagination, then force the user back to the last page
+            if ($currentPage > ($lastPage = $this->posts->lastPage()) && $currentPage > 1) {
+                return Redirect::to($this->currentPageUrl([$pageNumberParam => $lastPage]));
             }
         }
     }
