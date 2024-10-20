@@ -14,6 +14,7 @@ Supports:
 - Excerpts
 - Post previews
 - Importing & Exporting posts
+- RSS Feeds
 
 ## Installation
 
