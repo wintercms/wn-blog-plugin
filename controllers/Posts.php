@@ -89,7 +89,7 @@ class Posts extends Controller
         if (!$model = $widget->model) {
             return;
         }
-        if (!$model instanceof Post) {
+        if (!$model instanceof Post || $widget->isNested) {
             return;
         }
         $pluginManager = PluginManager::instance();
