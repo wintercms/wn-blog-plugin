@@ -4,6 +4,17 @@ A simple, extensible blogging platform for Winter CMS.
 
 [Blog & Forum Building Tutorial Video](https://player.vimeo.com/video/97088926)
 
+Supports:
+
+- Posts
+- Categories
+- Authors
+- Publish status & date
+- Featured images
+- Excerpts
+- Post previews
+- Importing & Exporting posts
+
 ## Installation
 
 This plugin is available for installation via [Composer](http://getcomposer.org/).
