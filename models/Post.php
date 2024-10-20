@@ -16,6 +16,7 @@ use System\Models\File;
 use Url;
 use ValidationException;
 use Winter\Blog\Classes\TagProcessor;
+use Winter\Blog\Models\Settings as BlogSettings;
 use Winter\Pages\Classes\MenuItem;
 use Winter\Sitemap\Classes\DefinitionItem;
 use Winter\Storm\Database\NestedTreeScope;
@@ -183,7 +184,13 @@ class Post extends Model
 
     public static function formatHtml($input, $preview = false)
     {
-        $result = Markdown::parse(trim($input));
+        $useRichEditor = BlogSettings::get('use_rich_editor', false);
+
+        if ($useRichEditor) {
+            $result = trim($input);
+        } else {
+            $result = Markdown::parse(trim($input));
+        }
 
         // Check to see if the HTML should be cleaned from potential XSS
         $user = BackendAuth::getUser();
