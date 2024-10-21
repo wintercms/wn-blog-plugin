@@ -99,7 +99,7 @@ class Posts extends Controller
 
         if ($useRichEditor) {
             $widget->tabs['fields']['content']['type'] = $useMlWidget ? 'Winter\Translate\FormWidgets\MLRichEditor' : 'richeditor';
-        } else if ($useMlWidget) {
+        } elseif ($useMlWidget) {
             $widget->tabs['fields']['content']['type'] = 'Winter\Blog\FormWidgets\MLBlogMarkdown';
         }
     }
