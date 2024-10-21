@@ -6,7 +6,9 @@ use Backend\Classes\Controller;
 use BackendMenu;
 use Flash;
 use Lang;
+use System\Classes\PluginManager;
 use Winter\Blog\Models\Post;
+use Winter\Blog\Models\Settings as BlogSettings;
 
 class Posts extends Controller
 {
@@ -87,11 +89,17 @@ class Posts extends Controller
         if (!$model = $widget->model) {
             return;
         }
+        if (!$model instanceof Post || $widget->isNested) {
+            return;
+        }
+        $pluginManager = PluginManager::instance();
 
-        // @TODO: This shouldn't engage when the translate plugin is present but disabled
-        // Fix can be more restrictive checks here or finishing changes to the class loader so that
-        // disabled plugins cannot even have their classes loaded.
-        if ($model instanceof Post && $model->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')) {
+        $useRichEditor = BlogSettings::get('use_rich_editor', false);
+        $useMlWidget = $pluginManager->exists('Winter.Translate');
+
+        if ($useRichEditor) {
+            $widget->tabs['fields']['content']['type'] = $useMlWidget ? 'Winter\Translate\FormWidgets\MLRichEditor' : 'richeditor';
+        } elseif ($useMlWidget) {
             $widget->tabs['fields']['content']['type'] = 'Winter\Blog\FormWidgets\MLBlogMarkdown';
         }
     }

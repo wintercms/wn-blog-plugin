@@ -26,7 +26,9 @@ return [
         'settings_description' => 'Manage blog settings',
         'show_all_posts_label' => 'Show all posts to backend users',
         'show_all_posts_comment' => 'Display both published and unpublished posts on the frontend to backend users',
-        'tab_general' => 'General'
+        'tab_general' => 'General',
+        'use_rich_editor_label' => 'Use the rich editor for blog content',
+        'use_rich_editor_comment' => 'By default, blog posts are written using Markdown. If this is enabled, this changes the editor to an HTML based editor (WYSIWYG).',
     ],
     'posts' => [
         'list_title' => 'Manage the blog posts',
