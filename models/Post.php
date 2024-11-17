@@ -398,6 +398,14 @@ class Post extends Model
     {
         $result = [];
 
+        if (!class_exists(Theme::class)) {
+            return $result;
+        }
+
+        if (!class_exists(CmsPage::class)) {
+            return $result;
+        }
+
         $theme = Theme::getActiveTheme();
         $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
             if (!preg_match('/{{\s*:/', $component->property('slug'))) {
@@ -569,6 +577,15 @@ class Post extends Model
         }
 
         if ($result) {
+
+            if (!class_exists(Theme::class)) {
+                return $result;
+            }
+
+            if (!class_exists(CmsPage::class)) {
+                return $result;
+            }
+
             $theme = Theme::getActiveTheme();
 
             $pages = CmsPage::listInTheme($theme, true);
@@ -614,6 +631,10 @@ class Post extends Model
     public static function resolveMenuItem(object $item, string $currentUrl, Theme $theme): ?array
     {
         $result = null;
+
+        if (!class_exists(CmsPage::class)) {
+            return $result;
+        }
 
         // Items must have a reference to a CMS page
         if (!$item->cmsPage) {
