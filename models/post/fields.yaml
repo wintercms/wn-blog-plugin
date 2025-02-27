@@ -19,7 +19,6 @@ fields:
 
     toolbar:
         type: partial
-        path: post_toolbar
         cssClass: collapse-visible
 
 tabs:
