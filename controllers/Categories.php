@@ -3,7 +3,6 @@
 namespace Winter\Blog\Controllers;
 
 use Backend\Classes\Controller;
-use Backend\Facades\BackendMenu;
 use Illuminate\Support\Facades\Lang;
 use Winter\Blog\Models\Category;
 use Winter\Storm\Support\Facades\Flash;
@@ -17,13 +16,6 @@ class Categories extends Controller
     ];
 
     public $requiredPermissions = ['winter.blog.access_categories'];
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        BackendMenu::setContext('Winter.Blog', 'blog', 'categories');
-    }
 
     public function index_onDelete()
     {

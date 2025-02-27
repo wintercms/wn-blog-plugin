@@ -3,7 +3,6 @@
 namespace Winter\Blog\Controllers;
 
 use Backend\Classes\Controller;
-use Backend\Facades\BackendMenu;
 use Illuminate\Support\Facades\Lang;
 use System\Classes\PluginManager;
 use Winter\Blog\Models\Post;
@@ -20,12 +19,7 @@ class Posts extends Controller
 
     public $requiredPermissions = ['winter.blog.access_other_posts', 'winter.blog.access_posts'];
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        BackendMenu::setContext('Winter.Blog', 'blog', 'posts');
-    }
+    protected $formLayout = 'fancy';
 
     public function index()
     {
@@ -38,9 +32,6 @@ class Posts extends Controller
 
     public function create()
     {
-        BackendMenu::setContextSideMenu('new_post');
-
-        $this->bodyClass = 'compact-container';
         $this->addCss('/plugins/winter/blog/assets/css/winter.blog-preview.css');
         $this->addJs('/plugins/winter/blog/assets/js/post-form.js');
 
