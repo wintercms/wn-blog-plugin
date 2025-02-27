@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Une plateforme de blog robuste.'
+        'description' => 'Une plateforme de blog robuste.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -167,5 +167,5 @@ return [
         'default_author_label' => 'Auteur par défaut (facultatif)',
         'default_author_comment' => "L'importation tentera d'utiliser un auteur existant si vous correspondez la colonne Email à l'auteur, sinon l'auteur spécifié ci-dessus sera utilisé.",
         'default_author_placeholder' => "-- sélectionnez l'auteur --",
-    ]
+    ],
 ];

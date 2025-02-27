@@ -2,11 +2,11 @@
 
 namespace Winter\Blog\Components;
 
-use BackendAuth;
+use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
-use Event;
 use Winter\Blog\Models\Post as BlogPost;
+use Winter\Storm\Support\Facades\Event;
 
 class Post extends ComponentBase
 {
@@ -24,7 +24,7 @@ class Post extends ComponentBase
     {
         return [
             'name'        => 'winter.blog::lang.settings.post_title',
-            'description' => 'winter.blog::lang.settings.post_description'
+            'description' => 'winter.blog::lang.settings.post_description',
         ];
     }
 
@@ -89,7 +89,7 @@ class Post extends ComponentBase
     {
         $slug = $this->property('slug');
 
-        $post = new BlogPost;
+        $post = new BlogPost();
         $query = $post->query();
 
         if ($post->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')) {
@@ -108,7 +108,7 @@ class Post extends ComponentBase
          * Add a "url" helper attribute for linking to each category
          */
         if ($post && $post->exists && $post->categories->count()) {
-            $post->categories->each(function($category) {
+            $post->categories->each(function ($category) {
                 $category->setUrl($this->categoryPage, $this->controller);
             });
         }
@@ -142,7 +142,7 @@ class Post extends ComponentBase
 
         $post->setUrl($postPage, $this->controller);
 
-        $post->categories->each(function($category) {
+        $post->categories->each(function ($category) {
             $category->setUrl($this->categoryPage, $this->controller);
         });
 

@@ -2,10 +2,10 @@
 
 namespace Winter\Blog\Models;
 
-use ApplicationException;
 use Backend\Models\ImportModel;
 use Backend\Models\User as AuthorModel;
 use Exception;
+use Winter\Storm\Exception\ApplicationException;
 
 /**
  * Post Import Model
@@ -19,7 +19,7 @@ class PostImport extends ImportModel
      */
     public $rules = [
         'title'   => 'required',
-        'content' => 'required'
+        'content' => 'required',
     ];
 
     protected $authorEmailCache = [];
@@ -52,7 +52,6 @@ class PostImport extends ImportModel
          */
         foreach ($results as $row => $data) {
             try {
-
                 if (!$title = array_get($data, 'title')) {
                     $this->logSkipped($row, 'Missing post title');
                     continue;
@@ -96,12 +95,10 @@ class PostImport extends ImportModel
                  */
                 if ($postExists) {
                     $this->logUpdated();
-                }
-                else {
+                } else {
                     $this->logCreated();
                 }
-            }
-            catch (Exception $ex) {
+            } catch (Exception $ex) {
                 $this->logError($row, $ex->getMessage());
             }
         }
@@ -151,14 +148,12 @@ class PostImport extends ImportModel
 
                 if (isset($this->categoryNameCache[$name])) {
                     $ids[] = $this->categoryNameCache[$name];
-                }
-                else {
+                } else {
                     $newCategory = Category::firstOrCreate(['name' => $name]);
                     $ids[] = $this->categoryNameCache[$name] = $newCategory->id;
                 }
             }
-        }
-        elseif ($this->categories) {
+        } elseif ($this->categories) {
             $ids = (array) $this->categories;
         }
 

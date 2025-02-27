@@ -1,15 +1,15 @@
-<?php namespace Winter\Blog\Updates;
+<?php
 
-use Schema;
+namespace Winter\Blog\Updates;
+
 use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\Schema;
 
 class CreateCategoriesTable extends Migration
 {
-
     public function up()
     {
-        Schema::create('rainlab_blog_categories', function($table)
-        {
+        Schema::create('rainlab_blog_categories', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->nullable();
@@ -23,8 +23,7 @@ class CreateCategoriesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('rainlab_blog_posts_categories', function($table)
-        {
+        Schema::create('rainlab_blog_posts_categories', function ($table) {
             $table->engine = 'InnoDB';
             $table->integer('post_id')->unsigned();
             $table->integer('category_id')->unsigned();
@@ -37,5 +36,4 @@ class CreateCategoriesTable extends Migration
         Schema::dropIfExists('rainlab_blog_categories');
         Schema::dropIfExists('rainlab_blog_posts_categories');
     }
-
 }

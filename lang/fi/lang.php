@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blogi',
-        'description' => 'Vankka bloggausalusta.'
+        'description' => 'Vankka bloggausalusta.',
     ],
     'blog' => [
         'menu_label' => 'Blogi',
@@ -26,7 +26,7 @@ return [
         'settings_description' => 'Hallinnoi blogin asetuksia',
         'show_all_posts_label' => 'Näytä kaikki postaukset ylläpitäjille',
         'show_all_posts_comment' => 'Näytä molemmat sekä julkaistut että julkaisemattomat postaukset ylläpitäjille',
-        'tab_general' => 'Yleiset'
+        'tab_general' => 'Yleiset',
     ],
     'posts' => [
         'list_title' => 'Hallitse blogipostauksia',
@@ -35,7 +35,7 @@ return [
         'filter_date' => 'Päivämäärä',
         'new_post' => 'Uusi postaus',
         'export_post' => 'Vie postaukset',
-        'import_post' => 'Tuo postauksia'
+        'import_post' => 'Tuo postauksia',
     ],
     'post' => [
         'title' => 'Otsikko',
@@ -67,12 +67,12 @@ return [
         'delete_confirm' => 'Poista tämä postaus?',
         'delete_success' => 'Postaukset poistettu onnistuneesti.',
         'close_confirm' => 'Tämä postaus ei ole tallennettu.',
-        'return_to_posts' => 'Palaa postauslistaan'
+        'return_to_posts' => 'Palaa postauslistaan',
     ],
     'categories' => [
         'list_title' => 'Hallitse blogikategorioita',
         'new_category' => 'Uusi kategoria',
-        'uncategorized' => 'Luokittelematon'
+        'uncategorized' => 'Luokittelematon',
     ],
     'category' => [
         'name' => 'Nimi',
@@ -84,14 +84,14 @@ return [
         'delete_confirm' => 'Poista tämä kategoria?',
         'delete_success' => 'Kategoriat poistettu onnistuneesti.',
         'return_to_categories' => 'Palaa blogikategorialistaan',
-        'reorder' => 'Järjestä kategoriat uudelleen'
+        'reorder' => 'Järjestä kategoriat uudelleen',
     ],
     'menuitem' => [
         'blog_category' => 'Blogikategoria',
         'all_blog_categories' => 'Kaikki blogikategoriat',
         'blog_post' => 'Blogipostaukset',
         'all_blog_posts' => 'Kaikki blogipostaukset',
-        'category_blog_posts' => 'Blogin kategorian postaukset'
+        'category_blog_posts' => 'Blogin kategorian postaukset',
     ],
     'settings' => [
         'category_title' => 'Kategorialista',
@@ -136,7 +136,7 @@ return [
         'rssfeed_title' => 'RSS syöte',
         'rssfeed_description' => 'Generoi RSS syötteen sisältäen postaukset blogista.',
         'group_links' => 'Linkit',
-        'group_exceptions' => 'Poikkeukset'
+        'group_exceptions' => 'Poikkeukset',
     ],
     'sorting' => [
         'title_asc' => 'Otsikko (ascending)',
@@ -147,7 +147,7 @@ return [
         'updated_desc' => 'Päivitetty (descending)',
         'published_asc' => 'Julkaistu (ascending)',
         'published_desc' => 'Julkaistu (descending)',
-        'random' => 'Satunnainen'
+        'random' => 'Satunnainen',
     ],
     'import' => [
         'update_existing_label' => 'Päivitä olemassa olevat postaukset',
@@ -158,6 +158,6 @@ return [
         'categories_comment' => 'Valitse kategoriat, joihin tuotavat postaukset liitetään (option).',
         'default_author_label' => 'Oletuskirjoittaja (optio)',
         'default_author_comment' => 'Tuonti yrittää käyttää Kirjoittaja tiedon sähköpostia yhdistäessään kirjoittajaa. Muussa tapauksessa käytetään ylempänä määriteltyä.',
-        'default_author_placeholder' => '-- valitse kirjoittaja --'
-    ]
+        'default_author_placeholder' => '-- valitse kirjoittaja --',
+    ],
 ];

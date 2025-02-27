@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'وبلاگ',
-        'description' => 'پلتفرم قوی برای وبلاگ نویسی'
+        'description' => 'پلتفرم قوی برای وبلاگ نویسی',
     ],
     'blog' => [
         'menu_label' => 'وبلاگ',
@@ -20,13 +20,13 @@ return [
         'delete_confirm' => 'آیا اطمینان دارید؟',
         'chart_published' => 'منتشر شده',
         'chart_drafts' => 'پیش نویس',
-        'chart_total' => 'مجموع'
+        'chart_total' => 'مجموع',
     ],
     'posts' => [
         'list_title' => 'مدیریت پست های ارسالی',
         'filter_category' => 'دسته بندی',
         'filter_published' => 'مخفی کردن منتشر شده ها',
-        'new_post' => 'پست جدید'
+        'new_post' => 'پست جدید',
     ],
     'post' => [
         'title' => 'عنوان',
@@ -55,12 +55,12 @@ return [
         'featured_images' => 'تصاویر شاخص',
         'delete_confirm' => 'آیا از حذف این پست اطمینان دارید؟',
         'close_confirm' => 'پست ذخیره نشده است',
-        'return_to_posts' => 'بازگشت به لیست پست ها'
+        'return_to_posts' => 'بازگشت به لیست پست ها',
     ],
     'categories' => [
         'list_title' => 'مدیریت دسته بندی های وبلاگ',
         'new_category' => 'دسته بندی جدید',
-        'uncategorized' => 'بدون دسته بندی'
+        'uncategorized' => 'بدون دسته بندی',
     ],
     'category' => [
         'name' => 'نام',
@@ -70,7 +70,7 @@ return [
         'posts' => 'پست ها',
         'delete_confirm' => 'آیا از حذف این دسته بندی اطمینان دارید؟',
         'return_to_categories' => 'بازگشت به لیست دسته بندی های وبلاگ',
-        'reorder' => 'مرتب سازی دسته بندی ها'
+        'reorder' => 'مرتب سازی دسته بندی ها',
     ],
     'settings' => [
         'category_title' => 'لیست دسته بندی',
@@ -105,5 +105,5 @@ return [
         'posts_post_description' => 'نام صفحه مربوط به نمایش کامل پست ها جهت لینک ادامه مطلب',
         'posts_except_post' => 'Except post',
         'posts_except_post_description' => 'Enter ID/URL or variable with post ID/URL you want to except',
-    ]
+    ],
 ];

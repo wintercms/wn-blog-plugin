@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Bài viết',
-        'description' => 'Quản lý bài viết'
+        'description' => 'Quản lý bài viết',
     ],
     'blog' => [
         'menu_label' => 'Bài viết',
@@ -26,7 +26,7 @@ return [
         'settings_description' => 'Quản lý cài đặt bài viết',
         'show_all_posts_label' => 'Hiển thị tất cả các bài đăng cho quản trị viên',
         'show_all_posts_comment' => 'Hiển thị tất cả bài đăng đã xuất bản, chưa xuất bản cho quản trị viên',
-        'tab_general' => 'Chung'
+        'tab_general' => 'Chung',
     ],
     'posts' => [
         'list_title' => 'Quản lý các bài đăng',
@@ -35,7 +35,7 @@ return [
         'filter_date' => 'Ngày',
         'new_post' => 'Đăng bài viết',
         'export_post' => 'Xuất bài viết',
-        'import_post' => 'Nhập bài viết'
+        'import_post' => 'Nhập bài viết',
     ],
     'post' => [
         'title' => 'Tiêu đề',
@@ -75,7 +75,7 @@ return [
     'categories' => [
         'list_title' => 'Quản lý danh mục bài viết',
         'new_category' => 'Thêm danh mục',
-        'uncategorized' => 'Chưa được phân loại'
+        'uncategorized' => 'Chưa được phân loại',
     ],
     'category' => [
         'name' => 'Tên danh mục',
@@ -87,14 +87,14 @@ return [
         'delete_confirm' => 'Xóa danh mục này?',
         'delete_success' => 'Đã xóa các danh mục đó.',
         'return_to_categories' => 'Quay lại danh sách danh mục',
-        'reorder' => 'Sắp xếp danh mục'
+        'reorder' => 'Sắp xếp danh mục',
     ],
     'menuitem' => [
         'blog_category' => 'Danh mục bài viết',
         'all_blog_categories' => 'Tất cả danh mục bài viết',
         'blog_post' => 'Bài viết',
         'all_blog_posts' => 'Tất cả bài viết',
-        'category_blog_posts' => 'Danh mục của bài viết'
+        'category_blog_posts' => 'Danh mục của bài viết',
     ],
     'settings' => [
         'category_title' => 'Danh sách danh mục',
@@ -139,7 +139,7 @@ return [
         'rssfeed_title' => 'Nguồn cấp RSS',
         'rssfeed_description' => 'Tạo nguồn cấp dữ liệu RSS chứa các bài viết.',
         'group_links' => 'Liên kết',
-        'group_exceptions' => 'Ngoại lệ'
+        'group_exceptions' => 'Ngoại lệ',
     ],
     'sorting' => [
         'title_asc' => 'Tiêu đề (tăng dần)',
@@ -150,7 +150,7 @@ return [
         'updated_desc' => 'Ngày cập nhật (giảm dần)',
         'published_asc' => 'Ngày xuất bản (tăng dần)',
         'published_desc' => 'Ngày xuất bản (giảm dần)',
-        'random' => 'Ngẫu nhiên'
+        'random' => 'Ngẫu nhiên',
     ],
     'import' => [
         'update_existing_label' => 'Cập nhật các bài đăng hiện có',
@@ -161,6 +161,6 @@ return [
         'categories_comment' => 'Chọn danh mục cho các bài đăng sắp được nhập vào (tùy chọn).',
         'default_author_label' => 'Tác giả mặc định (tùy chọn)',
         'default_author_comment' => 'Quá trình nhập sẽ cố gắng sử dụng tác giả hiện có nếu bạn khớp với cột Email tác giả, nếu không tác giả được chỉ định ở trên sẽ được sử dụng.',
-        'default_author_placeholder' => '-- Chọn tác giả --'
-    ]
+        'default_author_placeholder' => '-- Chọn tác giả --',
+    ],
 ];

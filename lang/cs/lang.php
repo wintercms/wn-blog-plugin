@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Robustní blogová platforma.'
+        'description' => 'Robustní blogová platforma.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -84,7 +84,7 @@ return [
         'all_blog_categories' => 'Všechny blogové kategorie',
         'blog_post' => 'Blogový příspěvek',
         'all_blog_posts' => 'Všechny blogové příspěvky',
-        'category_blog_posts' => 'Blog category posts'
+        'category_blog_posts' => 'Blog category posts',
     ],
     'settings' => [
         'category_title' => 'Seznam kategorií',
@@ -127,28 +127,28 @@ return [
         'rssfeed_title' => 'RSS Kanál',
         'rssfeed_description' => 'Vygeneruje RSS kanál který obsahuje blogové příspěvky.',
         'group_links' => 'Odkazy',
-        'group_exceptions' => 'Výjimky'
+        'group_exceptions' => 'Výjimky',
     ],
     'sorting' => [
-	    'title_asc' => 'Název (sestupně)',
-	    'title_desc' => 'Název (vzestupně)',
-	    'created_asc' => 'Vytvořeno (sestupně)',
-	    'created_desc' => 'Vytvořeno (vzestupně)',
-	    'updated_asc' => 'Upraveno (sestupně)',
-	    'updated_desc' => 'Upraveno (vzestupně)',
-	    'published_asc' => 'Publikováno (sestupně)',
-	    'published_desc' => 'Publikováno (vzestupně)',
-	    'random' => 'Náhodně'
+        'title_asc' => 'Název (sestupně)',
+        'title_desc' => 'Název (vzestupně)',
+        'created_asc' => 'Vytvořeno (sestupně)',
+        'created_desc' => 'Vytvořeno (vzestupně)',
+        'updated_asc' => 'Upraveno (sestupně)',
+        'updated_desc' => 'Upraveno (vzestupně)',
+        'published_asc' => 'Publikováno (sestupně)',
+        'published_desc' => 'Publikováno (vzestupně)',
+        'random' => 'Náhodně',
     ],
     'import' => [
-	    'update_existing_label' => 'Uprav existující příspěvky',
-	    'update_existing_comment' => 'Zvolte pokud chcete upravit příspěvky se stejným ID, názvem nebo URL.',
-	    'auto_create_categories_label' => 'VYtvořit kategorie ze souboru',
-	    'auto_create_categories_comment' => 'Chcete-li tuto funkci použít, měli byste se shodovat se sloupcem Kategorie, jinak vyberte výchozí kategorie, které chcete použít z níže uvedených položek.',
-	    'categories_label' => 'Kategorie',
-	    'categories_comment' => 'Vyberte kategorie ke kterým budou příspěvky přiřazeny (volitelné).',
-	    'default_author_label' => 'Výchozí autor příspěvků (volitelné)',
-	    'default_author_comment' => 'Import se pokusí použít existujícího autora, pokud odpovídá sloupci email, jinak se použije výše uvedený autor.',
-	    'default_author_placeholder' => '-- vyberte autora --'
-    ]
+        'update_existing_label' => 'Uprav existující příspěvky',
+        'update_existing_comment' => 'Zvolte pokud chcete upravit příspěvky se stejným ID, názvem nebo URL.',
+        'auto_create_categories_label' => 'VYtvořit kategorie ze souboru',
+        'auto_create_categories_comment' => 'Chcete-li tuto funkci použít, měli byste se shodovat se sloupcem Kategorie, jinak vyberte výchozí kategorie, které chcete použít z níže uvedených položek.',
+        'categories_label' => 'Kategorie',
+        'categories_comment' => 'Vyberte kategorie ke kterým budou příspěvky přiřazeny (volitelné).',
+        'default_author_label' => 'Výchozí autor příspěvků (volitelné)',
+        'default_author_comment' => 'Import se pokusí použít existujícího autora, pokud odpovídá sloupci email, jinak se použije výše uvedený autor.',
+        'default_author_placeholder' => '-- vyberte autora --',
+    ],
 ];

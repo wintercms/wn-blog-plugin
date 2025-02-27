@@ -1,7 +1,9 @@
-<?php namespace Winter\Blog\Updates;
+<?php
+
+namespace Winter\Blog\Updates;
 
 use Winter\Storm\Database\Updates\Migration;
-use DbDongle;
+use Winter\Storm\Support\Facades\DbDongle;
 
 class UpdateTimestampsNullable extends Migration
 {

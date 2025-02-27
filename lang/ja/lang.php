@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'ブログ',
-        'description' => 'ロバストなブログプラットフォームです。'
+        'description' => 'ロバストなブログプラットフォームです。',
     ],
     'blog' => [
         'menu_label' => 'ブログ',
@@ -19,13 +19,13 @@ return [
         'delete_confirm' => '削除していいですか？',
         'chart_published' => '公開済み',
         'chart_drafts' => '下書き',
-        'chart_total' => '合計'
+        'chart_total' => '合計',
     ],
     'posts' => [
         'list_title' => '投稿の管理',
         'filter_category' => 'カテゴリ',
         'filter_published' => '下書きのみ',
-        'new_post' => '投稿を追加'
+        'new_post' => '投稿を追加',
     ],
     'post' => [
         'title' => 'タイトル',
@@ -47,12 +47,12 @@ return [
         'featured_images' => 'アイキャッチ画像',
         'delete_confirm' => '削除していいですか？',
         'close_confirm' => '投稿は保存されていません。',
-        'return_to_posts' => '投稿一覧に戻る'
+        'return_to_posts' => '投稿一覧に戻る',
     ],
     'categories' => [
         'list_title' => 'カテゴリ管理',
         'new_category' => 'カテゴリの追加',
-        'uncategorized' => '未分類'
+        'uncategorized' => '未分類',
     ],
     'category' => [
         'name' => '名前',
@@ -61,7 +61,7 @@ return [
         'slug_placeholder' => 'new-category-slug-123',
         'posts' => '投稿数',
         'delete_confirm' => '削除していいですか？',
-        'return_to_categories' => 'カテゴリ一覧に戻る'
+        'return_to_categories' => 'カテゴリ一覧に戻る',
     ],
     'settings' => [
         'category_title' => 'カテゴリリスト',
@@ -96,5 +96,5 @@ return [
         'posts_post_description' => '"Learn more"リンクを生成するため、投稿ページのファイル名を指定します。拡張子(.htm)は省いてください。この項目はコンポーネントのデフォルトパーシャルで使用されます。',
         'posts_except_post' => 'Except post',
         'posts_except_post_description' => 'Enter ID/URL or variable with post ID/URL you want to except',
-    ]
+    ],
 ];

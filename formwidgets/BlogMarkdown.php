@@ -4,14 +4,14 @@ namespace Winter\Blog\FormWidgets;
 
 use Backend\FormWidgets\MarkdownEditor;
 use Exception;
-use Input;
-use Lang;
-use Response;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
 use System\Models\File;
-use SystemException;
-use ValidationException;
-use Validator;
 use Winter\Blog\Models\Post as PostModel;
+use Winter\Storm\Exception\SystemException;
+use Winter\Storm\Exception\ValidationException;
+use Winter\Storm\Support\Facades\Input;
+use Winter\Storm\Support\Facades\Validator;
 
 /**
  * Special markdown editor for the Create/Edit Post form.
@@ -26,7 +26,7 @@ class BlogMarkdown extends MarkdownEditor
      */
     public function init()
     {
-        $this->viewPath = base_path().'/modules/backend/formwidgets/markdowneditor/partials';
+        $this->viewPath = base_path() . '/modules/backend/formwidgets/markdowneditor/partials';
 
         $this->checkUploadPostback();
 
@@ -62,7 +62,7 @@ class BlogMarkdown extends MarkdownEditor
         $previewHtml = PostModel::formatHtml($content, true);
 
         return [
-            'preview' => $previewHtml
+            'preview' => $previewHtml,
         ];
     }
 
@@ -82,10 +82,11 @@ class BlogMarkdown extends MarkdownEditor
         try {
             $uploadedFile = Input::file('file');
 
-            if ($uploadedFile)
+            if ($uploadedFile) {
                 $uploadedFileName = $uploadedFile->getClientOriginalName();
+            }
 
-            $validationRules = ['max:'.File::getMaxFilesize()];
+            $validationRules = ['max:' . File::getMaxFilesize()];
             $validationRules[] = 'mimes:jpg,jpeg,bmp,png,gif';
 
             $validation = Validator::make(
@@ -111,12 +112,11 @@ class BlogMarkdown extends MarkdownEditor
             $fileRelation->add($file, $this->sessionKey);
             $result = [
                 'file' => $uploadedFileName,
-                'path' => $file->getPath()
+                'path' => $file->getPath(),
             ];
 
             $response = Response::make()->setContent($result);
             $this->controller->setResponse($response);
-
         } catch (Exception $ex) {
             $message = $uploadedFileName
                 ? Lang::get('cms::lang.asset.error_uploading_file', ['name' => $uploadedFileName, 'error' => $ex->getMessage()])
@@ -124,7 +124,7 @@ class BlogMarkdown extends MarkdownEditor
 
             $result = [
                 'error' => $message,
-                'file' => $uploadedFileName
+                'file' => $uploadedFileName,
             ];
 
             $response = Response::make()->setContent($result);

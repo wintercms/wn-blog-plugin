@@ -17,8 +17,8 @@ class PostExport extends ExportModel
     public $belongsTo = [
         'post_user' => [
             'Backend\Models\User',
-            'key' => 'user_id'
-        ]
+            'key' => 'user_id',
+        ],
     ];
 
     public $belongsToMany = [
@@ -26,8 +26,8 @@ class PostExport extends ExportModel
             'Winter\Blog\Models\Category',
             'table'    => 'winter_blog_posts_categories',
             'key'      => 'post_id',
-            'otherKey' => 'category_id'
-        ]
+            'otherKey' => 'category_id',
+        ],
     ];
 
     public $hasMany = [
@@ -35,8 +35,8 @@ class PostExport extends ExportModel
             'System\Models\File',
             'order' => 'sort_order',
             'key' => 'attachment_id',
-            'conditions' => "field = 'featured_images' AND attachment_type = 'Winter\\\\Blog\\\\Models\\\\Post'"
-        ]
+            'conditions' => "field = 'featured_images' AND attachment_type = 'Winter\\\\Blog\\\\Models\\\\Post'",
+        ],
     ];
 
     /**
@@ -46,7 +46,7 @@ class PostExport extends ExportModel
     protected $appends = [
         'author_email',
         'categories',
-        'featured_image_urls'
+        'featured_image_urls',
     ];
 
     public function exportData($columns, $sessionKey = null)
@@ -55,7 +55,7 @@ class PostExport extends ExportModel
             ->with([
                 'post_user',
                 'post_categories',
-                'featured_images'
+                'featured_images',
             ])
             ->get()
             ->toArray()

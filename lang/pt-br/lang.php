@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'A plataforma de blogs robusta.'
+        'description' => 'A plataforma de blogs robusta.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -21,7 +21,7 @@ return [
         'delete_confirm' => 'Você tem certeza?',
         'chart_published' => 'Publicados',
         'chart_drafts' => 'Rascunhos',
-        'chart_total' => 'Total'
+        'chart_total' => 'Total',
     ],
     'posts' => [
         'list_title' => 'Gerencie os posts do blog',
@@ -30,7 +30,7 @@ return [
         'filter_date' => 'Data',
         'new_post' => 'Novo post',
         'export_post' => 'Exportar posts',
-        'import_post' => 'Importar posts'
+        'import_post' => 'Importar posts',
     ],
     'post' => [
         'title' => 'Título',
@@ -59,12 +59,12 @@ return [
         'featured_images' => 'Imagens destacadas',
         'delete_confirm' => 'Você realmente deseja excluir este post?',
         'close_confirm' => 'O post não foi salvo.',
-        'return_to_posts' => 'Voltar à lista de posts'
+        'return_to_posts' => 'Voltar à lista de posts',
     ],
     'categories' => [
         'list_title' => 'Gerenciar as categorias do blog',
         'new_category' => 'Nova categoria',
-        'uncategorized' => 'Sem categoria'
+        'uncategorized' => 'Sem categoria',
     ],
     'category' => [
         'name' => 'Nome',
@@ -75,13 +75,13 @@ return [
         'posts' => 'Posts',
         'delete_confirm' => 'Você realmente quer apagar esta categoria?',
         'return_to_categories' => 'Voltar para a lista de categorias do blog',
-        'reorder' => 'Reordenar Categorias'
+        'reorder' => 'Reordenar Categorias',
     ],
     'menuitem' => [
         'blog_category' => 'Blog categoria',
         'all_blog_categories' => 'Todas as categorias de blog',
         'blog_post' => 'Blog post',
-        'all_blog_posts' => 'Todas as postagens do blog'
+        'all_blog_posts' => 'Todas as postagens do blog',
     ],
     'settings' => [
         'category_title' => 'Lista de categoria',
@@ -119,6 +119,6 @@ return [
         'rssfeed_blog' => 'Página do Blog',
         'rssfeed_blog_description' => 'Nome do arquivo principal da página do blog para geração de links. Essa propriedade é usada pelo componente padrão parcial.',
         'rssfeed_title' => 'RSS Feed',
-        'rssfeed_description' => 'Gera um feed RSS que contém posts do blog.'
-    ]
+        'rssfeed_description' => 'Gera um feed RSS que contém posts do blog.',
+    ],
 ];

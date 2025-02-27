@@ -3,19 +3,19 @@
 namespace Winter\Blog\Controllers;
 
 use Backend\Classes\Controller;
-use BackendMenu;
-use Flash;
-use Lang;
+use Backend\Facades\BackendMenu;
+use Illuminate\Support\Facades\Lang;
 use System\Classes\PluginManager;
 use Winter\Blog\Models\Post;
 use Winter\Blog\Models\Settings as BlogSettings;
+use Winter\Storm\Support\Facades\Flash;
 
 class Posts extends Controller
 {
     public $implement = [
         \Backend\Behaviors\FormController::class,
         \Backend\Behaviors\ListController::class,
-        \Backend\Behaviors\ImportExportController::class
+        \Backend\Behaviors\ImportExportController::class,
     ];
 
     public $requiredPermissions = ['winter.blog.access_other_posts', 'winter.blog.access_posts'];
@@ -107,7 +107,6 @@ class Posts extends Controller
     public function index_onDelete()
     {
         if (($checkedIds = post('checked')) && is_array($checkedIds) && count($checkedIds)) {
-
             foreach ($checkedIds as $postId) {
                 if ((!$post = Post::find($postId)) || !$post->canEdit($this->user)) {
                     continue;
@@ -144,7 +143,7 @@ class Posts extends Controller
         $previewHtml = Post::formatHtml($data['content'], true);
 
         return [
-            'preview' => $previewHtml
+            'preview' => $previewHtml,
         ];
     }
 }

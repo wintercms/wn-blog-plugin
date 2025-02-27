@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Eine robuste Blog Plattform.'
+        'description' => 'Eine robuste Blog Plattform.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -21,7 +21,7 @@ return [
         'delete_confirm' => 'Bist du sicher?',
         'chart_published' => 'Veröffentlicht',
         'chart_drafts' => 'Entwurf',
-        'chart_total' => 'Gesamt'
+        'chart_total' => 'Gesamt',
     ],
     'posts' => [
         'list_title' => 'Blog Artikel verwalten',
@@ -30,7 +30,7 @@ return [
         'filter_date' => 'Date',
         'new_post' => 'Neuer Artikel',
         'export_post' => 'Exportiere Artikel',
-        'import_post' => 'Importiere Artikel'
+        'import_post' => 'Importiere Artikel',
     ],
     'post' => [
         'title' => 'Titel',
@@ -67,7 +67,7 @@ return [
     'categories' => [
         'list_title' => 'Blog Kategorien verwalten',
         'new_category' => 'Neue Kategorie',
-        'uncategorized' => 'Allgemein'
+        'uncategorized' => 'Allgemein',
     ],
     'category' => [
         'name' => 'Name',
@@ -78,14 +78,14 @@ return [
         'posts' => 'Artikel',
         'delete_confirm' => 'Möchtest du die Kategorie wirklich löschen?',
         'return_to_categories' => 'Zurück zur Kategorie-Übersicht.',
-        'reorder' => 'Kategorien sortieren'
+        'reorder' => 'Kategorien sortieren',
     ],
     'menuitem' => [
         'blog_category' => 'Blog Kategorie',
         'all_blog_categories' => 'Alle Blog Kategorien',
         'blog_post' => 'Blog Artikel',
         'all_blog_posts' => 'Alle Blog Artikel',
-        'category_blog_posts' => 'Blog Kategorie Artikel'
+        'category_blog_posts' => 'Blog Kategorie Artikel',
     ],
     'settings' => [
         'category_title' => 'Blog Kategorie-Übersicht',
@@ -127,6 +127,6 @@ return [
         'rssfeed_title' => 'RSS-Feed',
         'rssfeed_description' => 'Erstellt einen RSS-Feed mit Artikeln aus dem Blog.',
         'group_links' => 'Links',
-        'group_exceptions' => 'Ausnahmen'
-    ]
+        'group_exceptions' => 'Ausnahmen',
+    ],
 ];

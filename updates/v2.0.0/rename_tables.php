@@ -1,15 +1,17 @@
-<?php namespace Winter\Blog\Updates;
+<?php
 
-use Db;
-use Schema;
+namespace Winter\Blog\Updates;
+
 use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\DB;
+use Winter\Storm\Support\Facades\Schema;
 
 class RenameTables extends Migration
 {
-    const TABLES = [
+    public const TABLES = [
         'categories',
         'posts',
-        'posts_categories'
+        'posts_categories',
     ];
 
     public function up()

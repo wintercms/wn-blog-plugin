@@ -2,17 +2,16 @@
 
 namespace Winter\Blog\Components;
 
-use BackendAuth;
+use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Lang;
-use Redirect;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Redirect;
 use Winter\Blog\Models\Category as BlogCategory;
 use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Settings as BlogSettings;
 use Winter\Storm\Database\Collection;
-use Winter\Storm\Database\Model;
 
 class Posts extends ComponentBase
 {
@@ -55,7 +54,7 @@ class Posts extends ComponentBase
     {
         return [
             'name'        => 'winter.blog::lang.settings.posts_title',
-            'description' => 'winter.blog::lang.settings.posts_description'
+            'description' => 'winter.blog::lang.settings.posts_description',
         ];
     }
 
@@ -222,10 +221,10 @@ class Posts extends ComponentBase
         /*
          * Add a "url" helper attribute for linking to each post and category
          */
-        $posts->each(function($post) use ($categorySlug) {
+        $posts->each(function ($post) use ($categorySlug) {
             $post->setUrl($this->postPage, $this->controller, ['category' => $categorySlug]);
 
-            $post->categories->each(function($category) {
+            $post->categories->each(function ($category) {
                 $category->setUrl($this->categoryPage, $this->controller);
             });
         });
@@ -239,7 +238,7 @@ class Posts extends ComponentBase
             return null;
         }
 
-        $category = new BlogCategory;
+        $category = new BlogCategory();
 
         $category = $category->isClassExtendedWith('Winter.Translate.Behaviors.TranslatableModel')
             ? $category->transWhere('slug', $slug)

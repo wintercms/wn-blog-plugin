@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Teljeskörű blog alkalmazás.'
+        'description' => 'Teljeskörű blog alkalmazás.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -26,7 +26,7 @@ return [
         'settings_description' => 'Beállítási lehetőségek.',
         'show_all_posts_label' => 'Az összes bejegyzés mutatása az adminisztrátorok számára',
         'show_all_posts_comment' => 'A közzétett és a még nem publikált bejegyzések is egyaránt meg fognak jelenni az oldal szerkesztőinek.',
-        'tab_general' => 'Általános'
+        'tab_general' => 'Általános',
     ],
     'posts' => [
         'list_title' => 'Blog bejegyzések',
@@ -35,7 +35,7 @@ return [
         'filter_date' => 'Létrehozva',
         'new_post' => 'Új bejegyzés',
         'export_post' => 'Exportálás',
-        'import_post' => 'Importálás'
+        'import_post' => 'Importálás',
     ],
     'post' => [
         'title' => 'Cím',
@@ -75,7 +75,7 @@ return [
     'categories' => [
         'list_title' => 'Blog kategóriák',
         'new_category' => 'Új kategória',
-        'uncategorized' => 'Nincs kategorizálva'
+        'uncategorized' => 'Nincs kategorizálva',
     ],
     'category' => [
         'name' => 'Név',
@@ -87,14 +87,14 @@ return [
         'delete_confirm' => 'Valóban törölni akarja ezt a kategóriát?',
         'delete_success' => 'Sikeresen törölve lettek a kategóriák.',
         'return_to_categories' => 'Vissza a kategóriákhoz',
-        'reorder' => 'Kategóriák sorrendje'
+        'reorder' => 'Kategóriák sorrendje',
     ],
     'menuitem' => [
         'blog_category' => 'Blog kategória',
         'all_blog_categories' => 'Összes blog kategória',
         'blog_post' => 'Blog bejegyzés',
         'all_blog_posts' => 'Összes blog bejegyzés',
-        'category_blog_posts' => 'Blog kategória bejegyzések'
+        'category_blog_posts' => 'Blog kategória bejegyzések',
     ],
     'settings' => [
         'category_title' => 'Blog kategória lista',
@@ -139,7 +139,7 @@ return [
         'rssfeed_title' => 'RSS hírfolyam',
         'rssfeed_description' => 'A bloghoz tartozó RSS hírfolyam generálása.',
         'group_links' => 'Hivatkozások',
-        'group_exceptions' => 'Kivételek'
+        'group_exceptions' => 'Kivételek',
     ],
     'sorting' => [
         'title_asc' => 'Név (növekvő)',
@@ -150,7 +150,7 @@ return [
         'updated_desc' => 'Frissítve (csökkenő)',
         'published_asc' => 'Publikálva (növekvő)',
         'published_desc' => 'Publikálva (csökkenő)',
-        'random' => 'Véletlenszerű'
+        'random' => 'Véletlenszerű',
     ],
     'import' => [
         'update_existing_label' => 'Meglévő bejegyzések frissítése',
@@ -161,6 +161,6 @@ return [
         'categories_comment' => 'Válassza ki azokat a kategóriákat, amelyekhez az importált bejegyzések tartoznak (nem kötelező).',
         'default_author_label' => 'Alapértelmezett szerző (nem kötelező)',
         'default_author_comment' => 'A rendszer megpróbál egy meglévő felhasználót társítani a bejegyzéshez az Email oszlop alapján. Amennyiben ez nem sikerül, az itt megadott szerzőt fogja alapul venni.',
-        'default_author_placeholder' => '-- válasszon felhasználót --'
-    ]
+        'default_author_placeholder' => '-- válasszon felhasználót --',
+    ],
 ];
