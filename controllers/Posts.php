@@ -3,6 +3,7 @@
 namespace Winter\Blog\Controllers;
 
 use Backend\Classes\Controller;
+use Backend\Facades\BackendMenu;
 use Illuminate\Support\Facades\Lang;
 use System\Classes\PluginManager;
 use Winter\Blog\Models\Post;
@@ -32,6 +33,8 @@ class Posts extends Controller
 
     public function create()
     {
+        BackendMenu::setContextSideMenu('new_post');
+
         $this->addCss('/plugins/winter/blog/assets/css/winter.blog-preview.css');
         $this->addJs('/plugins/winter/blog/assets/js/post-form.js');
 
