@@ -1,15 +1,15 @@
-<?php namespace Winter\Blog\Updates;
+<?php
 
-use Schema;
+namespace Winter\Blog\Updates;
+
 use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\Schema;
 
 class CreatePostsTable extends Migration
 {
-
     public function up()
     {
-        Schema::create('rainlab_blog_posts', function($table)
-        {
+        Schema::create('rainlab_blog_posts', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable()->index();
@@ -28,5 +28,4 @@ class CreatePostsTable extends Migration
     {
         Schema::dropIfExists('rainlab_blog_posts');
     }
-
 }

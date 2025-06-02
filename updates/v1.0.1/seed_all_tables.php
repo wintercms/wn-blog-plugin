@@ -1,13 +1,14 @@
-<?php namespace Winter\Blog\Updates;
+<?php
+
+namespace Winter\Blog\Updates;
 
 use Carbon\Carbon;
-use Winter\Blog\Models\Post;
 use Winter\Blog\Models\Category;
+use Winter\Blog\Models\Post;
 use Winter\Storm\Database\Updates\Seeder;
 
 class SeedAllTables extends Seeder
 {
-
     public function run()
     {
         Post::extend(function ($model) {
@@ -26,7 +27,7 @@ You can edit this content by selecting **Blog** from the administration back-end
             ',
             'excerpt' => 'The first ever blog post is here. It might be a good idea to update this post with some more relevant content.',
             'published_at' => Carbon::now(),
-            'published' => true
+            'published' => true,
         ]);
 
         Category::extend(function ($model) {

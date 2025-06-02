@@ -2,24 +2,24 @@
 
 namespace Winter\Blog\Models;
 
+use Backend\Facades\BackendAuth;
 use Backend\Models\User;
-use BackendAuth;
 use Carbon\Carbon;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
-use Html;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Lang;
-use Markdown;
-use Model;
+use Illuminate\Support\Facades\Lang;
 use System\Models\File;
-use Url;
-use ValidationException;
 use Winter\Blog\Classes\TagProcessor;
+use Winter\Blog\Models\Settings as BlogSettings;
 use Winter\Pages\Classes\MenuItem;
 use Winter\Sitemap\Classes\DefinitionItem;
+use Winter\Storm\Database\Model;
 use Winter\Storm\Database\NestedTreeScope;
-use Winter\Storm\Router\Router;
+use Winter\Storm\Exception\ValidationException;
+use Winter\Storm\Support\Facades\Html;
+use Winter\Storm\Support\Facades\Markdown;
+use Winter\Storm\Support\Facades\URL;
 
 /**
  * Class Post
@@ -39,7 +39,7 @@ class Post extends Model
         'title'   => 'required',
         'slug'    => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique'],
         'content' => 'required',
-        'excerpt' => ''
+        'excerpt' => '',
     ];
 
     /**
@@ -51,7 +51,7 @@ class Post extends Model
         'content_html',
         'excerpt',
         'metadata',
-        ['slug', 'index' => true]
+        ['slug', 'index' => true],
     ];
 
     /**
@@ -98,7 +98,7 @@ class Post extends Model
             Category::class,
             'table' => 'winter_blog_posts_categories',
             'order' => 'name',
-        ]
+        ],
     ];
 
     public $attachMany = [
@@ -156,8 +156,7 @@ class Post extends Model
         if (!$user->hasAnyAccess(['winter.blog.access_publish'])) {
             $fields->published->hidden = true;
             $fields->published_at->hidden = true;
-        }
-        else {
+        } else {
             $fields->published->hidden = false;
             $fields->published_at->hidden = false;
         }
@@ -167,7 +166,7 @@ class Post extends Model
     {
         if ($this->published && !$this->published_at) {
             throw new ValidationException([
-               'published_at' => Lang::get('winter.blog::lang.post.published_validation')
+                'published_at' => Lang::get('winter.blog::lang.post.published_validation'),
             ]);
         }
     }
@@ -183,7 +182,13 @@ class Post extends Model
 
     public static function formatHtml($input, $preview = false)
     {
-        $result = Markdown::parse(trim($input));
+        $useRichEditor = BlogSettings::get('use_rich_editor', false);
+
+        if ($useRichEditor) {
+            $result = trim($input);
+        } else {
+            $result = Markdown::parse(trim($input));
+        }
 
         // Check to see if the HTML should be cleaned from potential XSS
         $user = BackendAuth::getUser();
@@ -231,7 +236,7 @@ class Post extends Model
             'category'         => null,
             'search'           => '',
             'published'        => true,
-            'exceptPost'       => null
+            'exceptPost'       => null,
         ], $options));
 
         $searchableFields = ['title', 'slug', 'excerpt', 'content'];
@@ -296,7 +301,7 @@ class Post extends Model
          */
         if ($categories !== null) {
             $categories = is_array($categories) ? $categories : [$categories];
-            $query->whereHas('categories', function($q) use ($categories) {
+            $query->whereHas('categories', function ($q) use ($categories) {
                 $q->withoutGlobalScope(NestedTreeScope::class)->whereIn('id', $categories);
             });
         }
@@ -320,7 +325,7 @@ class Post extends Model
             $category = Category::find($category);
 
             $categories = $category->getAllChildrenAndSelf()->lists('id');
-            $query->whereHas('categories', function($q) use ($categories) {
+            $query->whereHas('categories', function ($q) use ($categories) {
                 $q->withoutGlobalScope(NestedTreeScope::class)->whereIn('id', $categories);
             });
         }
@@ -336,7 +341,7 @@ class Post extends Model
      */
     public function scopeFilterCategories($query, $categories)
     {
-        return $query->whereHas('categories', function($q) use ($categories) {
+        return $query->whereHas('categories', function ($q) use ($categories) {
             $q->withoutGlobalScope(NestedTreeScope::class)->whereIn('id', $categories);
         });
     }
@@ -473,7 +478,7 @@ class Post extends Model
 
         extract(array_merge([
             'direction' => 'next',
-            'attribute' => 'published_at'
+            'attribute' => 'published_at',
         ], $options));
 
         $isPrevious = in_array($direction, ['previous', -1]);
@@ -541,13 +546,13 @@ class Post extends Model
             $result = [
                 'references'   => $references,
                 'nesting'      => false,
-                'dynamicItems' => false
+                'dynamicItems' => false,
             ];
         }
 
         if ($type == 'all-blog-posts') {
             $result = [
-                'dynamicItems' => true
+                'dynamicItems' => true,
             ];
         }
 
@@ -561,7 +566,7 @@ class Post extends Model
 
             $result = [
                 'references'   => $references,
-                'dynamicItems' => true
+                'dynamicItems' => true,
             ];
         }
 
@@ -655,10 +660,9 @@ class Post extends Model
             if (count($localizedUrls) > 1) {
                 $result['alternateLinks'] = $localizedUrls;
             }
-
         } elseif ($item->type == 'all-blog-posts') {
             $result = [
-                'items' => []
+                'items' => [],
             ];
 
             $posts = self::isPublished()->orderBy('title')->get();
@@ -666,7 +670,7 @@ class Post extends Model
                 $postItem = [
                     'title' => $post->title,
                     'url'   => Url::to($post->getUrl($cmsPage)),
-                    'mtime' => $post->updated_at
+                    'mtime' => $post->updated_at,
                 ];
 
                 $postItem['isActive'] = $postItem['url'] === $currentUrl;
@@ -678,7 +682,6 @@ class Post extends Model
 
                 $result['items'][] = $postItem;
             }
-
         } elseif ($item->type == 'category-blog-posts') {
             if (!$item->reference) {
                 return null;
@@ -690,13 +693,13 @@ class Post extends Model
             }
 
             $result = [
-                'items' => []
+                'items' => [],
             ];
 
             $query = self::isPublished()->orderBy('title');
 
             $categories = $category->getAllChildrenAndSelf()->lists('id');
-            $query->whereHas('categories', function($q) use ($categories) {
+            $query->whereHas('categories', function ($q) use ($categories) {
                 $q->withoutGlobalScope(NestedTreeScope::class)->whereIn('id', $categories);
             });
 
@@ -706,7 +709,7 @@ class Post extends Model
                 $postItem = [
                     'title' => $post->title,
                     'url'   => Url::to($post->getUrl($cmsPage)),
-                    'mtime' => $post->updated_at
+                    'mtime' => $post->updated_at,
                 ];
 
                 $postItem['isActive'] = $postItem['url'] === $currentUrl;

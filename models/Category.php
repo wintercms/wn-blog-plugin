@@ -4,11 +4,11 @@ namespace Winter\Blog\Models;
 
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
-use Model;
-use Str;
-use Url;
 use Winter\Pages\Classes\MenuItem;
 use Winter\Sitemap\Classes\DefinitionItem;
+use Winter\Storm\Database\Model;
+use Winter\Storm\Support\Facades\URL;
+use Winter\Storm\Support\Str;
 
 class Category extends Model
 {
@@ -51,7 +51,7 @@ class Category extends Model
             'table' => 'winter_blog_posts_categories',
             'scope' => 'isPublished',
             'count' => true,
-        ]
+        ],
     ];
 
     public function beforeValidate()
@@ -112,13 +112,13 @@ class Category extends Model
             $result = [
                 'references'   => self::listSubCategoryOptions(),
                 'nesting'      => true,
-                'dynamicItems' => true
+                'dynamicItems' => true,
             ];
         }
 
         if ($type == 'all-blog-categories') {
             $result = [
-                'dynamicItems' => true
+                'dynamicItems' => true,
             ];
         }
 
@@ -154,17 +154,16 @@ class Category extends Model
     {
         $category = self::getNested();
 
-        $iterator = function($categories) use (&$iterator) {
+        $iterator = function ($categories) use (&$iterator) {
             $result = [];
 
             foreach ($categories as $category) {
                 if (!$category->children) {
                     $result[$category->id] = $category->name;
-                }
-                else {
+                } else {
                     $result[$category->id] = [
                         'title' => $category->name,
-                        'items' => $iterator($category->children)
+                        'items' => $iterator($category->children),
                     ];
                 }
             }
@@ -235,7 +234,7 @@ class Category extends Model
 
             if ($item->nesting) {
                 $categories = $category->getNested();
-                $iterator = function($categories) use (&$iterator, &$item, &$theme, $currentUrl) {
+                $iterator = function ($categories) use (&$iterator, &$item, &$theme, $currentUrl) {
                     $branch = [];
 
                     foreach ($categories as $category) {
@@ -267,10 +266,9 @@ class Category extends Model
 
                 $result['items'] = $iterator($categories);
             }
-        }
-        elseif ($item->type == 'all-blog-categories') {
+        } elseif ($item->type == 'all-blog-categories') {
             $result = [
-                'items' => []
+                'items' => [],
             ];
 
             $categories = self::orderBy('name')->get();
@@ -278,7 +276,7 @@ class Category extends Model
                 $categoryItem = [
                     'title' => $category->name,
                     'url'   => Url::to($category->getUrl($cmsPage)),
-                    'mtime' => $category->updated_at
+                    'mtime' => $category->updated_at,
                 ];
 
                 $categoryItem['isActive'] = $categoryItem['url'] === $currentUrl;

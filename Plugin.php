@@ -2,13 +2,13 @@
 
 namespace Winter\Blog;
 
-use Backend;
+use Backend\Facades\Backend;
 use Backend\Models\UserRole;
-use Event;
 use System\Classes\PluginBase;
 use Winter\Blog\Classes\TagProcessor;
 use Winter\Blog\Models\Category;
 use Winter\Blog\Models\Post;
+use Winter\Storm\Support\Facades\Event;
 
 class Plugin extends PluginBase
 {
@@ -36,7 +36,7 @@ class Plugin extends PluginBase
             \Winter\Blog\Components\Post::class       => 'blogPost',
             \Winter\Blog\Components\Posts::class      => 'blogPosts',
             \Winter\Blog\Components\Categories::class => 'blogCategories',
-            \Winter\Blog\Components\RssFeed::class    => 'blogRssFeed'
+            \Winter\Blog\Components\RssFeed::class    => 'blogRssFeed',
         ];
     }
 
@@ -75,7 +75,7 @@ class Plugin extends PluginBase
                 'tab'   => 'winter.blog::lang.blog.tab',
                 'label' => 'winter.blog::lang.blog.access_publish',
                 'roles' => [UserRole::CODE_DEVELOPER, UserRole::CODE_PUBLISHER],
-            ]
+            ],
         ];
     }
 
@@ -98,22 +98,22 @@ class Plugin extends PluginBase
                         'label'       => 'winter.blog::lang.posts.new_post',
                         'icon'        => 'icon-plus',
                         'url'         => Backend::url('winter/blog/posts/create'),
-                        'permissions' => ['winter.blog.access_posts']
+                        'permissions' => ['winter.blog.access_posts'],
                     ],
                     'posts' => [
                         'label'       => 'winter.blog::lang.blog.posts',
                         'icon'        => 'icon-copy',
                         'url'         => Backend::url('winter/blog/posts'),
-                        'permissions' => ['winter.blog.access_posts']
+                        'permissions' => ['winter.blog.access_posts'],
                     ],
                     'categories' => [
                         'label'       => 'winter.blog::lang.blog.categories',
                         'icon'        => 'icon-list-ul',
                         'url'         => Backend::url('winter/blog/categories'),
-                        'permissions' => ['winter.blog.access_categories']
-                    ]
-                ]
-            ]
+                        'permissions' => ['winter.blog.access_categories'],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -131,8 +131,8 @@ class Plugin extends PluginBase
                 'class' => 'Winter\Blog\Models\Settings',
                 'order' => 500,
                 'keywords' => 'blog post category',
-                'permissions' => ['winter.blog.manage_settings']
-            ]
+                'permissions' => ['winter.blog.manage_settings'],
+            ],
         ];
     }
 
@@ -144,19 +144,21 @@ class Plugin extends PluginBase
         /*
          * Register the image tag processing callback
          */
-        TagProcessor::instance()->registerCallback(function($input, $preview) {
+        TagProcessor::instance()->registerCallback(function ($input, $preview) {
             if (!$preview) {
                 return $input;
             }
 
-            return preg_replace('|\<img src="image" alt="([0-9]+)"([^>]*)\/>|m',
+            return preg_replace(
+                '|\<img src="image" alt="([0-9]+)"([^>]*)\/>|m',
                 '<span class="image-placeholder" data-index="$1">
                     <span class="upload-dropzone">
                         <span class="label">Click or drop an image...</span>
                         <span class="indicator"></span>
                     </span>
                 </span>',
-            $input);
+                $input
+            );
         });
     }
 

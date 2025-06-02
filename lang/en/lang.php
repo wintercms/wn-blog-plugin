@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'A robust blogging platform.'
+        'description' => 'A robust blogging platform.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -26,7 +26,9 @@ return [
         'settings_description' => 'Manage blog settings',
         'show_all_posts_label' => 'Show all posts to backend users',
         'show_all_posts_comment' => 'Display both published and unpublished posts on the frontend to backend users',
-        'tab_general' => 'General'
+        'tab_general' => 'General',
+        'use_rich_editor_label' => 'Use the rich editor for blog content',
+        'use_rich_editor_comment' => 'By default, blog posts are written using Markdown. If this is enabled, this changes the editor to an HTML based editor (WYSIWYG).',
     ],
     'posts' => [
         'list_title' => 'Manage the blog posts',
@@ -36,7 +38,7 @@ return [
         'new_post' => 'New post',
         'view_post' => 'View post',
         'export_post' => 'Export posts',
-        'import_post' => 'Import posts'
+        'import_post' => 'Import posts',
     ],
     'post' => [
         'title' => 'Title',
@@ -78,7 +80,7 @@ return [
     'categories' => [
         'list_title' => 'Manage the blog categories',
         'new_category' => 'New category',
-        'uncategorized' => 'Uncategorized'
+        'uncategorized' => 'Uncategorized',
     ],
     'category' => [
         'name' => 'Name',
@@ -90,14 +92,14 @@ return [
         'delete_confirm' => 'Delete this category?',
         'delete_success' => 'Successfully deleted those categories.',
         'return_to_categories' => 'Return to the blog category list',
-        'reorder' => 'Reorder Categories'
+        'reorder' => 'Reorder Categories',
     ],
     'menuitem' => [
         'blog_category' => 'Blog category',
         'all_blog_categories' => 'All blog categories',
         'blog_post' => 'Blog post',
         'all_blog_posts' => 'All blog posts',
-        'category_blog_posts' => 'Blog category posts'
+        'category_blog_posts' => 'Blog category posts',
     ],
     'settings' => [
         'category_title' => 'Category List',
@@ -142,7 +144,7 @@ return [
         'rssfeed_title' => 'RSS Feed',
         'rssfeed_description' => 'Generates an RSS feed containing posts from the blog.',
         'group_links' => 'Links',
-        'group_exceptions' => 'Exceptions'
+        'group_exceptions' => 'Exceptions',
     ],
     'sorting' => [
         'title_asc' => 'Title (ascending)',
@@ -153,7 +155,7 @@ return [
         'updated_desc' => 'Updated (descending)',
         'published_asc' => 'Published (ascending)',
         'published_desc' => 'Published (descending)',
-        'random' => 'Random'
+        'random' => 'Random',
     ],
     'import' => [
         'update_existing_label' => 'Update existing posts',
@@ -164,6 +166,6 @@ return [
         'categories_comment' => 'Select the categories that imported posts will belong to (optional).',
         'default_author_label' => 'Default post author (optional)',
         'default_author_comment' => 'The import will try to use an existing author if you match the Author Email column, otherwise the author specified above is used.',
-        'default_author_placeholder' => '-- select author --'
-    ]
+        'default_author_placeholder' => '-- select author --',
+    ],
 ];

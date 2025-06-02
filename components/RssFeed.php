@@ -6,8 +6,8 @@ use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Lang;
-use Response;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
 use Winter\Blog\Models\Category as BlogCategory;
 use Winter\Blog\Models\Post as BlogPost;
 use Winter\Storm\Router\UrlGenerator;
@@ -38,7 +38,7 @@ class RssFeed extends ComponentBase
     {
         return [
             'name'        => 'winter.blog::lang.settings.rssfeed_title',
-            'description' => 'winter.blog::lang.settings.rssfeed_description'
+            'description' => 'winter.blog::lang.settings.rssfeed_description',
         ];
     }
 
@@ -162,7 +162,7 @@ class RssFeed extends ComponentBase
         /*
          * Add a "url" helper attribute for linking to each post and category
          */
-        $posts->each(function($post) {
+        $posts->each(function ($post) {
             $post->setUrl($this->postPage, $this->controller);
         });
 

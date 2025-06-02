@@ -1,4 +1,6 @@
-<?php return [
+<?php
+
+return [
     'plugin' => [
         'name' => 'Blog',
         'description' => 'Solidna platforma blogera',

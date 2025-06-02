@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Una solida piattaforma di blogging.'
+        'description' => 'Una solida piattaforma di blogging.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -20,13 +20,13 @@ return [
         'delete_confirm' => 'Sei sicuro?',
         'chart_published' => 'Pubblicato',
         'chart_drafts' => 'Bozze',
-        'chart_total' => 'Totale'
+        'chart_total' => 'Totale',
     ],
     'posts' => [
         'list_title' => 'Gestisci i post',
         'category' => 'Categoria',
         'hide_published' => 'Nascondi pubblicati',
-        'new_post' => 'Nuovo post'
+        'new_post' => 'Nuovo post',
     ],
     'post' => [
         'title' => 'Titolo',
@@ -55,12 +55,12 @@ return [
         'featured_images' => 'Immagini in evidenza',
         'delete_confirm' => 'Vuoi veramente cancellare questo post?',
         'close_confirm' => 'Questo post non è salvato.',
-        'return_to_posts' => 'Ritorna all\'elenco dei post'
+        'return_to_posts' => 'Ritorna all\'elenco dei post',
     ],
     'categories' => [
         'list_title' => 'Gestisci le categorie del blog',
         'new_category' => 'Nuova categoria',
-        'uncategorized' => 'Non categorizzato'
+        'uncategorized' => 'Non categorizzato',
     ],
     'category' => [
         'name' => 'Nome',
@@ -70,7 +70,7 @@ return [
         'posts' => 'Post',
         'delete_confirm' => 'Vuoi veramente cancellare questa categoria?',
         'return_to_categories' => 'Ritorna all\'elenco delle categorie del blog',
-        'reorder' => 'Riordino Categorie'
+        'reorder' => 'Riordino Categorie',
     ],
     'settings' => [
         'category_title' => 'Elenco Categorie',
@@ -102,6 +102,6 @@ return [
         'posts_category' => 'Pagina delle categorie',
         'posts_category_description' => 'Nome del file per la pagina delle categorie per i link "Postato in" alle categorie. Questa proprietà è usata dal componente parziale di default.',
         'posts_post' => 'Pagina del post',
-        'posts_post_description' => 'Nome del file per la pagina del post per i link "Scopri di più". Questa proprietà è usata dal componente parziale di default.'
-    ]
+        'posts_post_description' => 'Nome del file per la pagina del post per i link "Scopri di più". Questa proprietà è usata dal componente parziale di default.',
+    ],
 ];

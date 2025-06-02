@@ -4,6 +4,32 @@ A simple, extensible blogging platform for Winter CMS.
 
 [Blog & Forum Building Tutorial Video](https://player.vimeo.com/video/97088926)
 
+Supports:
+
+- Posts
+- Categories
+- Authors
+- Publish status & date
+- Featured images
+- Excerpts
+- Post previews
+- Importing & Exporting posts
+- RSS Feeds
+
+## Installation
+
+This plugin is available for installation via [Composer](http://getcomposer.org/).
+
+```bash
+composer require winter/wn-blog-plugin
+```
+
+After installing the plugin you will need to run the migrations and (if you are using a [public folder](https://wintercms.com/docs/develop/docs/setup/configuration#using-a-public-folder)) [republish your public directory](https://wintercms.com/docs/develop/docs/console/setup-maintenance#mirror-public-files).
+
+```bash
+php artisan migrate
+```
+
 ## Editing posts
 
 The plugin uses the markdown markup for the posts. You can use any Markdown syntax and some special tags for embedding images and videos (requires Winter Blog Video plugin). To embed an image use the image placeholder:

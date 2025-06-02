@@ -1,12 +1,14 @@
-<?php namespace Winter\Blog\Updates;
+<?php
 
-use Db;
-use Schema;
+namespace Winter\Blog\Updates;
+
 use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\DB;
+use Winter\Storm\Support\Facades\Schema;
 
 class FixTranslateRecords extends Migration
 {
-    const MODELS = [
+    public const MODELS = [
         'Category',
         'Post',
     ];
@@ -27,7 +29,7 @@ class FixTranslateRecords extends Migration
 
         if (Schema::hasTable('rainlab_translate_indexes')) {
             $tables = preg_filter('/^/', 'rainlab_translate_', $tables);
-        } else if (Schema::hasTable('rainlab_translate_indexes')) {
+        } elseif (Schema::hasTable('rainlab_translate_indexes')) {
             $tables = preg_filter('/^/', 'rainlab_translate_', $tables);
         } else {
             return;

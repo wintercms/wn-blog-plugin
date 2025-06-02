@@ -2,11 +2,10 @@
 
 namespace Winter\Blog\Traits;
 
-use App;
 use Cms\Classes\Controller;
 use Cms\Classes\Page as CmsPage;
-use Url;
 use Winter\Storm\Router\Router;
+use Winter\Storm\Support\Facades\URL;
 use Winter\Translate\Classes\Translator;
 use Winter\Translate\Models\Locale;
 
@@ -68,7 +67,7 @@ trait Urlable
         $params = $localRecord->getUrlParams($page);
         $url = $translator->getPathInLocale($localeUrl, $locale);
 
-        return (new Router)->urlFromPattern($url, $params);
+        return (new Router())->urlFromPattern($url, $params);
     }
 
     /**

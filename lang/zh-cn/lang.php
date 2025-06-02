@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => '博客',
-        'description' => '一个强大的博客平台.'
+        'description' => '一个强大的博客平台.',
     ],
     'blog' => [
         'menu_label' => '博客',
@@ -21,7 +21,7 @@ return [
         'delete_confirm' => '你确定?',
         'chart_published' => '已发布',
         'chart_drafts' => '草稿',
-        'chart_total' => '总数'
+        'chart_total' => '总数',
     ],
     'posts' => [
         'list_title' => '管理博客帖子',
@@ -30,7 +30,7 @@ return [
         'filter_date' => '日期',
         'new_post' => '创建帖子',
         'export_post' => '导出帖子',
-        'import_post' => '导入帖子'
+        'import_post' => '导入帖子',
     ],
     'post' => [
         'title' => '标题',
@@ -59,12 +59,12 @@ return [
         'featured_images' => '特色图片',
         'delete_confirm' => '确定删除该帖子?',
         'close_confirm' => '该帖子未保存.',
-        'return_to_posts' => '返回帖子列表'
+        'return_to_posts' => '返回帖子列表',
     ],
     'categories' => [
         'list_title' => '管理博客分类',
         'new_category' => '新分类',
-        'uncategorized' => '未分类'
+        'uncategorized' => '未分类',
     ],
     'category' => [
         'name' => '名称',
@@ -75,13 +75,13 @@ return [
         'posts' => '帖子',
         'delete_confirm' => '确定删除分类?',
         'return_to_categories' => '返回博客分类列表',
-        'reorder' => '重新排序分类'
+        'reorder' => '重新排序分类',
     ],
     'menuitem' => [
         'blog_category' => '博客分类',
         'all_blog_categories' => '所有博客分类',
         'blog_post' => '博客帖子',
-        'all_blog_posts' => '所有博客帖子'
+        'all_blog_posts' => '所有博客帖子',
     ],
     'settings' => [
         'category_title' => '分类列表',
@@ -119,6 +119,6 @@ return [
         'rssfeed_blog' => '博客页面',
         'rssfeed_blog_description' => '生成博客帖子首页面文件名称. 该属性被默认组件partial所使用.',
         'rssfeed_title' => 'RSS Feed',
-        'rssfeed_description' => '从博客生成一个包含帖子的RSS Feed.'
-    ]
+        'rssfeed_description' => '从博客生成一个包含帖子的RSS Feed.',
+    ],
 ];

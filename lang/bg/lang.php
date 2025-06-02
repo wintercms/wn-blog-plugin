@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Блог',
-        'description' => 'Стабилната блог платформа.'
+        'description' => 'Стабилната блог платформа.',
     ],
     'blog' => [
         'menu_label' => 'Блог',
@@ -19,13 +19,13 @@ return [
         'delete_confirm' => 'Сигурни ли сте?',
         'chart_published' => 'Публикувано',
         'chart_drafts' => 'Чернови',
-        'chart_total' => 'Общо'
+        'chart_total' => 'Общо',
     ],
     'posts' => [
         'list_title' => 'Управление публикациите в блога',
         'filter_category' => 'Категория',
         'filter_published' => 'Скрий публикуваните',
-        'new_post' => 'Нова публикация'
+        'new_post' => 'Нова публикация',
     ],
     'post' => [
         'title' => 'Заглавие',
@@ -47,12 +47,12 @@ return [
         'featured_images' => 'Избрани снимки',
         'delete_confirm' => 'Наистина ли искате да изтриете тази публикация?',
         'close_confirm' => 'Публикацията не е запазена.',
-        'return_to_posts' => 'Върни ме към всички публикации'
+        'return_to_posts' => 'Върни ме към всички публикации',
     ],
     'categories' => [
         'list_title' => 'Управление категориите в блога',
         'new_category' => 'Нова категория',
-        'uncategorized' => 'Без категория'
+        'uncategorized' => 'Без категория',
     ],
     'category' => [
         'name' => 'Име',
@@ -61,7 +61,7 @@ return [
         'slug_placeholder' => 'нов slug на категотията',
         'posts' => 'публикации',
         'delete_confirm' => 'Наистина ли искате да изтриете тази категория?',
-        'return_to_categories' => 'Върни ме към всички категории'
+        'return_to_categories' => 'Върни ме към всички категории',
     ],
     'settings' => [
         'category_title' => 'Списък с категории',
@@ -96,5 +96,5 @@ return [
         'posts_post_description' => 'Име на страницата за публикации "Прочетете повече". Това се използва подразбиране от компонента.',
         'posts_except_post' => 'Except post',
         'posts_except_post_description' => 'Enter ID/URL or variable with post ID/URL you want to except',
-    ]
+    ],
 ];

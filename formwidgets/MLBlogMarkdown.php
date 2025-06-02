@@ -111,8 +111,7 @@ class MLBlogMarkdown extends BlogMarkdown
             $this->originalViewPath = $this->viewPath;
             $this->assetPath = '/modules/backend/formwidgets/markdowneditor/assets';
             $this->viewPath = base_path('/modules/backend/formwidgets/markdowneditor/partials');
-        }
-        else {
+        } else {
             $this->assetPath = $this->originalAssetPath;
             $this->viewPath = $this->originalViewPath;
         }
@@ -125,8 +124,7 @@ class MLBlogMarkdown extends BlogMarkdown
             $this->originalViewPath = $this->viewPath;
             $this->assetPath = '/plugins/winter/translate/formwidgets/mlmarkdowneditor/assets';
             $this->viewPath = base_path('/plugins/winter/translate/formwidgets/mlmarkdowneditor/partials');
-        }
-        else {
+        } else {
             $this->assetPath = $this->originalAssetPath;
             $this->viewPath = $this->originalViewPath;
         }

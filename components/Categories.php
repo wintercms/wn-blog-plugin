@@ -28,7 +28,7 @@ class Categories extends ComponentBase
     {
         return [
             'name'        => 'winter.blog::lang.settings.category_title',
-            'description' => 'winter.blog::lang.settings.category_description'
+            'description' => 'winter.blog::lang.settings.category_description',
         ];
     }
 

@@ -1,8 +1,10 @@
-<?php namespace Winter\Blog\Updates;
+<?php
 
-use Schema;
-use Winter\Storm\Database\Updates\Migration;
+namespace Winter\Blog\Updates;
+
 use Winter\Blog\Models\Category;
+use Winter\Storm\Database\Updates\Migration;
+use Winter\Storm\Support\Facades\Schema;
 
 class CategoriesAddNestedFields extends Migration
 {
@@ -12,8 +14,7 @@ class CategoriesAddNestedFields extends Migration
             return;
         }
 
-        Schema::table('rainlab_blog_categories', function($table)
-        {
+        Schema::table('rainlab_blog_categories', function ($table) {
             $table->integer('parent_id')->unsigned()->index()->nullable();
             $table->integer('nest_left')->nullable();
             $table->integer('nest_right')->nullable();

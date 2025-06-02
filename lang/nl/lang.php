@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'A robust blogging platform.'
+        'description' => 'A robust blogging platform.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -20,13 +20,13 @@ return [
         'delete_confirm' => 'Weet je het zeker?',
         'chart_published' => 'Gepubliceerd',
         'chart_drafts' => 'Concepten',
-        'chart_total' => 'Totaal'
+        'chart_total' => 'Totaal',
     ],
     'posts' => [
         'list_title' => 'Beheren van blog artikelen',
         'filter_category' => 'Categorie',
         'filter_published' => 'Verberg gepubliceerd',
-        'new_post' => 'Nieuw artikel'
+        'new_post' => 'Nieuw artikel',
     ],
     'post' => [
         'title' => 'Titel',
@@ -65,7 +65,7 @@ return [
     'categories' => [
         'list_title' => 'Beheer blog categorieën',
         'new_category' => 'Nieuwe categorie',
-        'uncategorized' => 'Ongecategoriseerd'
+        'uncategorized' => 'Ongecategoriseerd',
     ],
     'category' => [
         'name' => 'Naam',
@@ -74,7 +74,7 @@ return [
         'slug_placeholder' => 'nieuw-categorie-slug',
         'posts' => 'Artikelen',
         'delete_confirm' => 'Weet je zeker dat je deze categorie wilt verwijderen?',
-        'return_to_categories' => 'Terug naar categorie overzicht'
+        'return_to_categories' => 'Terug naar categorie overzicht',
     ],
     'settings' => [
         'category_title' => 'Categorie overzicht',
@@ -109,5 +109,5 @@ return [
         'posts_post_description' => 'Naam van blog pagina bestand voor de "Lees meer" links. Deze waarde wordt standaard gebruikt door de partial.',
         'posts_except_post' => 'Except post',
         'posts_except_post_description' => 'Enter ID/URL or variable with post ID/URL you want to except',
-    ]
+    ],
 ];

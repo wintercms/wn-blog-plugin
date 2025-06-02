@@ -3,7 +3,7 @@
 return [
     'plugin' => [
         'name' => 'Blog',
-        'description' => 'Una plataforma robusta de blogging.'
+        'description' => 'Una plataforma robusta de blogging.',
     ],
     'blog' => [
         'menu_label' => 'Blog',
@@ -25,8 +25,8 @@ return [
         'chart_total' => 'Total',
         'settings_description' => 'Administrar configuración del blog',
         'show_all_posts_label' => 'Mostrar todas las publicaciones a los usuarios de backend',
-        'show_all_posts_comment' => 'Mostrar las publicaciones publicados y los borradores a los usuarios de backend',
-        'tab_general' => 'General'
+        'show_all_posts_comment' => 'Mostrar las publicaciones publicadas y los borradores a los usuarios de backend',
+        'tab_general' => 'General',
     ],
     'posts' => [
         'list_title' => 'Administrar publicaciones',
@@ -35,7 +35,7 @@ return [
         'filter_date' => 'Fecha',
         'new_post' => 'Nueva publicación',
         'export_post' => 'Exportar publicaciones',
-        'import_post' => 'Importar publicaciones'
+        'import_post' => 'Importar publicaciones',
     ],
     'post' => [
         'title' => 'Título',
@@ -70,12 +70,12 @@ return [
         'return_to_posts' => 'Volver a la lista de publicaciones',
         'posted_byline' => 'Publicado en :categories el :date.',
         'posted_byline_no_categories' => 'Publicado el :date.',
-        'date_format' => 'd de M de Y',
+        'date_format' => 'd \d\e M \d\e Y',
     ],
     'categories' => [
         'list_title' => 'Administrar las categorías',
         'new_category' => 'Nueva categoría',
-        'uncategorized' => 'Sin Categoría'
+        'uncategorized' => 'Sin Categoría',
     ],
     'category' => [
         'name' => 'Nombre',
@@ -87,14 +87,14 @@ return [
         'delete_confirm' => '¿Borrar esta categoría?',
         'delete_success' => 'Categorías borradas correctamente.',
         'return_to_categories' => 'Volver a la lista de categorías',
-        'reorder' => 'Re-ordenar Categorías'
+        'reorder' => 'Re-ordenar Categorías',
     ],
     'menuitem' => [
         'blog_category' => 'Categoría del blog',
         'all_blog_categories' => 'Todas las categorías del blog',
         'blog_post' => 'Publicación del blog',
         'all_blog_posts' => 'Todas las publicaciones del blog',
-        'category_blog_posts' => 'Publicaciones del blog por categorías'
+        'category_blog_posts' => 'Publicaciones del blog por categorías',
     ],
     'settings' => [
         'category_title' => 'Lista de Categorías',
@@ -139,18 +139,18 @@ return [
         'rssfeed_title' => 'RSS Feed',
         'rssfeed_description' => 'Genera un feed de RSS con las publicaciones del blog.',
         'group_links' => 'Enlaces',
-        'group_exceptions' => 'Excepciones'
+        'group_exceptions' => 'Excepciones',
     ],
     'sorting' => [
-        'title_asc' => 'Título (ascendiente)',
+        'title_asc' => 'Título (ascendente)',
         'title_desc' => 'Título (descendiente)',
-        'created_asc' => 'Creado (ascendiente)',
+        'created_asc' => 'Creado (ascendente)',
         'created_desc' => 'Creado (descendiente)',
-        'updated_asc' => 'Editado (ascendiente)',
+        'updated_asc' => 'Editado (ascendente)',
         'updated_desc' => 'Editado (descendiente)',
-        'published_asc' => 'Publicado (ascendiente)',
+        'published_asc' => 'Publicado (ascendente)',
         'published_desc' => 'Publicado (descendiente)',
-        'random' => 'Aleatorio'
+        'random' => 'Aleatorio',
     ],
     'import' => [
         'update_existing_label' => 'Editar publicaciones existentes',
@@ -161,6 +161,6 @@ return [
         'categories_comment' => 'Selecciona las categorías a las que pertenecerán las publicaciones importadas (opcional).',
         'default_author_label' => 'Autor de publicación por defecto (opcional)',
         'default_author_comment' => 'La importación intentará usar un autor existente si coicide con la columna "Author Email", sino se usará el autor especificado arriba.',
-        'default_author_placeholder' => '-- Selecciona Autor/a --'
-    ]
+        'default_author_placeholder' => '-- Selecciona Autor/a --',
+    ],
 ];
