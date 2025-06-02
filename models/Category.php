@@ -108,7 +108,6 @@ class Category extends Model
             return $result;
         }
 
-
         if ($type == 'blog-category') {
             $result = [
                 'references'   => self::listSubCategoryOptions(),
