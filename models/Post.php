@@ -566,12 +566,7 @@ class Post extends Model
         }
 
         if ($result) {
-
             if (!class_exists(Theme::class)) {
-                return $result;
-            }
-
-            if (!class_exists(CmsPage::class)) {
                 return $result;
             }
 
