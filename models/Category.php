@@ -108,9 +108,6 @@ class Category extends Model
             return $result;
         }
 
-        if (!class_exists(CmsPage::class)) {
-            return $result;
-        }
 
         if ($type == 'blog-category') {
             $result = [
