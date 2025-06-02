@@ -395,10 +395,6 @@ class Post extends Model
             return $result;
         }
 
-        if (!class_exists(CmsPage::class)) {
-            return $result;
-        }
-
         $theme = Theme::getActiveTheme();
         $pages = CmsPage::listInTheme($theme, true)->withComponent('blogPost', function ($component) {
             if (!preg_match('/{{\s*:/', $component->property('slug'))) {
