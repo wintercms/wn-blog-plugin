@@ -9,7 +9,7 @@ list: ~/plugins/winter/blog/models/post/columns.yaml
 modelClass: Winter\Blog\Models\Post
 
 # List Title
-title: winter.blog::lang.posts.list_title
+title: winter.blog::lang.post.label_plural
 
 # Link URL for each record
 recordUrl: winter/blog/posts/update/:id

@@ -41,6 +41,8 @@ return [
         'import_post' => 'Importer des articles',
     ],
     'post' => [
+        'label' => 'Article',
+        'label_plural' => 'Articles',
         'title' => 'Titre',
         'title_placeholder' => 'Titre du nouvel article',
         'content' => 'Contenu',
@@ -83,6 +85,8 @@ return [
         'uncategorized' => 'Non catégorisé',
     ],
     'category' => [
+        'label' => 'Catégorie',
+        'label_plural' => 'Catégories',
         'name' => 'Nom',
         'name_placeholder' => 'Nom de la nouvelle catégorie',
         'description' => 'Description',

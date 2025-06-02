@@ -41,6 +41,8 @@ return [
         'import_post' => 'Import posts',
     ],
     'post' => [
+        'label' => 'Post',
+        'label_plural' => 'Posts',
         'title' => 'Title',
         'title_placeholder' => 'New post title',
         'content' => 'Content',
@@ -83,6 +85,8 @@ return [
         'uncategorized' => 'Uncategorized',
     ],
     'category' => [
+        'label' => 'Category',
+        'label_plural' => 'Categories',
         'name' => 'Name',
         'name_placeholder' => 'New category name',
         'description' => 'Description',

@@ -1,6 +1,6 @@
 +function ($) { "use strict";
     var PostForm = function () {
-        this.$form = $('#post-form')
+        this.$form = $('.fancy-layout > form')
         this.$markdownEditor = $('[data-field-name=content] [data-control=markdowneditor]:first', this.$form)
         this.$preview = $('.editor-preview', this.$markdownEditor)
 
@@ -150,7 +150,7 @@
     }
 
     PostForm.prototype.initFormEvents = function() {
-        $(document).on('ajaxSuccess', '#post-form', function(event, context, data){
+        $(document).on('ajaxSuccess', '.fancy-layout > form', function(event, context, data){
             if (context.handler == 'onSave' && !data.X_WINTER_ERROR_FIELDS) {
                 $(this).trigger('unchange.wn.changeMonitor')
             }
