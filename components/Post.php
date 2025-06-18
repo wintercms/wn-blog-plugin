@@ -57,10 +57,9 @@ class Post extends ComponentBase
             $newParams = $params;
 
             if (isset($params['slug'])) {
-                $records = BlogPost::transWhere('slug', $params['slug'], $oldLocale)->first();
-                if ($records) {
-                    $records->translateContext($newLocale);
-                    $newParams['slug'] = $records['slug'];
+                $record = BlogPost::transWhere('slug', $params['slug'], $oldLocale)->first();
+                if ($record) {
+                    $newParams['slug'] = $record->getAttributeTranslated('slug', $newLocale);
                 }
             }
 
