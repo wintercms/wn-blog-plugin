@@ -54,16 +54,14 @@ class Post extends ComponentBase
     public function init()
     {
         Event::listen('translate.localePicker.translateParams', function ($page, $params, $oldLocale, $newLocale) {
-            $newParams = $params;
-
             if (isset($params['slug'])) {
+                $newParams = $params;
                 $record = BlogPost::transWhere('slug', $params['slug'], $oldLocale)->first();
                 if ($record) {
                     $newParams['slug'] = $record->getAttributeTranslated('slug', $newLocale);
+                    return $newParams;
                 }
             }
-
-            return $newParams;
         });
     }
 
