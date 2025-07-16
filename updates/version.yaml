@@ -79,3 +79,8 @@
 "2.1.2":
     - "Add multilang data to resolveMenuItem() methods."
     - "Move blog post form fields to primary tabs."
+"2.1.3":
+    - "Fixed issue with type hints on Category and Post components that threw an exception if no category or post was available."
+    - "Honor prefixDefaultLocale to improve support with the Translate plugin"
+    - "Revert to default locale url when url is missing for an alternate locale"
+    - "Correction of grammatical error in ES translations"
