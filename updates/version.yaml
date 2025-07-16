@@ -91,3 +91,6 @@
     - "Added missing translations, remove duplicate ones"
     - "Use Font Awesome 6 font family"
     - "Fix Cms/Classes not found when CMS module isn't loaded in config/cms.php"
+"2.2.0":
+    - "Use new controller behavior default views provided by Winter v1.2.8+"
+    - "Improve support with the Winter.Translate plugin"
