@@ -12,6 +12,7 @@ use Winter\Blog\Models\Category as BlogCategory;
 use Winter\Blog\Models\Post as BlogPost;
 use Winter\Blog\Models\Settings as BlogSettings;
 use Winter\Storm\Database\Collection;
+use Winter\Storm\Support\Facades\Event;
 
 class Posts extends ComponentBase
 {
@@ -147,6 +148,20 @@ class Posts extends ComponentBase
         }
 
         return $options;
+    }
+
+    public function init()
+    {
+        Event::listen('translate.localePicker.translateParams', function ($page, $params, $oldLocale, $newLocale) {
+            if (isset($params['slug'])) {
+                $newParams = $params;
+                $record = BlogCategory::transWhere('slug', $params['slug'], $oldLocale)->first();
+                if ($record) {
+                    $newParams['slug'] = $record->getAttributeTranslated('slug', $newLocale);
+                    return $newParams;
+                }
+            }
+        });
     }
 
     public function onRun()
