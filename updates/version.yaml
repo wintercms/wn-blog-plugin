@@ -84,3 +84,10 @@
     - "Honor prefixDefaultLocale to improve support with the Translate plugin"
     - "Revert to default locale url when url is missing for an alternate locale"
     - "Correction of grammatical error in ES translations"
+"2.1.4":
+    - "Improve seo support for posts root page"
+    - "Added post author to default markup as an example"
+    - "Added richeditor option to blog post"
+    - "Added missing translations, remove duplicate ones"
+    - "Use Font Awesome 6 font family"
+    - "Fix Cms/Classes not found when CMS module isn't loaded in config/cms.php"
