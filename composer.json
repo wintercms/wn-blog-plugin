@@ -29,7 +29,7 @@
     },
     "require": {
         "php": ">=7.0",
-        "winter/wn-backend-module": "~1.2.8|dev-develop",
+        "winter/wn-backend-module": ">=1.2.8|dev-develop",
         "composer/installers": "~1.0"
     },
     "replace": {
