@@ -187,7 +187,10 @@ class Post extends Model
         if ($useRichEditor) {
             $result = trim($input);
         } else {
-            $result = Markdown::parse(trim($input));
+            $result = Markdown::enableFootnotes()
+                ->enableAttributes()
+                ->enableTables()
+                ->parse(trim($input));
         }
 
         // Check to see if the HTML should be cleaned from potential XSS
