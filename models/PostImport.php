@@ -20,6 +20,7 @@ class PostImport extends ImportModel
     public $rules = [
         'title'   => 'required',
         'content' => 'required',
+        'slug'    => 'required',
     ];
 
     protected $authorEmailCache = [];
