@@ -28,7 +28,7 @@
         "source": "https://github.com/wintercms/wn-blog-plugin"
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=8.1",
         "winter/wn-backend-module": "^1.2.8|dev-develop",
         "composer/installers": "~1.0"
     },
