@@ -12,7 +12,7 @@
   </p>
 
   <h4><?= e(trans('winter.blog::lang.widgets.posts.upcoming')) ?></h4>
-  <?php if(count($upcoming) == 0): ?>
+  <?php if (count($upcoming) == 0): ?>
     <p><?= e(trans('winter.blog::lang.widgets.posts.no_upcoming_message')) ?></p>
     <?php else: ?>
       <div class="control-status-list">
