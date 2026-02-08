@@ -171,7 +171,7 @@ class Plugin extends PluginBase
             'Winter\Blog\ReportWidgets\Posts' => [
                 'label' => 'winter.blog::lang.widgets.posts.title',
                 'context' => 'dashboard',
-                'permissions' => [],
+                'permissions' => ['winter.blog.access_posts'],
             ],
         ];
     }
