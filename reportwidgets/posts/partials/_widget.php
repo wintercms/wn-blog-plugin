@@ -44,7 +44,7 @@
           <li>
             <span class="status-icon muted"><i class="icon-info"></i></span>
             <a href="<?= Backend::url('winter/blog/posts/update/' . $post->id) ?>" class="status-text muted">
-              <?= $post->title ?>
+              <?= e($post->title) ?>
             </a>
   
           <?php if ($post->user): ?>
