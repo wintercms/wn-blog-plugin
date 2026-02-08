@@ -2,14 +2,18 @@
     <h3><?= e(trans($this->property('title'))) ?></h3>
 
     <h4><?= e(trans('winter.blog::lang.widgets.posts.latest')) ?></h4>
+    <?php if (!$latest): ?>
+        <p><?= e(trans('winter.blog::lang.widgets.posts.no_latest_message')) ?></p>
+    <?php else: ?>
     <p>
-        <strong><a href="<?= Backend::url('winter/blog/posts/update/' . $latest->id) ?>"><?= $latest->title ?></a></strong> (<?= Backend::dateTime($latest->published_at, ['formatAlias' => 'dateTimeMin']) ?>)
+        <strong><a href="<?= Backend::url('winter/blog/posts/update/' . $latest->id) ?>"><?= e($latest->title) ?></a></strong> (<?= Backend::dateTime($latest->published_at, ['formatAlias' => 'dateTimeMin']) ?>)
     </p>
 
     <p>
         <strong><?= e(trans('winter.blog::lang.post.summary')) ?></strong>:
-        <?= $latest->summary ?>
+        <?= e($latest->summary) ?>
     </p>
+    <?php endif ?>
 
     <h4><?= e(trans('winter.blog::lang.widgets.posts.upcoming')) ?></h4>
     <?php if (count($upcoming) == 0): ?>
