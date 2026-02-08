@@ -40,6 +40,6 @@ class Posts extends ReportWidgetBase
         ->whereNotNull('published_at')
         ->where('published_at', '>', Carbon::now())
         ->orderBy('published_at', 'asc')
-        ->take(5)->get();
+        ->limit(5)->get();
     }
 }
