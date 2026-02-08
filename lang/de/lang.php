@@ -137,6 +137,7 @@ return [
             'upcoming' => 'Nächste Artikel',
             'no_upcoming_message' => 'Es gibt keine kommenden Artikel.',
             'latest' => 'Neuester Artikel',
+            'no_latest_message' => 'Kein veröffentlichter Artikel.',
         ],
     ],
 ];

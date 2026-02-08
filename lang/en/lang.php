@@ -180,6 +180,7 @@ return [
             'upcoming' => 'Upcoming',
             'no_upcoming_message' => 'There are no upcoming posts.',
             'latest' => 'Latest Post',
+            'no_latest_message' => 'No published posts',
         ],
     ],
 ];
