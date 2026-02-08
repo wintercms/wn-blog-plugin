@@ -17,7 +17,7 @@
     <?php else: ?>
       <div class="control-status-list">
         <ul>
-          <?php foreach($upcoming as $post): ?>
+          <?php foreach ($upcoming as $post): ?>
             <li>
               <span class="status-icon success"><i class="icon-clock"></i></span>
     
