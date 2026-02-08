@@ -35,7 +35,7 @@
   <?php endif ?>
 
   <h4><?= e(trans('winter.blog::lang.widgets.posts.drafts')) ?></h4>
-  <?php if(count($drafts) == 0): ?>
+  <?php if (!count($drafts)): ?>
     <p><?= e(trans('winter.blog::lang.widgets.posts.no_drafts_message')) ?></p>
   <?php else: ?>
     <div class="control-status-list">
