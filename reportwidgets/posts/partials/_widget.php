@@ -49,7 +49,7 @@
   
           <?php if ($post->user): ?>
             <a href="<?= Backend::url('backend/users/preview/' . $post->user->id) ?>" class="status-label link">
-              <?= $post->user->full_name ?>
+              <?= e($post->user->full_name) ?>
             </a>
           <?php endif; ?>
           </li>
