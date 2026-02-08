@@ -22,7 +22,7 @@
               <span class="status-icon success"><i class="icon-clock"></i></span>
     
               <a href="<?= Backend::url('winter/blog/posts/update/' . $post->id) ?>" class="status-text success">
-                <?= $post->title ?>
+                <?= e($post->title) ?>
               </a>
     
               <span class="status-label link">
