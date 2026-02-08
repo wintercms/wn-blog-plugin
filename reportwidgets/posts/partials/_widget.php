@@ -48,7 +48,7 @@
             </a>
   
           <?php if ($post->user): ?>
-            <a href="<?= Backend::url('backend/users/update/' . $post->user->id) ?>" class="status-label link">
+            <a href="<?= Backend::url('backend/users/preview/' . $post->user->id) ?>" class="status-label link">
               <?= $post->user->full_name ?>
             </a>
           <?php endif; ?>
