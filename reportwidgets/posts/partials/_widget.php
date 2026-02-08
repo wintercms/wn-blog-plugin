@@ -40,7 +40,7 @@
   <?php else: ?>
     <div class="control-status-list">
       <ul>
-        <?php foreach($drafts as $post): ?>
+        <?php foreach ($drafts as $post): ?>
           <li>
             <span class="status-icon muted"><i class="icon-info"></i></span>
             <a href="<?= Backend::url('winter/blog/posts/update/' . $post->id) ?>" class="status-text muted">
