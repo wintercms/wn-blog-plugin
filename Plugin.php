@@ -168,7 +168,7 @@ class Plugin extends PluginBase
     public function registerReportWidgets()
     {
         return [
-            'Winter\Blog\ReportWidgets\Posts' => [
+            \Winter\Blog\ReportWidgets\Posts::class => [
                 'label' => 'winter.blog::lang.widgets.posts.title',
                 'context' => 'dashboard',
                 'permissions' => ['winter.blog.access_posts'],
