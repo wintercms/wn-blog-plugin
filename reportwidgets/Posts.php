@@ -34,12 +34,17 @@ class Posts extends ReportWidgetBase
 
     protected function loadData()
     {
-      $this->vars['latest'] = Post::isPublished()->first();
-      $this->vars['drafts'] = Post::where('published', false)->with('user')->orderBy('updated_at', 'desc')->limit(5)->get();
-      $this->vars['upcoming'] = Post::where('published', true)
-        ->whereNotNull('published_at')
-        ->where('published_at', '>', Carbon::now())
-        ->orderBy('published_at', 'asc')
-        ->limit(5)->get();
+        $this->vars['latest'] = Post::isPublished()->first();
+        $this->vars['drafts'] = Post::where('published', false)
+            ->with('user')
+            ->orderBy('updated_at', 'desc')
+            ->limit(5)
+            ->get();
+        $this->vars['upcoming'] = Post::where('published', true)
+            ->whereNotNull('published_at')
+            ->where('published_at', '>', Carbon::now())
+            ->orderBy('published_at', 'asc')
+            ->limit(5)
+            ->get();
     }
 }
