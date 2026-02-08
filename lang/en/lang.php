@@ -172,4 +172,14 @@ return [
         'default_author_comment' => 'The import will try to use an existing author if you match the Author Email column, otherwise the author specified above is used.',
         'default_author_placeholder' => '-- select author --',
     ],
+    'widgets' => [
+        'posts' => [
+            'title' => 'Blog Posts',
+            'drafts' => 'Drafts',
+            'no_drafts_message' => 'There are no draft posts',
+            'upcoming' => 'Upcoming',
+            'no_upcoming_message' => 'There are no upcoming posts.',
+            'latest' => 'Latest Post',
+        ],
+    ],
 ];
