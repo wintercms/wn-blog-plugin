@@ -30,10 +30,10 @@
         {% endif %}
 
         <summary type="html">
-            <![CDATA[{{ post.summary | replace("]]>", "]]&gt;") }}]]>
+            <![CDATA[{{ post.summary | replace("]]>": "]]&gt;") }}]]>
         </summary>
         <content type="html" xml:base="{{ post.url }}">
-            <![CDATA[{{ post.content_html | raw | replace("]]>", "]]&gt;") }}]]>
+            <![CDATA[{{ post.content_html | raw | replace("]]>": "]]&gt;") }}]]>
         </content>
     </entry>
     {% endfor %}
