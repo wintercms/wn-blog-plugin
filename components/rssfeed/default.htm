@@ -12,10 +12,18 @@
 {% for post in posts %}
 <entry>
   <title>{{ post.title }}</title>
+  {% if post.user %}
   <author>
     <name>{{ post.user.full_name }}</name>
   </author>
   <rights>Copyright © {{ post.published_at|date("Y") }}, {{ post.user.full_name }}</rights>
+  {% else %}
+  <author>
+    <name>{{ this.page.meta_title ?: this.page.title }}</name>
+  </author>
+  <rights>Copyright © {{ post.published_at|date("Y") }}, {{ this.page.meta_title ?: this.page.title }}</rights>
+  {% endif %}
+
   <link rel="alternate" href="{{ post.url }}" />
   <id>{{ post.url }}</id>
   <published>{{ post.published_at|date("c") }}</published>
