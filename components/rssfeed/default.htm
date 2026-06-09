@@ -28,9 +28,9 @@
   <id>{{ post.url }}</id>
   <published>{{ post.published_at|date("c") }}</published>
   <updated>{{ post.updated_at|date("c") }}</updated>
-  <summary type="html"><![CDATA[{{ post.summary }}]]></summary>
+  <summary type="html"><![CDATA[{{ post.summary | replace("]]>", "]]&gt;") }}]]></summary>
   <content type="html" xml:base="{{ post.url }}">
-    <![CDATA[{{ post.content_html | raw }}]]>
+    <![CDATA[{{ post.content_html | raw | replace("]]>", "]]&gt;") }}]]>
   </content>
 </entry>
 {% endfor %}
