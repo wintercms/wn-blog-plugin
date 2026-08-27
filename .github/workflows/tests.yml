@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpUnitTests:
+    strategy:
+      matrix:
+        operatingSystem: [ubuntu-latest]
+        phpVersion: ['8.1', '8.2', '8.3', '8.4']
+        winterBranch: ['develop']
+      fail-fast: false
+    name: PHP ${{ matrix.phpVersion }} / Winter ${{ matrix.winterBranch }}
+    runs-on: ${{ matrix.operatingSystem }}
+    steps:
+      - name: Setup Winter
+        uses: wintercms/setup-winter-action@v1
+        with:
+          php-version: ${{ matrix.phpVersion }}
+          winter-ref: ${{ matrix.winterBranch }}
+          plugin-author: winter
+          plugin-name: blog
+
+      - name: Run linting
+        run: ./vendor/bin/parallel-lint plugins/winter/blog
+
+      - name: Run unit tests (develop branch)
+        run: php artisan winter:test -p Winter.Blog -- --testdox
