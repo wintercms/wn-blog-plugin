@@ -232,15 +232,17 @@ class ScaffoldCommand extends Command
 
     protected function attachImage(Post $post, int $index): void
     {
-        $sources = [
+        $sources = array_values(array_filter([
             base_path('themes/demo/assets/images/winter.png'),
             base_path('themes/demo/assets/images/theme-preview.png'),
             base_path('modules/backend/assets/images/wordmark.png'),
-        ];
-        $source = $sources[$index % count($sources)];
-        if (!File::exists($source)) {
+        ], fn ($path) => File::exists($path)));
+
+        if (empty($sources)) {
             return;
         }
+
+        $source = $sources[$index % count($sources)];
 
         $file = (new FileModel())->fromFile($source);
         $file->is_public = true;
