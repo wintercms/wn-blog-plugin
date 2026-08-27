@@ -6,6 +6,7 @@ use Backend\Facades\Backend;
 use Backend\Models\UserRole;
 use System\Classes\PluginBase;
 use Winter\Blog\Classes\TagProcessor;
+use Winter\Blog\Console\ScaffoldCommand;
 use Winter\Blog\Models\Category;
 use Winter\Blog\Models\Post;
 use Winter\Storm\Support\Facades\Event;
@@ -160,6 +161,8 @@ class Plugin extends PluginBase
                 $input
             );
         });
+
+        $this->registerConsoleCommand('winter.blog.scaffold', ScaffoldCommand::class);
     }
 
     /**
