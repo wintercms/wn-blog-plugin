@@ -108,7 +108,7 @@ class RssFeed extends ComponentBase
 
         $xmlFeed = $this->renderPartial('@default');
 
-        return Response::make($xmlFeed, '200')->header('Content-Type', 'text/xml');
+        return Response::make($xmlFeed, '200')->header('Content-Type', 'application/atom+xml');
     }
 
     protected function prepareVars(): void

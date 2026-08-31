@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>{{ this.page.meta_title ?: this.page.title }}</title>
-        <link>{{ link }}</link>
-        <description>{{ this.page.meta_description ?: this.page.description }}</description>
-        <atom:link rel="self" href="{{ rssLink }}" type="application/rss+xml" />
-        <link rel="first" href="{{ paginationLinks.first }}"/>
-        {% if paginationLinks.prev %}<link rel="previous" href="{{ paginationLinks.prev }}"/>{% endif %}
-        {% if paginationLinks.next %}<link rel="next" href="{{ paginationLinks.next }}"/>{% endif %}
-        <link rel="last" href="{{ paginationLinks.last }}"/>
-        {% for post in posts %}
-        <item>
-            <title>{{ post.title }}</title>
-            <link>{{ post.url }}</link>
-            <guid>{{ post.url }}</guid>
-            <pubDate>{{ post.published_at.toRfc2822String }}</pubDate>
-            <description>{{ post.summary }}</description>
-        </item>
-        {% endfor %}
-    </channel>
-</rss>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ this.page.meta_title ?: this.page.title }}</title>
+    <generator>WinterCMS.Blog Plugin</generator>
+
+    <link rel="alternate" type="text/html" href="{{ link }}" />
+    <link rel="self" type="application/atom+xml" href="{{ rssLink }}" />
+    <id>{{ link }}</id>
+
+    <updated>{{ "now"|date("c") }}</updated>
+
+    {% for post in posts %}
+    <entry>
+        <title>{{ post.title }}</title>
+        <link rel="alternate" href="{{ post.url }}" />
+        <id>{{ post.url }}</id>
+        <published>{{ post.published_at|date("c") }}</published>
+        <updated>{{ post.updated_at|date("c") }}</updated>
+
+        {% if post.user %}
+        <author>
+            <name>{{ post.user.full_name }}</name>
+        </author>
+        <rights>Copyright © {{ post.published_at|date("Y") }}, {{ post.user.full_name }}</rights>
+        {% else %}
+        <author>
+            <name>{{ this.page.meta_title ?: this.page.title }}</name>
+        </author>
+        <rights>Copyright © {{ post.published_at|date("Y") }}, {{ this.page.meta_title ?: this.page.title }}</rights>
+        {% endif %}
+
+        <summary type="html">
+            <![CDATA[{{ post.summary | replace("]]>": "]]&gt;") }}]]>
+        </summary>
+        <content type="html" xml:base="{{ post.url }}">
+            <![CDATA[{{ post.content_html | raw | replace("]]>": "]]&gt;") }}]]>
+        </content>
+    </entry>
+    {% endfor %}
+</feed>
